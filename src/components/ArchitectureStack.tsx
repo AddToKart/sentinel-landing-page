@@ -15,17 +15,25 @@ export const ArchitectureStack = () => {
   ];
 
   return (
-    <div className="flex flex-col gap-1">
+    <div className="flex flex-col gap-1 relative">
       {stack.map((row, i) => (
         <motion.div
           key={i}
-          initial={{ opacity: 0, x: 20 }}
+          initial={{ opacity: 0, x: 30 }}
           whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: i * 0.1 }}
-          className="flex items-center border border-white/5 bg-bg2/30 hover:bg-bg2/80 hover:border-white/10 transition-all group overflow-hidden"
+          viewport={{ once: true, margin: "-20px" }}
+          transition={{ duration: 0.5, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
+          className="flex items-center border border-white/5 bg-bg2/30 hover:bg-bg2/80 hover:border-white/10 transition-all duration-300 group overflow-hidden relative"
         >
-          <div className="p-4 w-12 flex items-center justify-center text-muted-text group-hover:text-accent transition-colors">
+          {/* Scan line effect on hover */}
+          <div className="absolute inset-0 opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-300">
+            <div className="absolute top-0 bottom-0 w-[30%] bg-gradient-to-r from-transparent via-accent/5 to-transparent animate-scan-line" />
+          </div>
+
+          {/* Left accent on hover */}
+          <div className="absolute left-0 top-0 bottom-0 w-[2px] bg-accent/0 group-hover:bg-accent/60 transition-all duration-300" />
+
+          <div className="p-4 w-12 flex items-center justify-center text-muted-text group-hover:text-accent transition-colors duration-300">
             <row.icon className="w-4 h-4" />
           </div>
           <div className="p-4 text-[10px] font-mono font-bold w-24 text-muted-text border-x border-white/5 uppercase tracking-widest text-right">
@@ -34,7 +42,7 @@ export const ArchitectureStack = () => {
           <div className="p-4 text-sm text-text flex-1">
             {row.tech} <span className="text-muted-text hidden md:inline">{row.detail}</span>
           </div>
-          <div className={`mr-4 text-[9px] font-bold tracking-[0.1em] uppercase px-2 py-1 border ${row.badgeClass}`}>
+          <div className={`mr-4 text-[9px] font-bold tracking-[0.1em] uppercase px-2 py-1 border ${row.badgeClass} transition-all duration-300 group-hover:shadow-sm`}>
             {row.badge}
           </div>
         </motion.div>

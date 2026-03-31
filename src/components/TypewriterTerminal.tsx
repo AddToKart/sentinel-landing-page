@@ -72,8 +72,12 @@ export const TypewriterTerminal = () => {
   }, [visibleLines, currentText]);
 
   return (
-    <div className="terminal-wrap reveal visible group relative overflow-hidden bg-bg2 border border-white/10 shadow-[0_0_80px_rgba(74,222,128,0.05),0_32px_64px_rgba(0,0,0,0.5)]">
+    <div className="terminal-wrap reveal visible group relative overflow-hidden bg-bg2 border border-white/10 shadow-[0_0_80px_rgba(74,222,128,0.05),0_32px_64px_rgba(0,0,0,0.5)] hover:border-accent/15 hover:shadow-[0_0_80px_rgba(74,222,128,0.08),0_32px_64px_rgba(0,0,0,0.5)] transition-all duration-700">
       <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-accent/5 to-transparent z-0" />
+      {/* Top accent line */}
+      <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-accent/30 to-transparent z-[3]" />
+      {/* Corner glow */}
+      <div className="absolute -top-20 -right-20 w-40 h-40 bg-accent/[0.04] rounded-full blur-[40px] pointer-events-none" />
       <div className="terminal-bar flex items-center gap-[7px] px-4 py-[10px] bg-bg3 border-b border-white/5 relative z-1">
         <div className="w-[10px] h-[10px] rounded-full bg-[#f87171]" />
         <div className="w-[10px] h-[10px] rounded-full bg-[#fbbf24]" />

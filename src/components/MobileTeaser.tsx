@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 
 export const MobileTeaser = () => {
   const [cpu1, setCpu1] = useState("2.1");
@@ -16,8 +17,17 @@ export const MobileTeaser = () => {
 
   return (
     <div className="mobile-phones relative flex justify-center items-end gap-4 h-[480px] group">
+      {/* Background glow */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_60%,rgba(168,85,247,0.08)_0%,transparent_60%)] pointer-events-none" />
+
       {/* Left phone (blurred bg) */}
-      <div className="phone phone-left w-[175px] h-[360px] border-[1.5px] border-white/10 rounded-[28px] bg-bg3 overflow-hidden absolute bottom-5 left-0 z-2 rotate-[-6deg] translate-x-2.5 opacity-60 shadow-[0_20px_60px_rgba(0,0,0,0.5)] group-hover:rotate-[-8deg] group-hover:translate-x-0 group-hover:opacity-70 transition-all duration-700 hidden lg:block">
+      <motion.div
+        initial={{ opacity: 0, x: -20, rotate: -3 }}
+        whileInView={{ opacity: 0.6, x: 10, rotate: -6 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8, delay: 0.3 }}
+        className="phone phone-left w-[175px] h-[360px] border-[1.5px] border-white/10 rounded-[28px] bg-bg3 overflow-hidden absolute bottom-5 left-0 z-2 shadow-[0_20px_60px_rgba(0,0,0,0.5)] group-hover:rotate-[-8deg] group-hover:translate-x-0 group-hover:opacity-70 transition-all duration-700 hidden lg:block"
+      >
         <div className="phone-screen h-full flex flex-col">
           <div className="phone-notch h-7 bg-bg flex items-center justify-center">
             <div className="w-[60px] h-[10px] rounded-[10px] bg-bg2" />
@@ -42,10 +52,16 @@ export const MobileTeaser = () => {
             </div>
           </div>
         </div>
-      </div>
+      </motion.div>
 
       {/* Main phone */}
-      <div className="phone phone-main w-[200px] h-[400px] border-[1.5px] border-accent/30 rounded-[28px] bg-bg3 overflow-hidden absolute bottom-0 left-1/2 -translate-x-1/2 z-3 shadow-[0_0_40px_rgba(74,222,128,0.1),0_24px_48px_rgba(0,0,0,0.6)] group-hover:-translate-y-2 transition-all duration-700">
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8, delay: 0.1 }}
+        className="phone phone-main w-[200px] h-[400px] border-[1.5px] border-accent/30 rounded-[28px] bg-bg3 overflow-hidden absolute bottom-0 left-1/2 -translate-x-1/2 z-3 shadow-[0_0_40px_rgba(74,222,128,0.1),0_24px_48px_rgba(0,0,0,0.6)] group-hover:-translate-y-2 transition-all duration-700"
+      >
         <div className="phone-screen h-full flex flex-col">
           <div className="phone-notch h-7 bg-bg flex items-center justify-center">
             <div className="w-[60px] h-[10px] rounded-[10px] bg-bg2" />
@@ -105,10 +121,16 @@ export const MobileTeaser = () => {
             <div className="flex-1 bg-bg2 border border-white/5 rounded-sm p-[6px] text-center text-[7px] text-muted-text cursor-pointer hover:border-accent/30 hover:text-accent transition-all">Apply</div>
           </div>
         </div>
-      </div>
+      </motion.div>
 
       {/* Right phone */}
-      <div className="phone phone-right w-[175px] h-[360px] border-[1.5px] border-white/10 rounded-[28px] bg-bg3 overflow-hidden absolute bottom-5 right-0 z-2 rotate-[6deg] -translate-x-2.5 opacity-60 shadow-[0_20px_60px_rgba(0,0,0,0.5)] group-hover:rotate-[8deg] group-hover:translate-x-0 group-hover:opacity-70 transition-all duration-700 hidden lg:block">
+      <motion.div
+        initial={{ opacity: 0, x: 20, rotate: 3 }}
+        whileInView={{ opacity: 0.6, x: -10, rotate: 6 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8, delay: 0.3 }}
+        className="phone phone-right w-[175px] h-[360px] border-[1.5px] border-white/10 rounded-[28px] bg-bg3 overflow-hidden absolute bottom-5 right-0 z-2 shadow-[0_20px_60px_rgba(0,0,0,0.5)] group-hover:rotate-[8deg] group-hover:translate-x-0 group-hover:opacity-70 transition-all duration-700 hidden lg:block"
+      >
         <div className="phone-screen h-full flex flex-col">
           <div className="phone-notch h-7 bg-bg flex items-center justify-center">
             <div className="w-[60px] h-[10px] rounded-[10px] bg-bg2" />
@@ -128,7 +150,7 @@ export const MobileTeaser = () => {
             </div>
           </div>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 };
