@@ -16,9 +16,9 @@ export const GridCanvas = () => {
     let dots: { x: number; y: number; o: number; speed: number }[] = [];
     let mouse = { x: -1000, y: -1000 };
 
-    function resize() {
-      W = canvas.width = window.innerWidth;
-      H = canvas.height = window.innerHeight;
+    function resize(el: HTMLCanvasElement) {
+      W = el.width = window.innerWidth;
+      H = el.height = window.innerHeight;
       const spacing = 48;
       cols = Math.ceil(W / spacing) + 1;
       rows = Math.ceil(H / spacing) + 1;
@@ -40,8 +40,8 @@ export const GridCanvas = () => {
       mouse.y = e.clientY;
     };
 
-    function draw() {
-      ctx.clearRect(0, 0, W, H);
+    function draw(c: CanvasRenderingContext2D) {
+      c.clearRect(0, 0, W, H);
       const t = Date.now() * 0.001;
       for (const d of dots) {
         d.o = 0.05 + 0.12 * Math.sin(t * d.speed * 100 + d.x * 0.02 + d.y * 0.02);
@@ -49,21 +49,22 @@ export const GridCanvas = () => {
           dy = d.y - mouse.y;
         const dist = Math.sqrt(dx * dx + dy * dy);
         const boost = Math.max(0, 1 - dist / 150) * 0.5;
-        ctx.beginPath();
-        ctx.arc(d.x, d.y, 1, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(74,222,128,${d.o + boost})`;
-        ctx.fill();
+        c.beginPath();
+        c.arc(d.x, d.y, 1, 0, Math.PI * 2);
+        c.fillStyle = `rgba(74,222,128,${d.o + boost})`;
+        c.fill();
       }
-      requestAnimationFrame(draw);
+      requestAnimationFrame(() => draw(c));
     }
 
-    resize();
-    window.addEventListener("resize", resize);
+    resize(canvas);
+    const handleResize = () => resize(canvas);
+    window.addEventListener("resize", handleResize);
     window.addEventListener("mousemove", handleMouseMove);
-    const animId = requestAnimationFrame(draw);
+    const animId = requestAnimationFrame(() => draw(ctx));
 
     return () => {
-      window.removeEventListener("resize", resize);
+      window.removeEventListener("resize", handleResize);
       window.removeEventListener("mousemove", handleMouseMove);
       cancelAnimationFrame(animId);
     };

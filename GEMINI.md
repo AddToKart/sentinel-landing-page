@@ -22,14 +22,14 @@ This is a modern, high-performance landing page for **sentinel**, a multi-agent 
 
 ### Development
 ```bash
-npm install
-npm run dev
+bun install
+bun run dev
 ```
 
 ### Production Build
 ```bash
-npm run build
-npm start
+bun run build
+bun start
 ```
 
 ## Project Structure
