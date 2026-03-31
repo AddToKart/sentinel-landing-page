@@ -1,42 +1,43 @@
 "use client";
 
 import { useRef, MouseEvent } from "react";
-import { Card } from "@/components/ui/card";
+import { motion } from "framer-motion";
+import { Layout, Terminal, Code2, Activity, Shield, Cpu, Zap, Layers, Share2 } from "lucide-react";
 
 const features = [
   {
-    icon: "⌗",
+    icon: Layout,
     title: "Multi-Tab Workspace",
     desc: "Persistent tabs for Agents Dashboard, terminals, and IDE mode — switching seamlessly while maintaining full process state.",
   },
   {
-    icon: "⧉",
+    icon: Shield,
     title: "Isolated Agent Sessions",
     desc: "Each agent runs in its own environment. Choose Sandbox Copy for safe experimentation or Git Worktree for parallel branch dev.",
   },
   {
-    icon: "⊕",
+    icon: Activity,
     title: "Real-Time Telemetry",
     desc: "Monitor CPU, RAM, and process metrics per session refreshed every second. Watch agents work without leaving Sentinel.",
   },
   {
-    icon: "◈",
+    icon: Share2,
     title: "Code Review & Apply",
     desc: "Automatically track every file changed by agents. Review diffs, apply changes to your main project, and resolve conflicts inline.",
   },
   {
-    icon: "▣",
+    icon: Code2,
     title: "Monaco IDE Mode",
     desc: "Built-in VS Code editor core with syntax highlighting, integrated persistent terminal, and live file modification indicators.",
   },
   {
-    icon: "▷",
+    icon: Terminal,
     title: "Full Terminal Emulation",
     desc: "xterm.js with portable-pty Rust backend. Auto-resizing, full scrollback, shell integration, and working directory tracking.",
   },
 ];
 
-const FeatureCard = ({ feature }: { feature: (typeof features)[0] }) => {
+const FeatureCard = ({ feature, index }: { feature: (typeof features)[0], index: number }) => {
   const cardRef = useRef<HTMLDivElement>(null);
 
   const handleMouseMove = (e: MouseEvent) => {
@@ -47,7 +48,11 @@ const FeatureCard = ({ feature }: { feature: (typeof features)[0] }) => {
   };
 
   return (
-    <div
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5, delay: index * 0.1 }}
       ref={cardRef}
       onMouseMove={handleMouseMove}
       className="feature-card group relative bg-bg border border-white/5 p-8 overflow-hidden cursor-default transition-colors hover:bg-bg2"
@@ -58,19 +63,19 @@ const FeatureCard = ({ feature }: { feature: (typeof features)[0] }) => {
         } as any
       }
     >
-      <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_var(--mx)_var(--my),rgba(74,222,128,0.04)_0%,transparent_60%)] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-      <div className="absolute top-0 left-0 right-0 h-[2px] bg-transparent group-hover:bg-accent transition-colors duration-300" />
+      <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_var(--mx)_var(--my),rgba(74,222,128,0.06)_0%,transparent_60%)] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+      <div className="absolute top-0 left-0 right-0 h-[1px] bg-transparent group-hover:bg-accent transition-colors duration-500" />
 
-      <div className="feat-icon w-[38px] h-[38px] flex items-center justify-center border border-white/10 mb-[1.1rem] text-[16px] bg-bg3 transition-colors group-hover:border-accent/40">
-        {feature.icon}
+      <div className="feat-icon w-12 h-12 flex items-center justify-center border border-white/10 mb-6 bg-bg3 transition-all group-hover:border-accent/40 group-hover:scale-110 group-hover:text-accent">
+        <feature.icon className="w-5 h-5" />
       </div>
-      <h3 className="font-head font-700 text-[1.05rem] mb-2 text-text">
+      <h3 className="font-head font-700 text-lg mb-3 text-text group-hover:text-accent transition-colors">
         {feature.title}
       </h3>
-      <p className="text-muted-text text-[13px] leading-[1.7]">
+      <p className="text-muted-text text-[14px] leading-relaxed">
         {feature.desc}
       </p>
-    </div>
+    </motion.div>
   );
 };
 
@@ -78,7 +83,7 @@ export const FeatureGrid = () => {
   return (
     <div className="features-grid max-w-[1100px] mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[1px] bg-white/5 border border-white/5">
       {features.map((f, i) => (
-        <FeatureCard key={i} feature={f} />
+        <FeatureCard key={i} index={i} feature={f} />
       ))}
     </div>
   );

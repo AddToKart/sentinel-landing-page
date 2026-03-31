@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { motion } from "framer-motion";
 import { GridCanvas } from "@/components/GridCanvas";
 import { TypewriterTerminal } from "@/components/TypewriterTerminal";
 import { Ticker } from "@/components/Ticker";
@@ -11,342 +11,457 @@ import { ArchitectureStack } from "@/components/ArchitectureStack";
 import { MobileTeaser } from "@/components/MobileTeaser";
 import { PricingGrid } from "@/components/PricingGrid";
 import { RoadmapGrid } from "@/components/RoadmapGrid";
+import { Github, Download, Star, ChevronRight, Layout, Terminal, Code2, Activity, Globe, Zap } from "lucide-react";
+
+const fadeIn = {
+  initial: { opacity: 0, y: 20 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] }
+};
+
+const staggerContainer = {
+  animate: {
+    transition: {
+      staggerChildren: 0.1
+    }
+  }
+};
 
 export default function Home() {
-  useEffect(() => {
-    const obs = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) {
-            e.target.classList.add("visible");
-          }
-        });
-      },
-      { threshold: 0.12 }
-    );
-    document
-      .querySelectorAll(".reveal, .reveal-left, .reveal-right")
-      .forEach((el) => obs.observe(el));
-    return () => obs.disconnect();
-  }, []);
-
   return (
-    <main className="min-h-screen relative">
+    <main className="min-h-screen relative selection:bg-accent selection:text-bg">
       <GridCanvas />
 
       {/* NAV */}
-      <nav className="fixed top-0 left-0 right-0 z-[200] flex items-center justify-between px-10 h-[54px] bg-bg/80 backdrop-blur-[18px] border-b border-white/5">
-        <a href="#" className="nav-logo font-head font-800 text-[18px] tracking-tight text-text flex items-center gap-1.5">
-          <div className="w-[7px] h-[7px] rounded-full bg-accent animate-nav-pulse" />
+      <motion.nav 
+        initial={{ y: -20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        className="fixed top-0 left-0 right-0 z-[200] flex items-center justify-between px-6 md:px-10 h-[64px] bg-bg/70 backdrop-blur-[24px] border-b border-white/5"
+      >
+        <a href="#" className="nav-logo font-head font-800 text-[18px] tracking-tight text-text flex items-center gap-2 group">
+          <div className="w-2 h-2 rounded-full bg-accent shadow-[0_0_12px_rgba(74,222,128,0.5)] group-hover:scale-125 transition-transform" />
           SENTINEL
         </a>
-        <ul className="hidden md:flex gap-10 list-none">
-          <li>
-            <a href="#features" className="text-muted-text text-[12px] tracking-wider hover:text-text transition-colors">
-              Features
-            </a>
-          </li>
-          <li>
-            <a href="#architecture" className="text-muted-text text-[12px] tracking-wider hover:text-text transition-colors">
-              Stack
-            </a>
-          </li>
-          <li>
-            <a href="#mobile" className="text-muted-text text-[12px] tracking-wider hover:text-text transition-colors">
-              Mobile
-            </a>
-          </li>
-          <li>
-            <a href="#pricing" className="text-muted-text text-[12px] tracking-wider hover:text-text transition-colors">
-              Pricing
-            </a>
-          </li>
-          <li>
-            <a href="#roadmap" className="text-muted-text text-[12px] tracking-wider hover:text-text transition-colors">
-              Roadmap
-            </a>
-          </li>
+        <ul className="hidden lg:flex gap-10 list-none">
+          {["Features", "Stack", "Mobile", "Pricing", "Roadmap"].map((item) => (
+            <li key={item}>
+              <a 
+                href={`#${item.toLowerCase()}`} 
+                className="text-muted-text text-[12px] font-medium tracking-wider hover:text-accent transition-colors relative group"
+              >
+                {item}
+                <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-accent transition-all group-hover:w-full" />
+              </a>
+            </li>
+          ))}
         </ul>
-        <div className="flex gap-2.5 items-center">
+        <div className="flex gap-3 items-center">
           <a
             href="https://github.com/AddToKart/sentinel-v2"
             target="_blank"
-            className="text-muted-text font-mono text-[12px] border border-white/10 px-4 py-[7px] hover:text-text hover:border-white/25 transition-all"
+            className="hidden sm:flex items-center gap-2 text-muted-text font-mono text-[12px] border border-white/10 px-4 py-2 hover:text-text hover:border-white/25 transition-all bg-white/5"
           >
-            GitHub ↗
+            <Github className="w-3.5 h-3.5" />
+            GitHub
           </a>
           <a
             href="https://github.com/AddToKart/sentinel-v2#installation"
             target="_blank"
-            className="bg-accent text-bg font-mono text-[12px] font-600 px-[18px] py-2 hover:opacity-90 transition-all"
+            className="flex items-center gap-2 bg-accent text-bg font-mono text-[12px] font-bold px-5 py-2 hover:scale-[1.02] active:scale-[0.98] transition-all shadow-[0_0_20px_rgba(74,222,128,0.2)]"
           >
-            Download Free
+            <Download className="w-3.5 h-3.5" />
+            Download
           </a>
         </div>
-      </nav>
+      </motion.nav>
 
       {/* HERO */}
-      <section className="hero min-h-screen flex flex-col items-center justify-center p-[7rem_2rem_3rem] relative text-center z-[1]">
-        <div className="absolute top-[-10%] left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-[radial-gradient(circle,rgba(74,222,128,0.07)_0%,transparent_65%)] pointer-events-none animate-glow-breathe" />
-        <div className="hero-badge inline-flex items-center gap-2 text-[11px] text-accent tracking-[0.12em] uppercase border border-accent/30 p-[5px_16px] mb-8 bg-accent/5 animate-fade-up">
-          <div className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse-dot" />
-          Now in Active Development
-        </div>
-        <h1 className="font-head font-800 text-[clamp(3.2rem,7.5vw,6.5rem)] leading-[0.97] tracking-tighter mb-[1.6rem] animate-fade-up [animation-delay:0.1s]">
+      <section className="hero min-h-screen flex flex-col items-center justify-center px-6 py-32 relative text-center z-[1] overflow-hidden">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-[radial-gradient(circle_at_50%_40%,rgba(74,222,128,0.08)_0%,transparent_60%)] pointer-events-none" />
+        
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+          className="hero-badge inline-flex items-center gap-2 text-[11px] text-accent tracking-[0.2em] uppercase border border-accent/20 p-[6px_16px] mb-8 bg-accent/5 backdrop-blur-sm"
+        >
+          <div className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
+          Production-Ready V2
+        </motion.div>
+
+        <motion.h1 
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+          className="font-head font-800 text-[clamp(2.8rem,10vw,7rem)] leading-[0.9] tracking-tighter mb-8"
+        >
           Run AI agents
           <br />
-          <em className="not-italic text-accent relative after:content-[''] after:absolute after:left-0 after:bottom-[-4px] after:w-full after:h-[2px] after:bg-accent after:opacity-40">
+          <span className="text-accent relative italic px-2">
             in parallel.
-          </em>
-        </h1>
-        <p className="max-w-[520px] text-muted-text text-[15px] leading-[1.75] mb-10 animate-fade-up [animation-delay:0.2s]">
-          Sentinel is a multi-agent workspace for managing multiple AI coding sessions
-          simultaneously — each in its own isolated sandbox or Git worktree.
-        </p>
-        <div className="flex gap-3 items-center mb-[4rem] animate-fade-up [animation-delay:0.3s]">
+            <motion.span 
+              initial={{ width: 0 }}
+              animate={{ width: "100%" }}
+              transition={{ duration: 1, delay: 0.8, ease: "circOut" }}
+              className="absolute left-0 bottom-2 h-[4px] md:h-[8px] bg-accent/20 -z-10"
+            />
+          </span>
+        </motion.h1>
+
+        <motion.p 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+          className="max-w-[580px] text-muted-text text-lg md:text-xl leading-relaxed mb-12"
+        >
+          Sentinel is a high-performance multi-agent workspace. Orchestrate multiple AI coding sessions 
+          simultaneously in isolated sandboxes.
+        </motion.p>
+
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+          className="flex flex-col sm:flex-row gap-4 items-center mb-24"
+        >
           <a
             href="https://github.com/AddToKart/sentinel-v2#installation"
             target="_blank"
-            className="bg-accent text-bg font-mono text-[13px] font-600 px-[30px] py-[13px] inline-flex items-center gap-2 relative overflow-hidden group hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(74,222,128,0.25)] transition-all"
+            className="w-full sm:w-auto bg-accent text-bg font-mono text-[14px] font-bold px-8 py-4 inline-flex items-center justify-center gap-2 group hover:shadow-[0_0_30px_rgba(74,222,128,0.3)] transition-all"
           >
-            ↓ Download for Free
-            <div className="absolute top-0 -left-full w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-all duration-500 group-hover:left-full" />
+            <Download className="w-4 h-4" />
+            Get Started Free
           </a>
           <a
             href="https://github.com/AddToKart/sentinel-v2"
             target="_blank"
-            className="font-mono text-[13px] text-text border border-white/10 px-[30px] py-[13px] hover:border-white/30 hover:bg-white/5 transition-all"
+            className="w-full sm:w-auto font-mono text-[14px] text-text border border-white/10 px-8 py-4 inline-flex items-center justify-center gap-2 hover:bg-white/5 transition-all"
           >
-            ★ Star on GitHub
+            <Star className="w-4 h-4 text-accent" />
+            Star on GitHub
           </a>
-        </div>
+        </motion.div>
 
-        <div className="w-full max-w-[920px] mx-auto animate-fade-up [animation-delay:0.4s]">
-          <TypewriterTerminal />
-        </div>
+        <motion.div 
+          initial={{ opacity: 0, y: 40, scale: 0.95 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 1.2, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+          className="w-full max-w-[1000px] mx-auto perspective-[1000px]"
+        >
+          <motion.div
+            animate={{ 
+              y: [0, -10, 0],
+            }}
+            transition={{ 
+              duration: 6, 
+              repeat: Infinity, 
+              ease: "easeInOut" 
+            }}
+          >
+            <TypewriterTerminal />
+          </motion.div>
+        </motion.div>
       </section>
 
       <Ticker />
-      <StatsBar />
+      
+      <motion.div
+        initial="initial"
+        whileInView="animate"
+        viewport={{ once: true }}
+        variants={staggerContainer}
+      >
+        <StatsBar />
+      </motion.div>
 
       {/* FEATURES */}
-      <section id="features" className="p-[7rem_2rem] relative z-[1]">
+      <section id="features" className="py-32 px-6 relative z-[1]">
         <div className="max-w-[1100px] mx-auto">
-          <div className="text-[11px] tracking-[0.15em] uppercase text-accent mb-4 reveal">
-            Core capabilities
-          </div>
-          <h2 className="font-head font-800 text-[clamp(2rem,4vw,3.4rem)] tracking-tight leading-[1.08] mb-4 reveal [animation-delay:0.1s]">
-            Everything you need
-            <br />
-            to orchestrate agents.
-          </h2>
-          <p className="text-muted-text max-w-[500px] text-[15px] leading-[1.75] mb-12 reveal [animation-delay:0.2s]">
-            Built on Tauri v2 for native performance. React 19 frontend with a Rust
-            backend. No Electron. No bloat.
-          </p>
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
+            <div className="text-[11px] tracking-[0.2em] uppercase text-accent mb-4 font-bold">
+              Engineering Excellence
+            </div>
+            <h2 className="font-head font-800 text-4xl md:text-6xl tracking-tighter leading-tight mb-6">
+              Built for agents.<br />Optimized for you.
+            </h2>
+            <p className="text-muted-text max-w-[540px] text-lg leading-relaxed mb-16">
+              Leveraging Tauri v2 and React 19 for a lightning-fast desktop experience 
+              with native Rust performance.
+            </p>
+          </motion.div>
           <FeatureGrid />
         </div>
       </section>
 
       {/* WORKFLOW */}
-      <section className="p-[7rem_2rem] relative z-[1] bg-bg2 border-t border-b border-white/5">
+      <section className="py-32 px-6 relative z-[1] bg-bg2 border-y border-white/5">
         <div className="max-w-[1100px] mx-auto">
-          <div className="text-[11px] tracking-[0.15em] uppercase text-accent mb-4 text-center reveal">
-            How it works
-          </div>
-          <h2 className="font-head font-800 text-[clamp(2rem,4vw,3.4rem)] tracking-tight leading-[1.08] mb-12 text-center reveal [animation-delay:0.1s]">
-            From repo to multi-agent
-            <br />
-            in four steps.
-          </h2>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-20"
+          >
+            <div className="text-[11px] tracking-[0.2em] uppercase text-accent mb-4 font-bold">
+              Operational Flow
+            </div>
+            <h2 className="font-head font-800 text-4xl md:text-6xl tracking-tighter leading-tight mb-4">
+              Streamlined Orchestration.
+            </h2>
+          </motion.div>
           <WorkflowGrid />
         </div>
       </section>
 
       {/* ARCHITECTURE */}
-      <section id="architecture" className="p-[7rem_2rem] relative z-[1]">
-        <div className="max-w-[1100px] mx-auto grid grid-cols-1 lg:grid-cols-[1fr_1.3fr] gap-20 items-center">
-          <div className="reveal-left">
-            <div className="text-[11px] tracking-[0.15em] uppercase text-accent mb-4">
-              Tech Stack
+      <section id="architecture" className="py-32 px-6 relative z-[1]">
+        <div className="max-w-[1100px] mx-auto grid grid-cols-1 lg:grid-cols-[1fr_1.2fr] gap-20 items-center">
+          <motion.div 
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
+            <div className="text-[11px] tracking-[0.2em] uppercase text-accent mb-4 font-bold">
+              Core Architecture
             </div>
-            <h2 className="font-head font-800 text-[clamp(2rem,4vw,3.4rem)] tracking-tight leading-[1.08] mb-4">
-              Native speed.
-              <br />
-              Web flexibility.
+            <h2 className="font-head font-800 text-4xl md:text-6xl tracking-tighter leading-tight mb-8">
+              Native speed.<br />Modern stack.
             </h2>
-            <p className="text-muted-text max-w-[500px] text-[15px] leading-[1.75] mb-4">
-              Built with Tauri v2 — a Rust-powered desktop framework dramatically lighter
-              than Electron, with zero compromise on capability.
-            </p>
-            <p className="text-muted-text text-[13px] mt-4 leading-[2]">
-              <span className="text-amber-400">████████████</span> 50.6% Rust
-              <br />
-              <span className="text-blue-400">███████████</span> 47.3% TypeScript
-              <br />
-              <span className="text-muted-text">█</span> 2.1% Other
-            </p>
-          </div>
-          <div className="reveal-right">
+            <div className="space-y-6 text-muted-text text-lg leading-relaxed mb-10">
+              <p>
+                Sentinel bypasses the bloat of Electron by using Tauri's Rust-based 
+                runtime, resulting in 90% smaller binaries and 3x less RAM usage.
+              </p>
+            </div>
+            <div className="bg-white/5 p-6 border border-white/10 space-y-4">
+              <div className="flex justify-between text-xs font-mono uppercase tracking-widest text-muted-text">
+                <span>Codebase Composition</span>
+                <span className="text-accent">V2.0.4</span>
+              </div>
+              <div className="h-4 flex rounded-full overflow-hidden bg-bg">
+                <div className="h-full bg-amber-400 w-[50.6%]" title="Rust" />
+                <div className="h-full bg-blue-400 w-[47.3%]" title="TypeScript" />
+                <div className="h-full bg-white/20 w-[2.1%]" title="Other" />
+              </div>
+              <div className="flex gap-6 text-[11px] font-mono">
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 rounded-full bg-amber-400" />
+                  <span>50.6% Rust</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 rounded-full bg-blue-400" />
+                  <span>47.3% TypeScript</span>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
             <ArchitectureStack />
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* MOBILE */}
-      <section id="mobile" className="p-[7rem_2rem] relative z-[1] bg-bg2 border-t border-b border-white/5 overflow-hidden">
-        <div className="max-w-[1100px] mx-auto grid grid-cols-1 lg:grid-cols-[1.1fr_1fr] gap-20 items-center">
-          <div className="reveal-left">
-            <div className="inline-flex items-center gap-2 text-[11px] tracking-[0.12em] uppercase border border-purple-500/35 p-[5px_16px] mb-6 bg-purple-500/5 text-purple-400">
-              📱 Mobile App — Coming Soon
+      <section id="mobile" className="py-32 px-6 relative z-[1] bg-bg2 border-y border-white/5 overflow-hidden">
+        <div className="max-w-[1100px] mx-auto grid grid-cols-1 lg:grid-cols-[1fr_1.1fr] gap-20 items-center">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            className="order-2 lg:order-1"
+          >
+            <MobileTeaser />
+          </motion.div>
+          <motion.div 
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="order-1 lg:order-2"
+          >
+            <div className="inline-flex items-center gap-2 text-[10px] tracking-[0.2em] uppercase border border-purple-500/30 p-[4px_12px] mb-8 bg-purple-500/10 text-purple-400 font-bold">
+              <Activity className="w-3 h-3" />
+              Mobile Telemetry
             </div>
-            <h2 className="font-head font-800 text-[clamp(2rem,4vw,3.4rem)] tracking-tight leading-[1.08] mb-4">
-              Your agents,
-              <br />
-              <em className="not-italic text-purple-400">in your pocket.</em>
+            <h2 className="font-head font-800 text-4xl md:text-6xl tracking-tighter leading-tight mb-8">
+              Your agents,<br />
+              <span className="text-purple-400 italic">everywhere.</span>
             </h2>
-            <p className="text-muted-text max-w-[500px] text-[15px] leading-[1.75] mb-0">
-              Monitor and remote-control every Sentinel session from your phone. Check on
-              your agents while you're away from your desk.
+            <p className="text-muted-text text-lg leading-relaxed mb-10">
+              Monitor active sessions, review diffs, and approve changes directly 
+              from your mobile device with encrypted remote sync.
             </p>
-            <ul className="list-none my-6 flex flex-col gap-3">
+            <ul className="space-y-4 mb-10">
               {[
-                "Live session monitoring",
-                "Remote terminal access",
-                "Push notifications",
-                "Apply & approve changes",
-                "Quick actions",
+                { icon: Zap, text: "Live session monitoring & kill-switch" },
+                { icon: Terminal, text: "Remote terminal access (SSH-secured)" },
+                { icon: Activity, text: "Real-time CPU/RAM push alerts" },
+                { icon: Code2, text: "Review & approve code on the go" },
               ].map((item, i) => (
-                <li key={i} className="flex items-start gap-3 text-[14px] text-muted-text">
-                  <span className="text-accent flex-shrink-0 mt-0.5">→</span>
-                  {item}
-                </li>
+                <motion.li 
+                  key={i} 
+                  initial={{ opacity: 0, x: 10 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.1 }}
+                  className="flex items-center gap-4 text-muted-text group"
+                >
+                  <div className="w-8 h-8 rounded-lg bg-purple-500/10 flex items-center justify-center text-purple-400 group-hover:bg-purple-500 group-hover:text-bg transition-colors">
+                    <item.icon className="w-4 h-4" />
+                  </div>
+                  <span className="text-[15px]">{item.text}</span>
+                </motion.li>
               ))}
             </ul>
-            <div className="flex gap-2.5 mb-4">
+            <div className="flex flex-col sm:flex-row gap-3">
               <input
                 type="email"
                 placeholder="your@email.com"
-                className="flex-1 font-mono text-[13px] bg-bg3 border border-white/10 text-text p-[11px_16px] outline-none focus:border-accent/40 transition-colors"
+                className="flex-1 font-mono text-sm bg-bg3 border border-white/10 text-text p-4 focus:border-purple-400 outline-none transition-all"
               />
-              <button className="bg-purple-500 text-white font-mono text-[12px] font-600 px-5 py-[11px] hover:opacity-85 transition-opacity whitespace-nowrap">
-                Notify Me
+              <button className="bg-purple-500 text-bg font-mono text-xs font-bold px-8 py-4 hover:bg-purple-400 transition-colors whitespace-nowrap">
+                Join Mobile Beta
               </button>
             </div>
-            <div className="flex gap-2 mt-3.5 flex-wrap">
-              <div className="flex items-center gap-1.5 text-[11px] text-muted-text border border-white/5 p-[6px_12px] bg-bg3">
-                iOS — Coming Soon
-              </div>
-              <div className="flex items-center gap-1.5 text-[11px] text-muted-text border border-white/5 p-[6px_12px] bg-bg3">
-                Android — Coming Soon
-              </div>
-            </div>
-          </div>
-          <div className="reveal-right">
-            <MobileTeaser />
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* PRICING */}
-      <section id="pricing" className="p-[7rem_2rem] relative z-[1]">
+      <section id="pricing" className="py-32 px-6 relative z-[1]">
         <div className="max-w-[1100px] mx-auto text-center">
-          <div className="text-[11px] tracking-[0.15em] uppercase text-accent mb-4 reveal">
-            Pricing
-          </div>
-          <h2 className="font-head font-800 text-[clamp(2rem,4vw,3.4rem)] tracking-tight leading-[1.08] mb-4 reveal [animation-delay:0.1s]">
-            Start free. Scale when ready.
-          </h2>
-          <p className="text-muted-text max-w-[500px] mx-auto text-[15px] leading-[1.75] mb-12 reveal [animation-delay:0.2s]">
-            Sentinel's core is free and open-source forever. Pro unlocks advanced team and
-            collaboration features.
-          </p>
-          <div className="reveal [animation-delay:0.2s]">
-            <PricingGrid />
-          </div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <div className="text-[11px] tracking-[0.2em] uppercase text-accent mb-4 font-bold">
+              Pricing Models
+            </div>
+            <h2 className="font-head font-800 text-4xl md:text-6xl tracking-tighter leading-tight mb-8">
+              Open source core.<br />Enterprise ready.
+            </h2>
+            <p className="text-muted-text max-w-[600px] mx-auto text-lg leading-relaxed mb-20">
+              Sentinel is free for individuals and open-source contributors. 
+              Pro plans unlock advanced collaboration for engineering teams.
+            </p>
+          </motion.div>
+          <PricingGrid />
         </div>
       </section>
 
       {/* ROADMAP */}
-      <section id="roadmap" className="p-[7rem_2rem] relative z-[1] bg-bg2 border-t border-b border-white/5">
+      <section id="roadmap" className="py-32 px-6 relative z-[1] bg-bg2 border-y border-white/5">
         <div className="max-w-[1100px] mx-auto">
-          <div className="text-[11px] tracking-[0.15em] uppercase text-accent mb-4 reveal">
-            Roadmap
-          </div>
-          <h2 className="font-head font-800 text-[clamp(2rem,4vw,3.4rem)] tracking-tight leading-[1.08] mb-4 reveal [animation-delay:0.1s]">
-            What's coming next.
-          </h2>
-          <p className="text-muted-text max-w-[500px] text-[15px] leading-[1.75] mb-12 reveal [animation-delay:0.2s]">
-            A public roadmap for Sentinel's planned features across the next three
-            quarters.
-          </p>
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+          >
+            <div className="text-[11px] tracking-[0.2em] uppercase text-accent mb-4 font-bold">
+              Future trajectory
+            </div>
+            <h2 className="font-head font-800 text-4xl md:text-5xl tracking-tighter leading-tight mb-8">
+              The path forward.
+            </h2>
+          </motion.div>
           <RoadmapGrid />
         </div>
       </section>
 
       {/* CTA */}
-      <section className="p-[8rem_2rem] relative z-[1] text-center bg-[radial-gradient(ellipse_60%_70%_at_50%_100%,rgba(74,222,128,0.06)_0%,transparent_70%)] border-t border-white/5">
-        <div className="text-[11px] tracking-[0.15em] uppercase text-accent mb-4 reveal">
-          Open Source
-        </div>
-        <h2 className="font-head font-800 text-[clamp(2rem,4vw,3.4rem)] tracking-tight leading-[1.08] mb-4 reveal [animation-delay:0.1s]">
-          Built in public.
-          <br />
-          <em className="not-italic text-accent">Free forever.</em>
-        </h2>
-        <p className="text-muted-text max-w-[420px] mx-auto text-[15px] leading-[1.75] mb-10 reveal [animation-delay:0.2s]">
-          Download Sentinel, star the repo, or contribute. MIT licensed and open to the
-          community.
-        </p>
-        <div className="flex gap-3.5 justify-center flex-wrap reveal [animation-delay:0.3s]">
-          <a
-            href="https://github.com/AddToKart/sentinel-v2#installation"
-            target="_blank"
-            className="bg-accent text-bg font-mono text-[13px] font-600 px-[30px] py-[13px] inline-flex items-center gap-2 relative overflow-hidden group hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(74,222,128,0.25)] transition-all"
-          >
-            ↓ Download Free
-            <div className="absolute top-0 -left-full w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-all duration-500 group-hover:left-full" />
-          </a>
-          <a
-            href="https://github.com/AddToKart/sentinel-v2"
-            target="_blank"
-            className="font-mono text-[13px] text-text border border-white/10 px-[30px] py-[13px] hover:border-white/30 hover:bg-white/5 transition-all"
-          >
-            ★ Star on GitHub
-          </a>
-        </div>
+      <section className="py-40 px-6 relative z-[1] text-center overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_100%,rgba(74,222,128,0.1)_0%,transparent_70%)] pointer-events-none" />
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+        >
+          <div className="text-[11px] tracking-[0.2em] uppercase text-accent mb-6 font-bold">
+            Community Driven
+          </div>
+          <h2 className="font-head font-800 text-5xl md:text-8xl tracking-tighter leading-none mb-10">
+            Built in public.<br />
+            <span className="text-accent italic">Free forever.</span>
+          </h2>
+          <p className="text-muted-text max-w-[500px] mx-auto text-lg leading-relaxed mb-12">
+            Download Sentinel today or contribute to the next generation of AI development tooling.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <a
+              href="https://github.com/AddToKart/sentinel-v2#installation"
+              target="_blank"
+              className="w-full sm:w-auto bg-accent text-bg font-mono text-sm font-bold px-10 py-5 inline-flex items-center justify-center gap-2 hover:shadow-[0_0_40px_rgba(74,222,128,0.4)] transition-all"
+            >
+              <Download className="w-4 h-4" />
+              Download Sentinel
+            </a>
+            <a
+              href="https://github.com/AddToKart/sentinel-v2"
+              target="_blank"
+              className="w-full sm:w-auto font-mono text-sm text-text border border-white/10 px-10 py-5 inline-flex items-center justify-center gap-2 hover:bg-white/5 transition-all"
+            >
+              <Github className="w-4 h-4" />
+              Source Code
+            </a>
+          </div>
+        </motion.div>
       </section>
 
       {/* FOOTER */}
-      <footer className="border-t border-white/5 p-[2rem_2.5rem] flex flex-col md:flex-row justify-between items-center gap-6 text-muted-text text-[12px] relative z-[1]">
-        <div>
-          <strong className="font-head font-800 tracking-tight text-text text-[14px]">
-            SENTINEL.
-          </strong>
-          <span className="ml-3.5">Manage AI agents. Master your workflow.</span>
+      <footer className="border-t border-white/5 p-12 bg-bg relative z-[1]">
+        <div className="max-w-[1100px] mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
+          <div className="space-y-4">
+            <div className="font-head font-800 tracking-tighter text-text text-2xl">
+              SENTINEL.
+            </div>
+            <p className="text-muted-text text-sm max-w-[300px]">
+              The parallel workspace for the next generation of AI-driven engineering.
+            </p>
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-12">
+            <div className="space-y-4">
+              <div className="text-[10px] uppercase tracking-widest text-accent font-bold">Product</div>
+              <ul className="space-y-2 text-sm text-muted-text">
+                <li><a href="#features" className="hover:text-text transition-colors">Features</a></li>
+                <li><a href="#pricing" className="hover:text-text transition-colors">Pricing</a></li>
+                <li><a href="#" className="hover:text-text transition-colors">Desktop App</a></li>
+              </ul>
+            </div>
+            <div className="space-y-4">
+              <div className="text-[10px] uppercase tracking-widest text-accent font-bold">Resources</div>
+              <ul className="space-y-2 text-sm text-muted-text">
+                <li><a href="https://github.com/AddToKart/sentinel-v2" className="hover:text-text transition-colors">GitHub</a></li>
+                <li><a href="https://github.com/AddToKart/sentinel-v2/blob/main/README.md" className="hover:text-text transition-colors">Documentation</a></li>
+                <li><a href="#" className="hover:text-text transition-colors">Community</a></li>
+              </ul>
+            </div>
+            <div className="space-y-4 col-span-2 sm:col-span-1">
+              <div className="text-[10px] uppercase tracking-widest text-accent font-bold">Legal</div>
+              <ul className="space-y-2 text-sm text-muted-text">
+                <li><a href="https://github.com/AddToKart/sentinel-v2/blob/main/LICENSE" className="hover:text-text transition-colors">MIT License</a></li>
+                <li><a href="#" className="hover:text-text transition-colors">Privacy</a></li>
+              </ul>
+            </div>
+          </div>
         </div>
-        <div className="flex gap-7">
-          <a
-            href="https://github.com/AddToKart/sentinel-v2"
-            target="_blank"
-            className="hover:text-text transition-colors"
-          >
-            GitHub
-          </a>
-          <a
-            href="https://github.com/AddToKart/sentinel-v2/blob/main/README.md"
-            target="_blank"
-            className="hover:text-text transition-colors"
-          >
-            Docs
-          </a>
-          <a
-            href="https://github.com/AddToKart/sentinel-v2/blob/main/LICENSE"
-            target="_blank"
-            className="hover:text-text transition-colors"
-          >
-            MIT License
-          </a>
+        <div className="max-w-[1100px] mx-auto mt-12 pt-8 border-t border-white/5 flex flex-col sm:flex-row justify-between gap-4 text-[10px] uppercase tracking-widest text-muted-text/50">
+          <span>© 2026 Sentinel Open Source Project.</span>
+          <div className="flex gap-6">
+            <a href="#" className="hover:text-accent transition-colors flex items-center gap-1.5"><Globe className="w-3 h-3" /> System Status</a>
+            <span>Built with Tauri & React</span>
+          </div>
         </div>
       </footer>
     </main>
