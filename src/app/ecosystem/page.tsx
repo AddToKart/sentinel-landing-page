@@ -24,6 +24,12 @@ import {
   Container,
   ExternalLink,
   Calendar,
+  MessageSquare,
+  Repeat,
+  Fingerprint,
+  FileText,
+  Type,
+  BookOpen,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -106,6 +112,57 @@ const ecosystems: Ecosystem[] = [
         description:
           "Advanced agent visual debugger and workflow designer. Model complex interactions as state machines with real-time message monitoring.",
         icon: Zap,
+        status: "Planning",
+        year: "2026",
+      },
+    ],
+  },
+  {
+    id: "aegis",
+    name: "Aegis",
+    tagline: "Academic Intelligence",
+    description:
+      "A specialized ecosystem of AI agents designed for academic integrity, high-fidelity research, and natural language optimization. Protecting your academic ethos with high-performance intelligence.",
+    accentColor: "#f59e0b",
+    accentDim: "rgba(245,158,11,0.08)",
+    products: [
+      {
+        name: "Aegis-Logos",
+        description:
+          "The core academic co-pilot for reasoning and brainstorming. Handles complex inquiries with a focus on logical consistency and verified data.",
+        icon: MessageSquare,
+        status: "Beta",
+        year: "2026",
+      },
+      {
+        name: "Aegis-Lexis",
+        description:
+          "High-performance paraphrasing and vocabulary optimization. Enhances lexical density while strictly preserving original academic meaning.",
+        icon: Repeat,
+        status: "Planning",
+        year: "2026",
+      },
+      {
+        name: "Aegis-Ethos",
+        description:
+          "Academic humanizer that optimizes AI-generated text to match human Authorial Voice. Removes robotic patterns for authoritative results.",
+        icon: Fingerprint,
+        status: "Planning",
+        year: "2026",
+      },
+      {
+        name: "Aegis-Synopsis",
+        description:
+          "Advanced summarization engine for high-density research papers. Compresses multi-page documents into high-signal executive summaries.",
+        icon: FileText,
+        status: "Coming Soon",
+        year: "2026",
+      },
+      {
+        name: "Aegis-Vellum",
+        description:
+          "Document structural integrity and citation engine. Handles complex formatting and bibliography management with clinical precision.",
+        icon: Type,
         status: "Planning",
         year: "2026",
       },
@@ -585,11 +642,14 @@ export default function EcosystemPage() {
       {/* ═══ SENTINEL SECTION ═══ */}
       <EcosystemSection ecosystem={ecosystems[0]} />
 
-      {/* ═══ NEXUS SECTION ═══ */}
+      {/* ═══ AEGIS SECTION ═══ */}
       <EcosystemSection ecosystem={ecosystems[1]} />
 
-      {/* ═══ FORGE SECTION ═══ */}
+      {/* ═══ NEXUS SECTION ═══ */}
       <EcosystemSection ecosystem={ecosystems[2]} />
+
+      {/* ═══ FORGE SECTION ═══ */}
+      <EcosystemSection ecosystem={ecosystems[3]} />
 
       {/* ═══ CTA ═══ */}
       <section className="py-28 px-6 relative z-[1] text-center">

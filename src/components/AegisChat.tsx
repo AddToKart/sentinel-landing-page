@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Terminal, X, Send, User, Loader2, Minus, Maximize2 } from 'lucide-react';
 import { Message } from 'ai';
 import type { ReactNode } from 'react';
+import { INITIAL_AEGIS_MESSAGE } from '@/lib/aegis-knowledge';
 
 function renderInline(text: string) {
   const parts = text.split(/(`[^`]+`|\*\*[^*]+\*\*)/g).filter(Boolean);
@@ -176,7 +177,7 @@ export function AegisChat() {
       {
         id: 'initial',
         role: 'assistant',
-        content: 'System initialized. I am Aegis, Sentinel\'s autonomous co-pilot. How can I assist with your orchestration today?',
+        content: INITIAL_AEGIS_MESSAGE,
       },
     ],
   });

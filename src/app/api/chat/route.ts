@@ -1,5 +1,6 @@
 import { createOpenAI } from '@ai-sdk/openai';
 import { streamText } from 'ai';
+import { AEGIS_SYSTEM_PROMPT, INITIAL_AEGIS_MESSAGE } from '@/lib/aegis-knowledge';
 
 // NVIDIA exposes an OpenAI-compatible endpoint.
 // Keep the base URL at /v1 and use provider/model IDs as the model names.
@@ -46,16 +47,22 @@ const MODELS: ModelConfig[] = [
   },
 ];
 
-const INITIAL_ASSISTANT_MESSAGE =
-  "System initialized. I am Aegis, Sentinel's autonomous co-pilot. How can I assist with your orchestration today?";
-
-const SYSTEM_PROMPT =
-  'You are Aegis, Sentinel\'s AI copilot. Be concise, technical, and direct. Maintain continuity with prior messages, remember the active topic, and avoid repeating yourself. Prefer clean, natural formatting with short paragraphs, lists only when useful, and minimal markdown noise.';
-
 export const runtime = 'edge';
 
 function getStatus(error: ProviderErrorShape | undefined) {
   return Number(error?.statusCode ?? error?.response?.status ?? error?.data?.error?.code);
+}
+
+function getMaxTokens(messages: ChatMessage[]) {
+  const lastUserMessage =
+    [...messages].reverse().find(message => message.role === 'user')?.content.toLowerCase() ?? '';
+
+  const needsDepth =
+    /sentinel|aegis|ecosystem|roadmap|history|about|founder|creator|product|mobile|cloud|teams|cli|studio|edge|nexus|forge|feature|workflow|academic|paraphras|chatbot|research|study|compare|overview|details|explain|list/.test(
+      lastUserMessage
+    );
+
+  return needsDepth ? 280 : 160;
 }
 
 function normalizeMessages(messages: unknown): ChatMessage[] {
@@ -82,7 +89,7 @@ function normalizeMessages(messages: unknown): ChatMessage[] {
 
   const withoutInitialGreeting = normalized.filter(
     message =>
-      !(message.role === 'assistant' && message.content.trim() === INITIAL_ASSISTANT_MESSAGE)
+      !(message.role === 'assistant' && message.content.trim() === INITIAL_AEGIS_MESSAGE)
   );
 
   return withoutInitialGreeting.slice(-16);
@@ -114,8 +121,8 @@ export async function POST(req: Request) {
         const result = await streamText({
           model: provider.chat(config.id),
           messages: normalizedMessages,
-          system: SYSTEM_PROMPT,
-          maxTokens: 160,
+          system: AEGIS_SYSTEM_PROMPT,
+          maxTokens: getMaxTokens(normalizedMessages),
           temperature: 0.2,
         });
 

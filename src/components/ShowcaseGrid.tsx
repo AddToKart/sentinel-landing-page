@@ -6,7 +6,7 @@ export interface Project {
   name: string;
   description: string;
   tech: string[];
-  url: string;
+  url?: string;
   stars?: number;
   language?: string;
   accentColor?: string;
@@ -52,12 +52,21 @@ function TechBadge({ tech }: { tech: string }) {
 }
 
 function ProjectCard({ project }: { project: Project }) {
+  const CardWrapper = (project.url ? "a" : "div") as any;
+  const wrapperProps = project.url
+    ? {
+        href: project.url,
+        target: "_blank",
+        rel: "noopener noreferrer",
+      }
+    : {};
+
   return (
-    <a
-      href={project.url}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="group relative flex flex-col bg-bg2 border border-border-dim hover:border-border-dim2 transition-all duration-300 overflow-hidden"
+    <CardWrapper
+      {...wrapperProps}
+      className={`group relative flex flex-col bg-bg2 border border-border-dim hover:border-border-dim2 transition-all duration-300 overflow-hidden ${
+        !project.url ? "cursor-default" : ""
+      }`}
     >
       {/* Hover accent top border */}
       <div
@@ -80,7 +89,13 @@ function ProjectCard({ project }: { project: Project }) {
           <h3 className="font-head font-800 text-lg md:text-xl tracking-tight text-text group-hover:text-accent transition-colors duration-300">
             {project.name}
           </h3>
-          <ExternalLink className="w-4 h-4 text-muted-text/40 group-hover:text-accent transition-colors duration-200 mt-1 flex-shrink-0" />
+          {project.url ? (
+            <ExternalLink className="w-4 h-4 text-muted-text/40 group-hover:text-accent transition-colors duration-200 mt-1 flex-shrink-0" />
+          ) : (
+            <div className="text-[9px] font-mono uppercase tracking-[0.15em] px-2 py-0.5 border border-white/10 text-muted-text/40 mt-1 whitespace-nowrap">
+              Planning
+            </div>
+          )}
         </div>
 
         {/* Description */}
@@ -115,11 +130,11 @@ function ProjectCard({ project }: { project: Project }) {
             )}
           </div>
           <span className="text-[10px] font-mono uppercase tracking-[0.15em] text-accent/50 group-hover:text-accent transition-colors duration-200">
-            View Source &rarr;
+            {project.url ? "View Source \u2192" : "In Development"}
           </span>
         </div>
       </div>
-    </a>
+    </CardWrapper>
   );
 }
 

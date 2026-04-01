@@ -96,6 +96,33 @@ const personalProjects: Project[] = [
     category: "personal",
   },
   {
+    name: "Aegis-Logos",
+    description:
+      "Advanced academic co-pilot for high-fidelity reasoning and brainstorming. Maintains logical consistency across complex research inquiries with clinical precision.",
+    tech: ["TypeScript", "NVIDIA NIM", "Llama 3.1"],
+    language: "TypeScript",
+    accentColor: "#f59e0b",
+    category: "personal",
+  },
+  {
+    name: "Aegis-Lexis",
+    description:
+      "Technical paraphrasing engine that optimizes lexical density and sentence structure while strictly preserving original academic meaning.",
+    tech: ["TypeScript", "Python", "NLP"],
+    language: "TypeScript",
+    accentColor: "#f59e0b",
+    category: "personal",
+  },
+  {
+    name: "Aegis-Ethos",
+    description:
+      "Authorial voice optimizer that adjusts AI-generated content to match a specific human persona, removing robotic patterns for authoritative results.",
+    tech: ["TypeScript", "OpenAI", "React"],
+    language: "TypeScript",
+    accentColor: "#f59e0b",
+    category: "personal",
+  },
+  {
     name: "Sentinel",
     description:
       "A high-performance multi-agent workspace built with Tauri v2 and React 19. Orchestrate multiple AI coding sessions simultaneously in isolated sandboxes, Git worktrees, or Docker containers with real-time telemetry.",
