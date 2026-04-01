@@ -81,35 +81,7 @@ const stats: StatItem[] = [
    NAV
    ═══════════════════════════════════════════════════════════ */
 
-function Nav() {
-  return (
-    <motion.nav
-      initial={{ y: -16, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-      className="fixed top-0 left-0 right-0 z-[200] flex items-center justify-between px-6 md:px-10 h-[60px] backdrop-blur-xl bg-bg/80 border-b border-border-dim"
-    >
-      <Link
-        href="/"
-        className="font-head font-800 text-[17px] tracking-tight text-text flex items-center gap-2.5 hover:text-accent transition-colors duration-200"
-      >
-        <ArrowLeft className="w-4 h-4" />
-        <div className="w-[7px] h-[7px] rounded-full bg-accent" />
-        SENTINEL
-      </Link>
-      <div className="flex gap-2.5 items-center">
-        <a
-          href="https://github.com/AddToKart/sentinel-v2"
-          target="_blank"
-          className="flex items-center gap-2 text-muted-text font-mono text-[11px] border border-border-dim2 px-3.5 py-1.5 hover:text-text hover:border-border-dim2 transition-all duration-200 bg-bg2"
-        >
-          <Github className="w-3.5 h-3.5" />
-          GitHub
-        </a>
-      </div>
-    </motion.nav>
-  );
-}
+
 
 /* ═══════════════════════════════════════════════════════════
    VALUE CARD
@@ -210,8 +182,6 @@ export default function AboutPage() {
   return (
     <main className="min-h-screen relative selection:bg-accent selection:text-bg">
       <GridCanvas />
-      <Nav />
-
       {/* ═══ HERO ═══ */}
       <motion.section
         ref={heroRef}
@@ -560,129 +530,7 @@ export default function AboutPage() {
       </section>
 
       {/* ═══ FOOTER ═══ */}
-      <footer className="border-t border-border-dim px-6 py-12 bg-bg relative z-[1]">
-        <div className="max-w-[1100px] mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
-          <div className="space-y-3">
-            <div className="font-head font-800 tracking-tighter text-text text-xl">
-              SENTINEL.
-            </div>
-            <p className="text-muted-text text-[13px] max-w-[280px]">
-              The parallel workspace for the next generation of AI-driven
-              engineering.
-            </p>
-          </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-10">
-            <div className="space-y-3">
-              <div className="text-[9px] uppercase tracking-[0.15em] text-accent/70 font-bold">
-                Product
-              </div>
-              <ul className="space-y-1.5 text-[13px] text-muted-text">
-                <li>
-                  <Link
-                    href="/"
-                    className="hover:text-text transition-colors duration-150"
-                  >
-                    Features
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/"
-                    className="hover:text-text transition-colors duration-150"
-                  >
-                    Pricing
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/products"
-                    className="hover:text-text transition-colors duration-150"
-                  >
-                    Products
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/roadmap"
-                    className="hover:text-text transition-colors duration-150"
-                  >
-                    Roadmap
-                  </Link>
-                </li>
-              </ul>
-            </div>
-            <div className="space-y-3">
-              <div className="text-[9px] uppercase tracking-[0.15em] text-accent/70 font-bold">
-                Resources
-              </div>
-              <ul className="space-y-1.5 text-[13px] text-muted-text">
-                <li>
-                  <a
-                    href="https://github.com/AddToKart/sentinel-v2"
-                    target="_blank"
-                    className="hover:text-text transition-colors duration-150"
-                  >
-                    GitHub
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="https://github.com/AddToKart/sentinel-v2/blob/main/README.md"
-                    target="_blank"
-                    className="hover:text-text transition-colors duration-150"
-                  >
-                    Documentation
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="hover:text-text transition-colors duration-150"
-                  >
-                    Community
-                  </a>
-                </li>
-              </ul>
-            </div>
-            <div className="space-y-3 col-span-2 sm:col-span-1">
-              <div className="text-[9px] uppercase tracking-[0.15em] text-accent/70 font-bold">
-                Legal
-              </div>
-              <ul className="space-y-1.5 text-[13px] text-muted-text">
-                <li>
-                  <a
-                    href="https://github.com/AddToKart/sentinel-v2/blob/main/LICENSE"
-                    target="_blank"
-                    className="hover:text-text transition-colors duration-150"
-                  >
-                    MIT License
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="hover:text-text transition-colors duration-150"
-                  >
-                    Privacy
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div className="max-w-[1100px] mx-auto mt-10 pt-6 border-t border-border-dim flex flex-col sm:flex-row justify-between gap-4 text-[9px] uppercase tracking-[0.15em] text-muted-text/40">
-          <span>&copy; 2026 Sentinel Open Source Project.</span>
-          <div className="flex gap-5">
-            <Link
-              href="/"
-              className="hover:text-accent/60 transition-colors duration-150"
-            >
-              Back to Sentinel
-            </Link>
-            <span>Built with Tauri &amp; React</span>
-          </div>
-        </div>
-      </footer>
+      
     </main>
   );
 }

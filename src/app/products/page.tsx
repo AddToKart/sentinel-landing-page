@@ -135,39 +135,13 @@ const personalProjects: Project[] = [
   },
 ];
 
-/* ─── Nav ───────────────────────────────────────── */
-function Nav() {
-  return (
-    <nav className="fixed top-0 left-0 right-0 z-[200] flex items-center justify-between px-6 md:px-10 h-[60px] backdrop-blur-xl bg-bg/80 border-b border-border-dim">
-      <Link
-        href="/"
-        className="font-head font-800 text-[17px] tracking-tight text-text flex items-center gap-2.5 hover:text-accent transition-colors duration-200"
-      >
-        <ArrowLeft className="w-4 h-4" />
-        <div className="w-[7px] h-[7px] rounded-full bg-accent" />
-        SENTINEL
-      </Link>
-      <div className="flex gap-2.5 items-center">
-        <a
-          href="https://github.com/AddToKart"
-          target="_blank"
-          className="flex items-center gap-2 text-muted-text font-mono text-[11px] border border-border-dim2 px-3.5 py-1.5 hover:text-text hover:border-border-dim2 transition-all duration-200 bg-bg2"
-        >
-          <Github className="w-3.5 h-3.5" />
-          AddToKart
-        </a>
-      </div>
-    </nav>
-  );
-}
+
 
 /* ─── Main Page ─────────────────────────────────── */
 export default function ProductsPage() {
   return (
     <main className="min-h-screen relative selection:bg-accent selection:text-bg">
       <GridCanvas />
-      <Nav />
-
       {/* ═══ HERO ═══ */}
       <section className="pt-32 pb-20 px-6 relative z-[1] text-center">
         <div className="absolute top-[25%] left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-accent/[0.03] rounded-full blur-[120px] pointer-events-none" />
@@ -321,37 +295,7 @@ export default function ProductsPage() {
       </section>
 
       {/* ═══ FOOTER ═══ */}
-      <footer className="border-t border-border-dim px-6 py-12 bg-bg relative z-[1]">
-        <div className="max-w-[1100px] mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
-          <div className="space-y-3">
-            <div className="font-head font-800 tracking-tighter text-text text-xl">
-              ADDTOKART.
-            </div>
-            <p className="text-muted-text text-[13px] max-w-[280px]">
-              Open-source developer building AI tooling, developer utilities, and creative
-              applications.
-            </p>
-          </div>
-          <div className="flex gap-5 text-[11px] font-mono uppercase tracking-[0.15em] text-muted-text/50">
-            <a
-              href="https://github.com/AddToKart"
-              target="_blank"
-              className="hover:text-accent/60 transition-colors duration-150 flex items-center gap-1.5"
-            >
-              <Github className="w-3 h-3" /> GitHub
-            </a>
-            <Link
-              href="/"
-              className="hover:text-accent/60 transition-colors duration-150 flex items-center gap-1.5"
-            >
-              <Globe className="w-3 h-3" /> Sentinel
-            </Link>
-          </div>
-        </div>
-        <div className="max-w-[1100px] mx-auto mt-10 pt-6 border-t border-border-dim text-[9px] uppercase tracking-[0.15em] text-muted-text/40">
-          &copy; 2026 AddToKart. All projects are open source under the MIT License.
-        </div>
-      </footer>
+      
     </main>
   );
 }

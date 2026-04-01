@@ -4,6 +4,8 @@ import "./globals.css";
 import { SPEProvider } from "@/lib/SPE/SPEProvider";
 import { TelemetryOverlay } from "@/components/SPE/TelemetryOverlay";
 import { AegisChat } from "@/components/AegisChat";
+import { Navbar } from "@/components/Navbar";
+import { Footer } from "@/components/Footer";
 
 const ibmPlexMono = IBM_Plex_Mono({
   variable: "--font-mono",
@@ -33,7 +35,9 @@ export default function RootLayout({
         className={`${ibmPlexMono.variable} ${syne.variable} font-mono antialiased bg-background text-foreground transition-colors duration-300`}
       >
         <SPEProvider>
+          <Navbar />
           {children}
+          <Footer />
           <TelemetryOverlay />
           <AegisChat />
         </SPEProvider>

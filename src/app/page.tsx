@@ -23,74 +23,7 @@ import { GitHubFeed } from "@/components/GitHubFeed";
 import { Github, Download, Star, Activity, Globe, Zap, Terminal, Code2 } from "lucide-react";
 import Link from "next/link";
 
-/* ─── Scroll-aware Nav ────────────────────────────────── */
-function Nav() {
-  const [scrolled, setScrolled] = useState(false);
 
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  return (
-    <motion.nav
-      initial={{ y: -16, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-      className={`fixed top-0 left-0 right-0 z-[200] flex items-center justify-between px-6 md:px-10 h-[60px] backdrop-blur-xl border-b transition-all duration-500 ${
-        scrolled
-          ? "bg-bg/80 border-border-dim shadow-[0_2px_20px_rgba(0,0,0,0.2)]"
-          : "bg-bg/40 border-transparent"
-      }`}
-    >
-      <a href="#" className="font-head font-800 text-[17px] tracking-tight text-text flex items-center gap-2.5 group">
-        <div className="w-[7px] h-[7px] rounded-full bg-accent group-hover:scale-125 transition-transform duration-200" />
-        SENTINEL
-      </a>
-      <ul className="hidden lg:flex gap-9 list-none">
-        {[
-          { name: "Features", href: "#features" },
-          { name: "Docs", href: "/docs" },
-          { name: "Pricing", href: "/pricing" },
-          { name: "Ecosystem", href: "/ecosystem" },
-          { name: "Roadmap", href: "/roadmap" },
-          { name: "About", href: "/about" },
-          { name: "Showcase", href: "/products" }
-        ].map((item) => (
-          <li key={item.name}>
-            <Link
-              href={item.href}
-              className="text-muted-text text-[11px] font-medium tracking-[0.06em] uppercase hover:text-accent transition-colors duration-200 relative group"
-            >
-              {item.name}
-              <span className="absolute -bottom-1 left-0 w-0 h-px bg-accent transition-all duration-300 group-hover:w-full" />
-            </Link>
-          </li>
-        ))}
-      </ul>
-      <div className="flex gap-2.5 items-center">
-        <a
-          href="https://github.com/AddToKart/sentinel-v2"
-          target="_blank"
-          className="hidden sm:flex items-center gap-2 text-muted-text font-mono text-[11px] border border-border-dim px-3.5 py-1.5 hover:text-text hover:border-border-dim2 transition-all duration-200 bg-bg2"
-        >
-          <Github className="w-3.5 h-3.5" />
-          GitHub
-        </a>
-        <a
-          href="https://github.com/AddToKart/sentinel-v2#installation"
-          target="_blank"
-          className="flex items-center gap-2 bg-accent text-bg font-mono text-[11px] font-bold px-4 py-1.5 hover:scale-[1.02] active:scale-[0.98] transition-all duration-150"
-        >
-          <Download className="w-3 h-3" />
-          Download
-        </a>
-        <ThemeToggle />
-      </div>
-    </motion.nav>
-  );
-}
 
 /* ─── Main Page ───────────────────────────────────────── */
 export default function Home() {
@@ -106,8 +39,6 @@ export default function Home() {
   return (
     <main className="min-h-screen relative selection:bg-accent selection:text-bg">
       <GridCanvas />
-      <Nav />
-
       {/* ═══ HERO ═══ */}
       <motion.section
         ref={heroRef}
@@ -517,52 +448,7 @@ export default function Home() {
       </section>
 
       {/* ═══ FOOTER ═══ */}
-      <footer className="border-t border-border-dim px-6 py-12 bg-bg relative z-[1]">
-        <div className="max-w-[1100px] mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
-          <div className="space-y-3">
-            <div className="font-head font-800 tracking-tighter text-text text-xl">SENTINEL.</div>
-            <p className="text-muted-text text-[13px] max-w-[280px]">
-              The parallel workspace for the next generation of AI-driven engineering.
-            </p>
-          </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-10">
-            <div className="space-y-3">
-              <div className="text-[9px] uppercase tracking-[0.15em] text-accent/70 font-bold">Product</div>
-              <ul className="space-y-1.5 text-[13px] text-muted-text">
-                <li><a href="#features" className="hover:text-text transition-colors duration-150">Features</a></li>
-                <li><Link href="/pricing" className="hover:text-text transition-colors duration-150">Pricing</Link></li>
-                <li><Link href="/ecosystem" className="hover:text-text transition-colors duration-150">Ecosystem</Link></li>
-                <li><a href="#" className="hover:text-text transition-colors duration-150">Desktop App</a></li>
-                <li><Link href="/products" className="hover:text-text transition-colors duration-150">Portfolio</Link></li>
-              </ul>
-            </div>
-            <div className="space-y-3">
-              <div className="text-[9px] uppercase tracking-[0.15em] text-accent/70 font-bold">Resources</div>
-              <ul className="space-y-1.5 text-[13px] text-muted-text">
-                <li><a href="https://github.com/AddToKart/sentinel-v2" className="hover:text-text transition-colors duration-150">GitHub</a></li>
-                <li><a href="https://github.com/AddToKart/sentinel-v2/blob/main/README.md" className="hover:text-text transition-colors duration-150">Documentation</a></li>
-                <li><a href="#" className="hover:text-text transition-colors duration-150">Community</a></li>
-              </ul>
-            </div>
-            <div className="space-y-3 col-span-2 sm:col-span-1">
-              <div className="text-[9px] uppercase tracking-[0.15em] text-accent/70 font-bold">Legal</div>
-              <ul className="space-y-1.5 text-[13px] text-muted-text">
-                <li><a href="https://github.com/AddToKart/sentinel-v2/blob/main/LICENSE" className="hover:text-text transition-colors duration-150">MIT License</a></li>
-                <li><a href="#" className="hover:text-text transition-colors duration-150">Privacy</a></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div className="max-w-[1100px] mx-auto mt-10 pt-6 border-t border-border-dim flex flex-col sm:flex-row justify-between gap-4 text-[9px] uppercase tracking-[0.15em] text-muted-text/40">
-          <span>&copy; 2026 Sentinel Open Source Project.</span>
-          <div className="flex gap-5">
-            <a href="#" className="hover:text-accent/60 transition-colors duration-150 flex items-center gap-1.5">
-              <Globe className="w-2.5 h-2.5" /> System Status
-            </a>
-            <span>Built with Tauri &amp; React</span>
-          </div>
-        </div>
-      </footer>
+      
     </main>
   );
 }

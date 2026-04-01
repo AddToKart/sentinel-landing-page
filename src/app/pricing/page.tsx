@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import { useRef, useState } from "react";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { GridCanvas } from "@/components/GridCanvas";
@@ -30,13 +30,7 @@ import {
   ListChecks,
   Monitor,
   Activity,
-  Bug,
-  FileCode,
   Network,
-  Copy,
-  Split,
-  Trash2,
-  Gauge,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -48,18 +42,11 @@ interface Plan {
   price: number;
   description: string;
   accentColor: string;
-  accentDim: string;
   icon: React.ElementType;
   popular?: boolean;
   features: string[];
   ecosystems: string[];
   cta: string;
-}
-
-interface FeatureRow {
-  feature: string;
-  icon: React.ElementType;
-  values: (boolean | string | number)[];
 }
 
 /* ─── Plan Data ─────────────────────────────────── */
@@ -71,7 +58,6 @@ const plans: Plan[] = [
     price: 5,
     description: "Just enough to get started. Run agents, explore the platform.",
     accentColor: "#4ade80",
-    accentDim: "rgba(74,222,128,0.08)",
     icon: Zap,
     features: [
       "2 parallel agents",
@@ -90,7 +76,6 @@ const plans: Plan[] = [
     price: 15,
     description: "Your reliable daily driver. Academic tools unlocked.",
     accentColor: "#f59e0b",
-    accentDim: "rgba(245,158,11,0.08)",
     icon: Shield,
     features: [
       "5 parallel agents",
@@ -109,8 +94,7 @@ const plans: Plan[] = [
     price: 45,
     description: "Full control for serious developers. Infra + DevOps included.",
     accentColor: "#8b5cf6",
-    accentDim: "rgba(139,92,246,0.08)",
-    icon: Shield,
+    icon: Network,
     features: [
       "15 parallel agents",
       "All sandbox modes",
@@ -130,7 +114,6 @@ const plans: Plan[] = [
     price: 120,
     description: "Team-scale power. Review, intelligence, and refactoring agents.",
     accentColor: "#06b6d4",
-    accentDim: "rgba(6,182,212,0.08)",
     icon: Crown,
     popular: true,
     features: [
@@ -162,7 +145,6 @@ const plans: Plan[] = [
     price: 300,
     description: "Everything. No gates. No limits. The full platform.",
     accentColor: "#f472b6",
-    accentDim: "rgba(244,114,182,0.08)",
     icon: Crown,
     features: [
       "Unlimited parallel agents",
@@ -194,597 +176,413 @@ const plans: Plan[] = [
 ];
 
 /* ─── Ecosystem Access Data ─────────────────────── */
-const ecosystemAccess: {
-  id: string;
-  name: string;
-  tagline: string;
-  icon: React.ElementType;
-  color: string;
-}[] = [
-  {
-    id: "sentinel",
-    name: "Sentinel",
-    tagline: "Agent Workspace",
-    icon: Terminal,
-    color: "#4ade80",
-  },
-  {
-    id: "aegis",
-    name: "Aegis",
-    tagline: "Academic Intelligence",
-    icon: MessageSquare,
-    color: "#f59e0b",
-  },
-  {
-    id: "nexus",
-    name: "Nexus",
-    tagline: "AI Infrastructure",
-    icon: Server,
-    color: "#8b5cf6",
-  },
-  {
-    id: "forge",
-    name: "Forge",
-    tagline: "DevOps Automation",
-    icon: Rocket,
-    color: "#f97316",
-  },
-  {
-    id: "argus",
-    name: "Argus",
-    tagline: "Code Review",
-    icon: Eye,
-    color: "#06b6d4",
-  },
-  {
-    id: "oracle",
-    name: "Oracle",
-    tagline: "Codebase Intelligence",
-    icon: Search,
-    color: "#a78bfa",
-  },
-  {
-    id: "proteus",
-    name: "Proteus",
-    tagline: "Refactoring",
-    icon: Repeat,
-    color: "#34d399",
-  },
-  {
-    id: "aletheia",
-    name: "Aletheia",
-    tagline: "Testing & QA",
-    icon: CheckCircle,
-    color: "#f472b6",
-  },
-  {
-    id: "iatros",
-    name: "Iatros",
-    tagline: "Debugging",
-    icon: HeartPulse,
-    color: "#fb923c",
-  },
-  {
-    id: "janus",
-    name: "Janus",
-    tagline: "API & Integration",
-    icon: Globe,
-    color: "#60a5fa",
-  },
+const ecosystemAccess = [
+  { id: "sentinel", name: "Sentinel", tagline: "Agent Workspace", icon: Terminal, color: "#4ade80" },
+  { id: "aegis", name: "Aegis", tagline: "Academic Intelligence", icon: MessageSquare, color: "#f59e0b" },
+  { id: "nexus", name: "Nexus", tagline: "AI Infrastructure", icon: Server, color: "#8b5cf6" },
+  { id: "forge", name: "Forge", tagline: "DevOps Automation", icon: Rocket, color: "#f97316" },
+  { id: "argus", name: "Argus", tagline: "Code Review", icon: Eye, color: "#06b6d4" },
+  { id: "oracle", name: "Oracle", tagline: "Codebase Intelligence", icon: Search, color: "#a78bfa" },
+  { id: "proteus", name: "Proteus", tagline: "Refactoring", icon: Repeat, color: "#34d399" },
+  { id: "aletheia", name: "Aletheia", tagline: "Testing & QA", icon: CheckCircle, color: "#f472b6" },
+  { id: "iatros", name: "Iatros", tagline: "Debugging", icon: HeartPulse, color: "#fb923c" },
+  { id: "janus", name: "Janus", tagline: "API & Integration", icon: Globe, color: "#60a5fa" },
 ];
 
 /* ─── Feature Comparison Data ───────────────────── */
-const featureRows: FeatureRow[] = [
-  {
-    feature: "Parallel Agents",
-    icon: Zap,
-    values: ["2", "5", "15", "50", "Unlimited"],
-  },
-  {
-    feature: "Sandbox Modes",
-    icon: Layers,
-    values: ["Copy", "Copy + Worktree", "All", "All", "All + Custom"],
-  },
-  {
-    feature: "Team Seats",
-    icon: Users,
-    values: [1, 1, 3, 25, "Unlimited"],
-  },
-  {
-    feature: "Mobile Monitoring",
-    icon: Monitor,
-    values: [false, false, true, true, true],
-  },
-  {
-    feature: "Cloud Sync",
-    icon: Cloud,
-    values: [false, false, true, true, true],
-  },
-  {
-    feature: "API Access",
-    icon: Code2,
-    values: [false, false, true, true, true],
-  },
-  {
-    feature: "Priority Support",
-    icon: MessageSquare,
-    values: [false, false, false, true, true],
-  },
-  {
-    feature: "SSO / SAML",
-    icon: Shield,
-    values: [false, false, false, true, true],
-  },
-  {
-    feature: "Audit Logs",
-    icon: ListChecks,
-    values: [false, false, false, true, true],
-  },
-  {
-    feature: "Custom Plugins",
-    icon: Boxes,
-    values: [false, false, false, false, true],
-  },
-  {
-    feature: "SLA",
-    icon: Activity,
-    values: [false, false, false, "99.5%", "99.99%"],
-  },
+const featureRows = [
+  { feature: "Parallel Agents", icon: Zap, values: ["2", "5", "15", "50", "Unlimited"] },
+  { feature: "Sandbox Modes", icon: Layers, values: ["Copy", "Copy + Worktree", "All", "All", "All + Custom"] },
+  { feature: "Team Seats", icon: Users, values: [1, 1, 3, 25, "Unlimited"] },
+  { feature: "Mobile Monitoring", icon: Monitor, values: [false, false, true, true, true] },
+  { feature: "Cloud Sync", icon: Cloud, values: [false, false, true, true, true] },
+  { feature: "API Access", icon: Code2, values: [false, false, true, true, true] },
+  { feature: "Priority Support", icon: MessageSquare, values: [false, false, false, true, true] },
+  { feature: "SSO / SAML", icon: Shield, values: [false, false, false, true, true] },
+  { feature: "Audit Logs", icon: ListChecks, values: [false, false, false, true, true] },
+  { feature: "Custom Plugins", icon: Boxes, values: [false, false, false, false, true] },
+  { feature: "SLA", icon: Activity, values: [false, false, false, "99.5%", "99.99%"] },
 ];
 
-/* ─── Nav ───────────────────────────────────────── */
-function Nav() {
-  return (
-    <nav className="fixed top-0 left-0 right-0 z-[200] flex items-center justify-between px-6 md:px-10 h-[60px] backdrop-blur-xl bg-bg/80 border-b border-border-dim">
-      <Link
-        href="/"
-        className="font-head font-800 text-[17px] tracking-tight text-text flex items-center gap-2.5 hover:text-accent transition-colors duration-200"
-      >
-        <ArrowLeft className="w-4 h-4" />
-        <div className="w-[7px] h-[7px] rounded-full bg-accent" />
-        SENTINEL
-      </Link>
-      <div className="flex gap-2.5 items-center">
-        <a
-          href="https://github.com/AddToKart"
-          target="_blank"
-          className="flex items-center gap-2 text-muted-text font-mono text-[11px] border border-border-dim2 px-3.5 py-1.5 hover:text-text hover:border-border-dim2 transition-all duration-200 bg-bg2"
-        >
-          <Github className="w-3.5 h-3.5" />
-          AddToKart
-        </a>
-      </div>
-    </nav>
-  );
-}
+/* ─── Spotlight Card Component ──────────────────── */
+function SpotlightCard({ 
+  children, 
+  className = "", 
+  accentColor, 
+  popular 
+}: { 
+  children: React.ReactNode; 
+  className?: string; 
+  accentColor: string;
+  popular?: boolean;
+}) {
+  const divRef = useRef<HTMLDivElement>(null);
+  const [isFocused, setIsFocused] = useState(false);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [opacity, setOpacity] = useState(0);
 
-/* ─── Plan Card ─────────────────────────────────── */
-function PlanCard({ plan, index }: { plan: Plan; index: number }) {
-  const Icon = plan.icon;
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!divRef.current || isFocused) return;
+    const rect = divRef.current.getBoundingClientRect();
+    setPosition({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+  };
+
+  const handleFocus = () => {
+    setIsFocused(true);
+    setOpacity(1);
+  };
+
+  const handleBlur = () => {
+    setIsFocused(false);
+    setOpacity(0);
+  };
+
+  const handleMouseEnter = () => {
+    setOpacity(1);
+  };
+
+  const handleMouseLeave = () => {
+    setOpacity(0);
+  };
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.6, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
-      className={`relative flex flex-col h-full bg-bg2 border rounded-2xl overflow-hidden transition-all duration-300 ${
-        plan.popular
-          ? "border-accent/30 shadow-[0_0_40px_-10px_rgba(74,222,128,0.15)]"
-          : "border-border-dim hover:border-border-dim2"
-      }`}
+    <div
+      ref={divRef}
+      onMouseMove={handleMouseMove}
+      onFocus={handleFocus}
+      onBlur={handleBlur}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      className={`relative overflow-hidden rounded-3xl border transition-all duration-500 bg-bg2 ${
+        popular ? "border-transparent scale-[1.02] shadow-2xl z-10" : "border-white/[0.06] hover:border-white/[0.15]"
+      } ${className}`}
       style={{
-        borderColor: plan.popular ? undefined : undefined,
+        boxShadow: popular ? `0 0 50px -15px ${accentColor}50` : undefined,
       }}
     >
-      {/* Popular badge */}
-      {plan.popular && (
-        <div className="absolute top-4 right-4 z-10">
-          <span className="text-[9px] font-mono uppercase tracking-[0.15em] px-2.5 py-1 border border-accent/25 text-accent bg-accent/[0.06] rounded-full">
-            Most Popular
-          </span>
+      {/* Animated gradient border for popular plan */}
+      {popular && (
+        <div className="absolute inset-0 z-0 rounded-3xl overflow-hidden pointer-events-none">
+          <motion.div
+            animate={{ rotate: 360 }}
+            transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150%] h-[150%]"
+            style={{
+              background: `conic-gradient(from 0deg, transparent 0 340deg, ${accentColor} 360deg)`,
+            }}
+          />
+          <div className="absolute inset-[2px] rounded-[22px] bg-bg2 z-10" />
         </div>
       )}
 
-      {/* Accent top border */}
+      {/* Spotlight Effect */}
       <div
-        className="absolute top-0 left-0 right-0 h-[2px]"
+        className="pointer-events-none absolute -inset-px opacity-0 transition duration-300 z-10"
         style={{
-          background: `linear-gradient(90deg, transparent, ${plan.accentColor}60, transparent)`,
+          opacity,
+          background: `radial-gradient(600px circle at ${position.x}px ${position.y}px, ${accentColor}15, transparent 40%)`,
         }}
       />
-
-      <div className="p-7 flex-1 flex flex-col">
-        {/* Header */}
-        <div className="mb-6">
-          <div
-            className="w-10 h-10 flex items-center justify-center border rounded-xl mb-4"
-            style={{
-              borderColor: `${plan.accentColor}20`,
-              backgroundColor: `${plan.accentColor}08`,
-            }}
-          >
-            <Icon className="w-5 h-5" style={{ color: plan.accentColor }} />
-          </div>
-          <h3 className="font-head font-800 text-2xl tracking-tight text-text">
-            {plan.name}
-          </h3>
-          <p
-            className="text-[11px] font-mono uppercase tracking-[0.15em] mt-1"
-            style={{ color: plan.accentColor }}
-          >
-            {plan.tagline}
-          </p>
-        </div>
-
-        {/* Price */}
-        <div className="mb-6">
-          <div className="flex items-baseline gap-1">
-            <span className="font-head font-800 text-4xl tracking-tight text-text">
-              ${plan.price}
-            </span>
-            <span className="text-muted-text/60 text-sm">/mo</span>
-          </div>
-          <p className="text-muted-text text-[13px] leading-relaxed mt-2">
-            {plan.description}
-          </p>
-        </div>
-
-        {/* Features */}
-        <ul className="space-y-2.5 mb-8 flex-1">
-          {plan.features.map((f) => (
-            <li key={f} className="flex items-start gap-2.5 text-[13px] text-muted-text">
-              <Check className="w-4 h-4 shrink-0 mt-0.5" style={{ color: plan.accentColor }} />
-              <span>{f}</span>
-            </li>
-          ))}
-        </ul>
-
-        {/* CTA */}
-        <a
-          href="#"
-          className={`w-full text-center font-mono text-[12px] font-bold px-6 py-3 rounded-xl transition-all duration-200 ${
-            plan.popular
-              ? "bg-accent text-bg hover:brightness-110"
-              : "bg-bg3 border border-border-dim text-text hover:bg-bg2 hover:border-border-dim2"
-          }`}
-        >
-          {plan.cta}
-        </a>
+      
+      {/* Content wrapper */}
+      <div className="relative z-20 h-full flex flex-col p-8">
+        {children}
       </div>
-    </motion.div>
-  );
-}
-
-/* ─── Ecosystem Access Table ────────────────────── */
-function EcosystemAccessTable() {
-  return (
-    <div className="overflow-x-auto">
-      <table className="w-full text-[13px]">
-        <thead>
-          <tr className="border-b border-border-dim">
-            <th className="text-left py-4 px-4 font-mono text-[10px] uppercase tracking-[0.15em] text-muted-text/60">
-              Ecosystem
-            </th>
-            {plans.map((p) => (
-              <th
-                key={p.id}
-                className="text-center py-4 px-4 font-mono text-[10px] uppercase tracking-[0.15em]"
-                style={{ color: p.accentColor }}
-              >
-                {p.name}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {ecosystemAccess.map((eco) => {
-            const Icon = eco.icon;
-            return (
-              <tr
-                key={eco.id}
-                className="border-b border-border-dim/50 hover:bg-bg2/50 transition-colors"
-              >
-                <td className="py-3.5 px-4">
-                  <div className="flex items-center gap-3">
-                    <div
-                      className="w-8 h-8 flex items-center justify-center border rounded-lg"
-                      style={{
-                        borderColor: `${eco.color}20`,
-                        backgroundColor: `${eco.color}08`,
-                      }}
-                    >
-                      <Icon className="w-4 h-4" style={{ color: eco.color }} />
-                    </div>
-                    <div>
-                      <div className="font-mono text-[13px] font-bold text-text">
-                        {eco.name}
-                      </div>
-                      <div className="text-[10px] text-muted-text/50">
-                        {eco.tagline}
-                      </div>
-                    </div>
-                  </div>
-                </td>
-                {plans.map((p) => {
-                  const hasAccess = p.ecosystems.includes(eco.id);
-                  return (
-                    <td key={p.id} className="text-center py-3.5 px-4">
-                      {hasAccess ? (
-                        <Check className="w-4 h-4 mx-auto" style={{ color: eco.color }} />
-                      ) : (
-                        <X className="w-4 h-4 mx-auto text-muted-text/20" />
-                      )}
-                    </td>
-                  );
-                })}
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
     </div>
   );
 }
 
-/* ─── Feature Comparison Table ──────────────────── */
-function FeatureComparisonTable() {
-  return (
-    <div className="overflow-x-auto">
-      <table className="w-full text-[13px]">
-        <thead>
-          <tr className="border-b border-border-dim">
-            <th className="text-left py-4 px-4 font-mono text-[10px] uppercase tracking-[0.15em] text-muted-text/60">
-              Feature
-            </th>
-            {plans.map((p) => (
-              <th
-                key={p.id}
-                className="text-center py-4 px-4 font-mono text-[10px] uppercase tracking-[0.15em]"
-                style={{ color: p.accentColor }}
-              >
-                {p.name}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {featureRows.map((row) => {
-            const Icon = row.icon;
-            return (
-              <tr
-                key={row.feature}
-                className="border-b border-border-dim/50 hover:bg-bg2/50 transition-colors"
-              >
-                <td className="py-3.5 px-4">
-                  <div className="flex items-center gap-3">
-                    <Icon className="w-4 h-4 text-muted-text/40" />
-                    <span className="text-text font-medium">{row.feature}</span>
-                  </div>
-                </td>
-                {row.values.map((val, i) => (
-                  <td key={i} className="text-center py-3.5 px-4">
-                    {typeof val === "boolean" ? (
-                      val ? (
-                        <Check className="w-4 h-4 mx-auto text-accent" />
-                      ) : (
-                        <X className="w-4 h-4 mx-auto text-muted-text/20" />
-                      )
-                    ) : (
-                      <span className="font-mono text-[12px] text-muted-text">
-                        {val}
-                      </span>
-                    )}
-                  </td>
-                ))}
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-    </div>
-  );
-}
+
 
 /* ─── Main Page ─────────────────────────────────── */
 export default function PricingPage() {
+  const [hoveredPlan, setHoveredPlan] = useState<string | null>(null);
+  
   const heroRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: heroRef,
     offset: ["start start", "end start"],
   });
-  const heroY = useTransform(scrollYProgress, [0, 1], [0, 80]);
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
+  const heroY = useTransform(scrollYProgress, [0, 1], [0, 100]);
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
   return (
     <main className="min-h-screen relative selection:bg-accent selection:text-bg">
       <GridCanvas />
-      <Nav />
-
       {/* ═══ HERO ═══ */}
-      <section
+      <motion.section
         ref={heroRef}
-        className="pt-32 pb-20 px-6 relative z-[1] text-center overflow-hidden"
+        style={{ y: heroY, opacity: heroOpacity }}
+        className="pt-40 pb-20 px-6 relative z-[1] text-center overflow-hidden"
       >
-        <div className="absolute top-[25%] left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-accent/[0.03] rounded-full blur-[120px] pointer-events-none" />
+        <div className="absolute top-[20%] left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-accent/[0.04] rounded-full blur-[150px] pointer-events-none" />
 
         <ScrollReveal>
-          <div className="inline-flex items-center gap-2 text-[11px] text-accent/80 tracking-[0.2em] uppercase border border-accent/15 px-4 py-1.5 mb-8 bg-accent/[0.03]">
-            <Crown className="w-3.5 h-3.5" />
-            Pricing
+          <div className="inline-flex items-center gap-2 text-[11px] text-accent/80 tracking-[0.2em] uppercase border border-accent/15 px-4 py-1.5 mb-8 bg-accent/[0.03] rounded-full">
+            <Crown className="w-3 h-3" />
+            Pricing Plans
           </div>
         </ScrollReveal>
 
-        <motion.div style={{ y: heroY, opacity: heroOpacity }}>
-          <ScrollReveal delay={80}>
-            <h1 className="font-head font-800 text-[clamp(2.4rem,8vw,5.5rem)] leading-[0.92] tracking-tighter mb-6">
-              Choose your{" "}
-              <span className="text-accent italic relative">
-                tier
-                <span className="absolute left-0 bottom-1.5 h-[3px] md:h-[5px] w-full bg-accent/15 -z-10" />
-              </span>
-            </h1>
-          </ScrollReveal>
+        <ScrollReveal delay={80}>
+          <h1 className="font-head font-800 text-[clamp(2.5rem,8vw,6rem)] leading-[0.9] tracking-tighter mb-6">
+            Scale without{" "}
+            <span className="text-accent italic relative">
+              friction.
+              <span className="absolute left-0 bottom-1.5 h-[3px] md:h-[6px] w-full bg-accent/20 -z-10" />
+            </span>
+          </h1>
+        </ScrollReveal>
 
-          <ScrollReveal delay={160}>
-            <p className="max-w-[620px] mx-auto text-muted-text text-lg md:text-xl leading-relaxed mb-6">
-              Five tiers. Ten ecosystems. One platform. Start small, scale without limits.
+        <ScrollReveal delay={160}>
+          <p className="max-w-[620px] mx-auto text-muted-text text-lg md:text-xl leading-relaxed mb-12">
+            From solo explorers to global enterprises. Predictable pricing for the ultimate AI orchestration platform.
+          </p>
+        </ScrollReveal>
+      </motion.section>
+
+      {/* ═══ PRICING CARDS ═══ */}
+      <section className="py-10 px-6 relative z-[10]">
+        <div className="max-w-[1400px] mx-auto relative">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 xl:gap-4 items-center">
+            {plans.map((plan, i) => {
+              const Icon = plan.icon;
+              return (
+                <div 
+                  key={plan.id}
+                  onMouseEnter={() => setHoveredPlan(plan.id)}
+                  onMouseLeave={() => setHoveredPlan(null)}
+                  className={`transition-all duration-300 ${hoveredPlan && hoveredPlan !== plan.id ? 'opacity-40 scale-95' : 'opacity-100 scale-100'}`}
+                >
+                  <ScrollReveal delay={i * 100} className="h-full">
+                    <SpotlightCard 
+                      accentColor={plan.accentColor} 
+                      popular={plan.popular}
+                      className="h-full min-h-[520px]"
+                    >
+                      {plan.popular && (
+                        <div 
+                          className="absolute top-4 right-4 text-[9px] font-mono uppercase tracking-[0.2em] px-3 py-1.5 rounded-full font-bold"
+                          style={{ color: plan.accentColor, backgroundColor: `${plan.accentColor}15`, border: `1px solid ${plan.accentColor}30` }}
+                        >
+                          Most Popular
+                        </div>
+                      )}
+                      
+                      <div className="mb-6 flex-1">
+                        <div 
+                          className="w-12 h-12 flex items-center justify-center rounded-2xl mb-5"
+                          style={{ backgroundColor: `${plan.accentColor}10`, border: `1px solid ${plan.accentColor}20` }}
+                        >
+                          <Icon className="w-6 h-6" style={{ color: plan.accentColor }} />
+                        </div>
+                        <h3 className="font-head font-800 text-3xl tracking-tight text-text mb-1">
+                          {plan.name}
+                        </h3>
+                        <p className="text-[11px] font-mono uppercase tracking-[0.15em]" style={{ color: plan.accentColor }}>
+                          {plan.tagline}
+                        </p>
+
+                        <div className="mt-8 mb-6">
+                          <div className="flex items-baseline gap-1">
+                            <span className="font-head font-800 text-5xl tracking-tighter text-text">
+                              ${plan.price}
+                            </span>
+                            <span className="text-muted-text/50 font-mono text-sm">/mo</span>
+                          </div>
+                          <p className="text-muted-text text-[14px] leading-relaxed mt-3">
+                            {plan.description}
+                          </p>
+                        </div>
+
+                        <div className="space-y-3.5 mt-8">
+                          {plan.features.map((f, idx) => (
+                            <div key={idx} className="flex items-start gap-3 text-[13px] text-text/80">
+                              <div className="mt-0.5 shrink-0 rounded-full p-0.5" style={{ backgroundColor: `${plan.accentColor}15` }}>
+                                <Check className="w-3 h-3" style={{ color: plan.accentColor }} />
+                              </div>
+                              <span className="leading-snug">{f}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+
+                      <button 
+                        className={`w-full mt-8 py-4 px-6 rounded-xl font-mono text-[13px] font-bold uppercase tracking-[0.1em] transition-all duration-300 relative overflow-hidden group`}
+                        style={{
+                          backgroundColor: plan.popular ? plan.accentColor : `${plan.accentColor}08`,
+                          color: plan.popular ? "#000" : plan.accentColor,
+                          border: plan.popular ? "none" : `1px solid ${plan.accentColor}30`,
+                        }}
+                      >
+                        <span className="relative z-10">{plan.cta}</span>
+                        {plan.popular && (
+                          <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+                        )}
+                        {!plan.popular && (
+                          <div 
+                            className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-300" 
+                            style={{ backgroundColor: plan.accentColor }} 
+                          />
+                        )}
+                      </button>
+                    </SpotlightCard>
+                  </ScrollReveal>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══ INTERACTIVE ECOSYSTEM MAP ═══ */}
+      <section className="py-32 px-6 relative z-[1] bg-bg2/50 border-y border-white/[0.04] mt-20">
+        <div className="max-w-[1200px] mx-auto text-center mb-16">
+          <ScrollReveal>
+            <h2 className="font-head font-800 text-4xl md:text-5xl tracking-tighter leading-tight mb-4">
+              Ecosystem Unlocks
+            </h2>
+            <p className="text-muted-text text-lg max-w-[600px] mx-auto">
+              Hover over a plan above to see which ecosystems it unlocks, or explore the full platform capabilities below.
             </p>
           </ScrollReveal>
-        </motion.div>
+        </div>
 
-        <ScrollReveal delay={220}>
-          <div className="flex flex-wrap justify-center gap-4 text-[11px] font-mono uppercase tracking-[0.15em] text-muted-text/60">
-            <span className="flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-accent" />
-              Free Core
-            </span>
-            <span className="flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-purple-400" />
-              $5 – $300/mo
-            </span>
-            <span className="flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />
-              10 Ecosystems
-            </span>
-            <span className="flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-orange-400" />
-              Cancel Anytime
-            </span>
-          </div>
-        </ScrollReveal>
-      </section>
-
-      {/* ═══ PLAN CARDS ═══ */}
-      <section className="py-20 px-6 relative z-[1]">
         <div className="max-w-[1200px] mx-auto">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5">
-            {plans.map((plan, i) => (
-              <PlanCard key={plan.id} plan={plan} index={i} />
-            ))}
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+            {ecosystemAccess.map((eco, i) => {
+              const Icon = eco.icon;
+              const isActive = hoveredPlan 
+                ? plans.find(p => p.id === hoveredPlan)?.ecosystems.includes(eco.id)
+                : true;
+
+              return (
+                <ScrollReveal key={eco.id} delay={i * 50} className="h-full">
+                  <div 
+                    className={`p-6 rounded-2xl border transition-all duration-500 h-full flex flex-col items-center text-center ${
+                      isActive 
+                        ? "bg-bg shadow-[0_8px_30px_-10px_rgba(0,0,0,0.5)] border-white/[0.08]" 
+                        : "bg-bg/40 border-white/[0.02] opacity-30 grayscale"
+                    }`}
+                    style={{
+                      boxShadow: isActive && hoveredPlan ? `0 0 30px -10px ${eco.color}40` : undefined,
+                      borderColor: isActive && hoveredPlan ? `${eco.color}40` : undefined,
+                    }}
+                  >
+                    <div 
+                      className="w-14 h-14 rounded-full flex items-center justify-center mb-4 transition-all duration-500"
+                      style={{
+                        backgroundColor: isActive ? `${eco.color}15` : "rgba(255,255,255,0.05)",
+                      }}
+                    >
+                      <Icon className="w-6 h-6 transition-all duration-500" style={{ color: isActive ? eco.color : "#666" }} />
+                    </div>
+                    <h4 className={`font-head font-800 text-lg transition-colors duration-500 ${isActive ? "text-text" : "text-muted-text"}`}>
+                      {eco.name}
+                    </h4>
+                    <p className="text-[10px] font-mono uppercase tracking-[0.1em] text-muted-text mt-2">
+                      {eco.tagline}
+                    </p>
+                  </div>
+                </ScrollReveal>
+              );
+            })}
           </div>
         </div>
       </section>
 
-      {/* ═══ ECOSYSTEM ACCESS ═══ */}
-      <section className="py-28 px-6 relative z-[1] bg-bg2 border-y border-border-dim">
-        <div className="max-w-[1100px] mx-auto">
+      {/* ═══ DETAILED COMPARISON MATRIX ═══ */}
+      <section className="py-32 px-6 relative z-[1]">
+        <div className="max-w-[1200px] mx-auto">
           <ScrollReveal>
-            <div className="text-center mb-14">
-              <div className="text-[11px] tracking-[0.2em] uppercase text-accent/80 mb-4 font-bold">
-                Ecosystem Access
-              </div>
-              <h2 className="font-head font-800 text-4xl md:text-5xl tracking-tighter leading-tight mb-4">
-                What you get.
+            <div className="mb-16">
+              <h2 className="font-head font-800 text-4xl tracking-tighter mb-4">
+                Deep Dive Comparison
               </h2>
-              <p className="text-muted-text max-w-[480px] mx-auto text-[15px] leading-relaxed">
-                Each tier unlocks a broader slice of the platform. Higher tiers include everything below.
-              </p>
+              <p className="text-muted-text text-lg">Every feature compared side-by-side.</p>
             </div>
           </ScrollReveal>
 
           <ScrollReveal delay={100}>
-            <div className="bg-bg border border-border-dim rounded-xl overflow-hidden">
-              <EcosystemAccessTable />
-            </div>
-          </ScrollReveal>
-        </div>
-      </section>
+            <div className="rounded-3xl border border-white/[0.06] bg-bg2 overflow-x-auto shadow-2xl">
+              <div className="min-w-[900px]">
+                {/* Header Row */}
+                <div className="grid grid-cols-[2.5fr_1fr_1fr_1fr_1fr_1fr] border-b border-white/[0.08] bg-bg/50 backdrop-blur-md sticky top-0 z-20">
+                  <div className="p-6 font-mono text-[11px] uppercase tracking-[0.2em] text-muted-text/50 flex items-center">
+                    Feature
+                  </div>
+                  {plans.map(plan => (
+                    <div key={plan.id} className="p-6 text-center border-l border-white/[0.04]">
+                      <div className="font-head font-800 text-xl" style={{ color: plan.accentColor }}>{plan.name}</div>
+                      <div className="text-text font-mono font-bold mt-2">${plan.price}</div>
+                    </div>
+                  ))}
+                </div>
 
-      {/* ═══ FEATURE COMPARISON ═══ */}
-      <section className="py-28 px-6 relative z-[1]">
-        <div className="max-w-[1100px] mx-auto">
-          <ScrollReveal>
-            <div className="text-center mb-14">
-              <div className="text-[11px] tracking-[0.2em] uppercase text-accent/80 mb-4 font-bold">
-                Feature Comparison
+                {/* Feature Rows */}
+                <div className="divide-y divide-white/[0.04]">
+                  {featureRows.map((row, idx) => {
+                    const Icon = row.icon;
+                    return (
+                      <div key={idx} className="grid grid-cols-[2.5fr_1fr_1fr_1fr_1fr_1fr] hover:bg-white/[0.02] transition-colors duration-200">
+                        <div className="p-5 px-6 flex items-center gap-4">
+                          <div className="w-8 h-8 rounded-lg bg-white/[0.03] border border-white/[0.05] flex items-center justify-center shrink-0">
+                            <Icon className="w-4 h-4 text-muted-text" />
+                          </div>
+                          <span className="text-[14px] text-text/90 font-medium">{row.feature}</span>
+                        </div>
+                        
+                        {row.values.map((val, i) => (
+                          <div key={i} className="p-5 border-l border-white/[0.04] flex items-center justify-center">
+                            {typeof val === "boolean" ? (
+                              val ? (
+                                <div className="w-6 h-6 rounded-full bg-accent/10 flex items-center justify-center">
+                                  <Check className="w-3.5 h-3.5 text-accent" />
+                                </div>
+                              ) : (
+                                <X className="w-4 h-4 text-muted-text/20" />
+                              )
+                            ) : (
+                              <span className="font-mono text-[13px] text-muted-text">
+                                {val}
+                              </span>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
-              <h2 className="font-head font-800 text-4xl md:text-5xl tracking-tighter leading-tight mb-4">
-                Side by side.
-              </h2>
-              <p className="text-muted-text max-w-[480px] mx-auto text-[15px] leading-relaxed">
-                Every feature, every tier. No hidden costs, no surprises.
-              </p>
-            </div>
-          </ScrollReveal>
-
-          <ScrollReveal delay={100}>
-            <div className="bg-bg2 border border-border-dim rounded-xl overflow-hidden">
-              <FeatureComparisonTable />
             </div>
           </ScrollReveal>
         </div>
       </section>
 
       {/* ═══ CTA ═══ */}
-      <section className="py-28 px-6 relative z-[1] text-center">
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[500px] h-[250px] bg-accent/[0.03] rounded-full blur-[100px] pointer-events-none" />
+      <section className="py-32 px-6 relative z-[1] text-center overflow-hidden border-t border-white/[0.04]">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-accent/[0.03] rounded-full blur-[120px] pointer-events-none" />
         <ScrollReveal>
-          <h2 className="font-head font-800 text-4xl md:text-6xl tracking-tighter leading-none mb-6">
-            Start building today.
+          <h2 className="font-head font-800 text-5xl md:text-7xl tracking-tighter leading-none mb-8">
+            Ready to <span className="text-accent italic">deploy?</span>
           </h2>
-          <p className="text-muted-text max-w-[440px] mx-auto text-lg leading-relaxed mb-10">
-            Sentinel Core is free and open source. Upgrade when you&apos;re ready to unlock the full platform.
+          <p className="text-muted-text max-w-[480px] mx-auto text-lg leading-relaxed mb-10">
+            Start for free. No credit card required. Upgrade when your team is ready to scale.
           </p>
-          <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <a
               href="https://github.com/AddToKart/sentinel-v2#installation"
               target="_blank"
-              className="w-full sm:w-auto bg-accent text-bg font-mono text-sm font-bold px-9 py-4 inline-flex items-center justify-center gap-2 hover:brightness-110 transition-all duration-200"
+              className="w-full sm:w-auto bg-accent text-bg font-mono text-[14px] font-bold px-10 py-4 rounded-xl hover:brightness-110 hover:scale-105 transition-all duration-300"
             >
-              <Github className="w-4 h-4" />
-              Download Free
+              Deploy Sentinel Core
             </a>
-            <Link
-              href="/"
-              className="w-full sm:w-auto font-mono text-sm text-text border border-border-dim px-9 py-4 inline-flex items-center justify-center gap-2 hover:bg-bg3 hover:border-border-dim2 transition-all duration-200"
-            >
-              <ArrowLeft className="w-4 h-4" />
-              Back to Home
-            </Link>
           </div>
         </ScrollReveal>
       </section>
 
       {/* ═══ FOOTER ═══ */}
-      <footer className="border-t border-border-dim px-6 py-12 bg-bg relative z-[1]">
-        <div className="max-w-[1100px] mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
-          <div className="space-y-3">
-            <div className="font-head font-800 tracking-tighter text-text text-xl">
-              SENTINEL.
-            </div>
-            <p className="text-muted-text text-[13px] max-w-[280px]">
-              A unified ecosystem of open-source AI agent tooling, infrastructure,
-              and developer automation.
-            </p>
-          </div>
-          <div className="flex gap-5 text-[11px] font-mono uppercase tracking-[0.15em] text-muted-text/50">
-            <a
-              href="https://github.com/AddToKart"
-              target="_blank"
-              className="hover:text-accent/60 transition-colors duration-150 flex items-center gap-1.5"
-            >
-              <Github className="w-3 h-3" /> GitHub
-            </a>
-            <Link
-              href="/"
-              className="hover:text-accent/60 transition-colors duration-150 flex items-center gap-1.5"
-            >
-              <Code2 className="w-3 h-3" /> Home
-            </Link>
-            <Link
-              href="/ecosystem"
-              className="hover:text-accent/60 transition-colors duration-150 flex items-center gap-1.5"
-            >
-              <Boxes className="w-3 h-3" /> Ecosystem
-            </Link>
-          </div>
-        </div>
-        <div className="max-w-[1100px] mx-auto mt-10 pt-6 border-t border-border-dim text-[9px] uppercase tracking-[0.15em] text-muted-text/40">
-          &copy; 2026 Sentinel Ecosystem. All projects are open source under the
-          MIT License.
-        </div>
-      </footer>
+      
     </main>
   );
 }
