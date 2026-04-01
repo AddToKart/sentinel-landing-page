@@ -1,36 +1,60 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# sentinel-landing-page
 
-## Getting Started
+A modern, high-performance landing page for the **Sentinel** multi-agent AI workspace. This project serves as the visual and technical flagship for the Sentinel ecosystem, utilizing a "hard-coded" technical aesthetic and cutting-edge frontend orchestration.
 
-First, run the development server:
+## 🚀 Core Technologies
+
+- **Framework**: [Next.js 16.2+](https://nextjs.org) (App Router) & React 19
+- **Styling**: [Tailwind CSS v4](https://tailwindcss.com) (CSS-first engine)
+- **Performance**: Custom **Sentinel Performance Engine (SPE)**
+- **Animations**: [Framer Motion 12](https://framer.com/motion) & Performance-optimized CSS Keyframes
+- **Components**: [shadcn/ui](https://ui.shadcn.com) + Radix UI Primitives
+- **Typography**: Syne (Headings) & IBM Plex Mono (Technical Details)
+
+## 🛠️ Performance Architecture (SPE)
+
+The site is powered by the **Sentinel Performance Engine (SPE)**, a custom-built orchestration layer that manages the browser's resources to ensure a constant 60fps experience even during complex animations.
+
+- **Priority Scheduling**: Tasks are bucketed into `CRITICAL`, `ANIMATION`, `VISIBLE`, and `BACKGROUND` priorities.
+- **Spatial Indexing**: The interactive `GridCanvas` uses O(1) grid-lookup for mouse proximity calculations.
+- **GPU Lifecycle Management**: Dynamic `will-change` allocation and disposal to minimize memory pressure.
+- **Direct DOM Reconciliation**: High-frequency text updates (like the Terminal and Aegis Chat) bypass React's virtual DOM for zero-latency typing.
+
+## 🌐 Ecosystems
+
+### 1. Sentinel
+The core desktop application for orchestrating AI coding agents in isolated sandboxes and Git worktrees.
+
+### 2. Aegis (Academic Suite)
+A specialized intelligence layer for academic integrity and natural language optimization, featuring **Aegis-Logos**, **Aegis-Lexis**, and **Aegis-Ethos**.
+
+### 3. Nexus
+Modular AI infrastructure providing task decomposition, persistent context (MCP), and unified authentication.
+
+### 4. Forge
+Next-generation DevOps automation built specifically for AI-native deployment pipelines.
+
+## 📦 Getting Started
+
+This project uses `bun` for package management and execution.
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# Install dependencies
+bun install
+
+# Run the development server
+bun run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 📁 Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `src/app/`: App router, global styles, and layout.
+- `src/lib/SPE/`: The Sentinel Performance Engine core and React provider.
+- `src/components/`: Modular UI components (Hero, FeatureGrid, WorkflowGrid, etc.).
+- `src/components/SPE/`: Performance-monitoring tools and Telemetry Overlay.
 
-## Learn More
+## ⚖️ License
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Distributed under the MIT License. See `LICENSE` for more information.

@@ -3,11 +3,13 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Github, Download } from "lucide-react";
 import { ThemeToggle } from "@/components/ThemeToggle";
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -32,24 +34,32 @@ export function Navbar() {
       </Link>
       <ul className="hidden lg:flex gap-9 list-none">
         {[
-          { name: "Features", href: "/#features" },
           { name: "Docs", href: "/docs" },
           { name: "Pricing", href: "/pricing" },
           { name: "Ecosystem", href: "/ecosystem" },
           { name: "Roadmap", href: "/roadmap" },
           { name: "About", href: "/about" },
           { name: "Showcase", href: "/products" }
-        ].map((item) => (
-          <li key={item.name}>
-            <Link
-              href={item.href}
-              className="text-muted-text text-[11px] font-medium tracking-[0.06em] uppercase hover:text-accent transition-colors duration-200 relative group"
-            >
-              {item.name}
-              <span className="absolute -bottom-1 left-0 w-0 h-px bg-accent transition-all duration-300 group-hover:w-full" />
-            </Link>
-          </li>
-        ))}
+        ].map((item) => {
+          const isActive = pathname === item.href;
+          return (
+            <li key={item.name}>
+              <Link
+                href={item.href}
+                className={`text-[11px] font-medium tracking-[0.06em] uppercase transition-colors duration-200 relative group
+                  ${isActive ? "text-accent" : "text-muted-text hover:text-accent"}
+                `}
+              >
+                {item.name}
+                <span 
+                  className={`absolute -bottom-1 left-0 h-px bg-accent transition-all duration-300 
+                    ${isActive ? "w-full" : "w-0 group-hover:w-full"}
+                  `} 
+                />
+              </Link>
+            </li>
+          );
+        })}
       </ul>
       <div className="flex gap-2.5 items-center">
         <a
