@@ -27,7 +27,7 @@ interface ProviderErrorShape {
 }
 
 interface ChatMessage {
-  role: string;
+  role: 'user' | 'assistant' | 'system';
   content: string;
 }
 
@@ -63,13 +63,22 @@ function normalizeMessages(messages: unknown): ChatMessage[] {
     return [];
   }
 
+  const isChatRole = (role: unknown): role is ChatMessage['role'] =>
+    role === 'user' || role === 'assistant' || role === 'system';
+
   const normalized = messages
     .filter((message): message is { role?: unknown; content?: unknown } => typeof message === 'object' && message !== null)
-    .map(message => ({
-      role: typeof message.role === 'string' ? message.role : '',
-      content: typeof message.content === 'string' ? message.content : '',
-    }))
-    .filter(message => message.role && message.content.trim().length > 0);
+    .map(message => {
+      const role = isChatRole(message.role) ? message.role : null;
+      const content = typeof message.content === 'string' ? message.content : '';
+
+      if (!role || content.trim().length === 0) {
+        return null;
+      }
+
+      return { role, content };
+    })
+    .filter((message): message is ChatMessage => message !== null);
 
   const withoutInitialGreeting = normalized.filter(
     message =>
