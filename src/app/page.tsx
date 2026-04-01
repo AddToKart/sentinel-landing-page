@@ -11,7 +11,6 @@ import { FeatureGrid } from "@/components/FeatureGrid";
 import { WorkflowGrid } from "@/components/WorkflowGrid";
 import { ArchitectureStack } from "@/components/ArchitectureStack";
 import { MobileTeaser } from "@/components/MobileTeaser";
-import { PricingGrid } from "@/components/PricingGrid";
 import { RoadmapGrid } from "@/components/RoadmapGrid";
 import { IntegrationsGrid } from "@/components/IntegrationsGrid";
 import { TestimonialsGrid } from "@/components/TestimonialsGrid";
@@ -53,6 +52,7 @@ function Nav() {
         {[
           { name: "Features", href: "#features" },
           { name: "Docs", href: "/docs" },
+          { name: "Pricing", href: "/pricing" },
           { name: "Ecosystem", href: "/ecosystem" },
           { name: "Roadmap", href: "/roadmap" },
           { name: "About", href: "/about" },
@@ -440,28 +440,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ═══ PRICING ═══ */}
-      <section id="pricing" className="py-28 px-6 relative z-[1] bg-bg2 border-y border-border-dim">
-        <div className="max-w-[1100px] mx-auto text-center">
-          <ScrollReveal>
-            <div className="text-[11px] tracking-[0.2em] uppercase text-accent/80 mb-4 font-bold">Pricing Models</div>
-            <h2 className="font-head font-800 text-4xl md:text-5xl tracking-tighter leading-tight mb-5">
-              Open source core.
-              <br />
-              <span className="text-accent/70">Enterprise ready.</span>
-            </h2>
-            <p className="text-muted-text max-w-[560px] mx-auto text-lg leading-relaxed mb-16">
-              Sentinel is free for individuals and open-source contributors. Pro plans unlock advanced collaboration
-              for engineering teams.
-            </p>
-          </ScrollReveal>
-          <ScrollReveal delay={100}>
-            <PricingGrid />
-          </ScrollReveal>
-        </div>
-      </section>
-
-      {/* ═══ FAQ (NEW) ═══ */}
+      {/* ═══ FAQ ═══ */}
       <section className="py-28 px-6 relative z-[1]">
         <div className="max-w-[1100px] mx-auto">
           <ScrollReveal>
@@ -551,7 +530,8 @@ export default function Home() {
               <div className="text-[9px] uppercase tracking-[0.15em] text-accent/70 font-bold">Product</div>
               <ul className="space-y-1.5 text-[13px] text-muted-text">
                 <li><a href="#features" className="hover:text-text transition-colors duration-150">Features</a></li>
-                <li><a href="#pricing" className="hover:text-text transition-colors duration-150">Pricing</a></li>
+                <li><Link href="/pricing" className="hover:text-text transition-colors duration-150">Pricing</Link></li>
+                <li><Link href="/ecosystem" className="hover:text-text transition-colors duration-150">Ecosystem</Link></li>
                 <li><a href="#" className="hover:text-text transition-colors duration-150">Desktop App</a></li>
                 <li><Link href="/products" className="hover:text-text transition-colors duration-150">Portfolio</Link></li>
               </ul>
