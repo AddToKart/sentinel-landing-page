@@ -28,9 +28,19 @@ export function Navbar() {
           : "bg-bg/40 border-transparent"
       }`}
     >
-      <Link href="/" className="font-head font-800 text-[17px] tracking-tight text-text flex items-center gap-2.5 group">
+      <Link 
+        href="/" 
+        className="font-head font-800 text-[17px] tracking-tight text-text flex items-center gap-2.5 group relative"
+      >
         <div className="w-[7px] h-[7px] rounded-full bg-accent group-hover:scale-125 transition-transform duration-200" />
-        SENTINEL
+        <span className="relative">
+          SENTINEL
+          <span 
+            className={`absolute -bottom-1 left-0 h-px bg-accent transition-all duration-300 
+              ${pathname === "/" ? "w-full" : "w-0 group-hover:w-full"}
+            `} 
+          />
+        </span>
       </Link>
       <ul className="hidden lg:flex gap-9 list-none">
         {[
