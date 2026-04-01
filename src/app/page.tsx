@@ -18,6 +18,7 @@ import { TestimonialsGrid } from "@/components/TestimonialsGrid";
 import { FAQ } from "@/components/FAQ";
 import { MagneticWrapper } from "@/components/MagneticWrapper";
 import { Github, Download, Star, Activity, Globe, Zap, Terminal, Code2 } from "lucide-react";
+import Link from "next/link";
 
 /* ─── Scroll-aware Nav ────────────────────────────────── */
 function Nav() {
@@ -45,15 +46,25 @@ function Nav() {
         SENTINEL
       </a>
       <ul className="hidden lg:flex gap-9 list-none">
-        {["Features", "Stack", "Mobile", "Pricing", "Roadmap"].map((item) => (
+        {["Features", "Stack", "Mobile", "Pricing", "Roadmap", "Products"].map((item) => (
           <li key={item}>
-            <a
-              href={`#${item.toLowerCase()}`}
-              className="text-muted-text text-[11px] font-medium tracking-[0.06em] uppercase hover:text-accent transition-colors duration-200 relative group"
-            >
-              {item}
-              <span className="absolute -bottom-1 left-0 w-0 h-px bg-accent transition-all duration-300 group-hover:w-full" />
-            </a>
+            {item === "Products" ? (
+              <Link
+                href="/products"
+                className="text-muted-text text-[11px] font-medium tracking-[0.06em] uppercase hover:text-accent transition-colors duration-200 relative group"
+              >
+                {item}
+                <span className="absolute -bottom-1 left-0 w-0 h-px bg-accent transition-all duration-300 group-hover:w-full" />
+              </Link>
+            ) : (
+              <a
+                href={`#${item.toLowerCase()}`}
+                className="text-muted-text text-[11px] font-medium tracking-[0.06em] uppercase hover:text-accent transition-colors duration-200 relative group"
+              >
+                {item}
+                <span className="absolute -bottom-1 left-0 w-0 h-px bg-accent transition-all duration-300 group-hover:w-full" />
+              </a>
+            )}
           </li>
         ))}
       </ul>
@@ -492,6 +503,7 @@ export default function Home() {
                 <li><a href="#features" className="hover:text-text transition-colors duration-150">Features</a></li>
                 <li><a href="#pricing" className="hover:text-text transition-colors duration-150">Pricing</a></li>
                 <li><a href="#" className="hover:text-text transition-colors duration-150">Desktop App</a></li>
+                <li><Link href="/products" className="hover:text-text transition-colors duration-150">Portfolio</Link></li>
               </ul>
             </div>
             <div className="space-y-3">
