@@ -46,25 +46,21 @@ function Nav() {
         SENTINEL
       </a>
       <ul className="hidden lg:flex gap-9 list-none">
-        {["Features", "Stack", "Mobile", "Pricing", "Roadmap", "Products"].map((item) => (
-          <li key={item}>
-            {item === "Products" ? (
-              <Link
-                href="/products"
-                className="text-muted-text text-[11px] font-medium tracking-[0.06em] uppercase hover:text-accent transition-colors duration-200 relative group"
-              >
-                {item}
-                <span className="absolute -bottom-1 left-0 w-0 h-px bg-accent transition-all duration-300 group-hover:w-full" />
-              </Link>
-            ) : (
-              <a
-                href={`#${item.toLowerCase()}`}
-                className="text-muted-text text-[11px] font-medium tracking-[0.06em] uppercase hover:text-accent transition-colors duration-200 relative group"
-              >
-                {item}
-                <span className="absolute -bottom-1 left-0 w-0 h-px bg-accent transition-all duration-300 group-hover:w-full" />
-              </a>
-            )}
+        {[
+          { name: "Features", href: "#features" },
+          { name: "Docs", href: "/docs" },
+          { name: "Roadmap", href: "/roadmap" },
+          { name: "About", href: "/about" },
+          { name: "Showcase", href: "/products" }
+        ].map((item) => (
+          <li key={item.name}>
+            <Link
+              href={item.href}
+              className="text-muted-text text-[11px] font-medium tracking-[0.06em] uppercase hover:text-accent transition-colors duration-200 relative group"
+            >
+              {item.name}
+              <span className="absolute -bottom-1 left-0 w-0 h-px bg-accent transition-all duration-300 group-hover:w-full" />
+            </Link>
           </li>
         ))}
       </ul>
