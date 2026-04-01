@@ -73,17 +73,17 @@ const ACTIVITY_CONFIG: Record<
   },
   star: {
     icon: Star,
-    color: "text-amber-400",
+    color: "text-amber-700 dark:text-amber-400",
     label: "Star",
   },
   pr: {
     icon: GitPullRequest,
-    color: "text-purple-400",
+    color: "text-purple-600 dark:text-purple-400",
     label: "Pull Request",
   },
   issue: {
     icon: CircleDot,
-    color: "text-orange-500",
+    color: "text-orange-600 dark:text-orange-500",
     label: "Issue",
   },
 };

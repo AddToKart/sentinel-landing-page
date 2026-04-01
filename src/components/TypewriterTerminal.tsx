@@ -75,7 +75,10 @@ export const TypewriterTerminal = () => {
   }, [visibleLines, lineIdx]);
 
   return (
-    <div className="terminal-wrap group relative overflow-hidden bg-bg2 border border-border-dim2 shadow-[0_32px_64px_rgba(0,0,0,0.4)]">
+    <div
+      className="terminal-wrap group relative overflow-hidden bg-bg2 border border-border-dim2"
+      style={{ boxShadow: "var(--shadow-elevated)" }}
+    >
       {/* Subtle top gradient */}
       <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-accent/[0.02] to-transparent z-0" />
 
@@ -120,7 +123,7 @@ export const TypewriterTerminal = () => {
             )}
             {line.type === "output" && <div className="text-muted-text pl-5">{line.text}</div>}
             {line.type === "success" && <div className="text-accent pl-5">{line.text}</div>}
-            {line.type === "info" && <div className="text-blue-400/90 pl-5">{line.text}</div>}
+            {line.type === "info" && <div className="text-blue-700 dark:text-blue-400/90 pl-5">{line.text}</div>}
           </div>
         ))}
         {lineIdx < lines.length && (
@@ -131,7 +134,7 @@ export const TypewriterTerminal = () => {
               className={
                 lines[lineIdx].type === "output" ? "text-muted-text" :
                 lines[lineIdx].type === "success" ? "text-accent" :
-                lines[lineIdx].type === "info" ? "text-blue-400/90" : "text-text"
+                lines[lineIdx].type === "info" ? "text-blue-700 dark:text-blue-400/90" : "text-text"
               }
             />
             <span className="inline-block w-2 h-3.5 bg-accent ml-0.5 align-middle animate-blink" />

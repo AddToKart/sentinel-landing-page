@@ -18,7 +18,7 @@ const accentMap: Record<string, string> = {
   Python: "#3776ab",
   Rust: "#dea584",
   JavaScript: "#f7df1e",
-  "Next.js": "#ffffff",
+  "Next.js": "#475569",
   Django: "#092e20",
   MongoDB: "#47a248",
   React: "#61dafb",
@@ -52,23 +52,8 @@ function TechBadge({ tech }: { tech: string }) {
 }
 
 function ProjectCard({ project }: { project: Project }) {
-  const CardWrapper = (project.url ? "a" : "div") as any;
-  const wrapperProps = project.url
-    ? {
-        href: project.url,
-        target: "_blank",
-        rel: "noopener noreferrer",
-      }
-    : {};
-
-  return (
-    <CardWrapper
-      {...wrapperProps}
-      className={`group relative flex flex-col bg-bg2 border border-border-dim hover:border-border-dim2 transition-all duration-300 overflow-hidden ${
-        !project.url ? "cursor-default" : ""
-      }`}
-    >
-      {/* Hover accent top border */}
+  const content = (
+    <>
       <div
         className="absolute top-0 left-0 right-0 h-px transition-all duration-500 opacity-0 group-hover:opacity-100"
         style={{
@@ -76,15 +61,14 @@ function ProjectCard({ project }: { project: Project }) {
         }}
       />
 
-      {/* Hover gradient */}
-      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+      <div
+        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
         style={{
           background: `radial-gradient(ellipse at 50% 0%, ${project.accentColor || "#4ade80"}06, transparent 70%)`,
         }}
       />
 
       <div className="p-6 md:p-7 flex-1 flex flex-col relative z-10">
-        {/* Header row */}
         <div className="flex items-start justify-between gap-3 mb-4">
           <h3 className="font-head font-800 text-lg md:text-xl tracking-tight text-text group-hover:text-accent transition-colors duration-300">
             {project.name}
@@ -92,25 +76,22 @@ function ProjectCard({ project }: { project: Project }) {
           {project.url ? (
             <ExternalLink className="w-4 h-4 text-muted-text/40 group-hover:text-accent transition-colors duration-200 mt-1 flex-shrink-0" />
           ) : (
-            <div className="text-[9px] font-mono uppercase tracking-[0.15em] px-2 py-0.5 border border-white/10 text-muted-text/40 mt-1 whitespace-nowrap">
+            <div className="text-[9px] font-mono uppercase tracking-[0.15em] px-2 py-0.5 border border-border-dim text-muted-text/50 mt-1 whitespace-nowrap bg-bg3/40">
               Planning
             </div>
           )}
         </div>
 
-        {/* Description */}
         <p className="text-muted-text text-[13px] leading-[1.75] mb-5 flex-1 group-hover:text-muted-text/90 transition-colors duration-300">
           {project.description}
         </p>
 
-        {/* Tech stack */}
         <div className="flex flex-wrap gap-1.5 mb-5">
           {project.tech.map((t) => (
             <TechBadge key={t} tech={t} />
           ))}
         </div>
 
-        {/* Footer */}
         <div className="flex items-center justify-between pt-4 border-t border-border-dim">
           <div className="flex items-center gap-3 text-[10px] font-mono uppercase tracking-[0.15em] text-muted-text/50">
             {project.language && (
@@ -134,7 +115,26 @@ function ProjectCard({ project }: { project: Project }) {
           </span>
         </div>
       </div>
-    </CardWrapper>
+    </>
+  );
+
+  if (project.url) {
+    return (
+      <a
+        href={project.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="group relative flex flex-col bg-bg2 border border-border-dim hover:border-border-dim2 transition-all duration-300 overflow-hidden"
+      >
+        {content}
+      </a>
+    );
+  }
+
+  return (
+    <div className="group relative flex flex-col bg-bg2 border border-border-dim hover:border-border-dim2 transition-all duration-300 overflow-hidden cursor-default">
+      {content}
+    </div>
   );
 }
 

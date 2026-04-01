@@ -32,6 +32,23 @@ import {
   FileText,
   Type,
   BookOpen,
+  Search,
+  Gauge,
+  Layers,
+  ListChecks,
+  Eye,
+  Split,
+  Trash2,
+  CheckCircle,
+  Monitor,
+  Activity,
+  Bug,
+  HeartPulse,
+  Route,
+  Globe,
+  FileCode,
+  Copy,
+  Network,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -214,6 +231,22 @@ const ecosystems: Ecosystem[] = [
         year: "2025",
         url: "https://github.com/AddToKart/nexus-auth",
       },
+      {
+        name: "Nexus Cache",
+        description:
+          "Semantic response caching for AI agents. Cache by meaning, not exact prompt — dramatically reducing API costs and latency.",
+        icon: Layers,
+        status: "Planning",
+        year: "2026",
+      },
+      {
+        name: "Nexus Queue",
+        description:
+          "Async job queue for agent workflows. Schedule, retry, and monitor background agent tasks with full lifecycle management.",
+        icon: ListChecks,
+        status: "Planning",
+        year: "2026",
+      },
     ],
   },
   {
@@ -246,6 +279,280 @@ const ecosystems: Ecosystem[] = [
         description:
           "Real-time infrastructure monitoring with AI-powered anomaly detection. Unified dashboards, alert routing, and predictive scaling.",
         icon: Zap,
+        status: "Planning",
+        year: "2026",
+      },
+      {
+        name: "Forge Scaffold",
+        description:
+          "AI project scaffolding — describe what you need, get a full project structure with boilerplate, configs, and CI/CD ready to go.",
+        icon: Container,
+        status: "Planning",
+        year: "2026",
+      },
+      {
+        name: "Forge Migrate",
+        description:
+          "Automated code migration — framework upgrades, language conversions, and API version bumps handled by parallel AI agents.",
+        icon: Repeat,
+        status: "Planning",
+        year: "2026",
+      },
+    ],
+  },
+  {
+    id: "argus",
+    name: "Argus",
+    tagline: "Parallel Code Review",
+    description:
+      "One codebase, a hundred eyes. Parallel AI agents review different dimensions of your code simultaneously — security, performance, architecture, and style — then merge into a single actionable report.",
+    accentColor: "#06b6d4",
+    accentDim: "rgba(6,182,212,0.08)",
+    products: [
+      {
+        name: "Argus Scan",
+        description:
+          "Security vulnerability scanning — secret leaks, injection risks, unsafe patterns, and dependency CVE detection across your entire codebase.",
+        icon: Eye,
+        status: "Planning",
+        year: "2026",
+      },
+      {
+        name: "Argus Bench",
+        description:
+          "Performance bottleneck detection — N+1 queries, memory leaks, unnecessary re-renders, and algorithmic complexity analysis.",
+        icon: Gauge,
+        status: "Planning",
+        year: "2026",
+      },
+      {
+        name: "Argus Arc",
+        description:
+          "Architecture violation detection — coupling issues, circular dependencies, SOLID principle breaks, and layer boundary enforcement.",
+        icon: Network,
+        status: "Planning",
+        year: "2026",
+      },
+      {
+        name: "Argus Lint",
+        description:
+          "Style enforcement and anti-pattern detection — naming conventions, formatting consistency, and code smell identification.",
+        icon: CheckCircle,
+        status: "Planning",
+        year: "2026",
+      },
+    ],
+  },
+  {
+    id: "oracle",
+    name: "Oracle",
+    tagline: "Codebase Intelligence",
+    description:
+      "The all-knowing eye into your codebase. Parallel agents that explore, map, and index every aspect of your project so you can actually understand it at scale.",
+    accentColor: "#a78bfa",
+    accentDim: "rgba(167,139,250,0.08)",
+    products: [
+      {
+        name: "Oracle Scry",
+        description:
+          "Auto-generates interactive architecture diagrams and module dependency graphs from your codebase — always in sync with the latest commit.",
+        icon: Search,
+        status: "Planning",
+        year: "2026",
+      },
+      {
+        name: "Oracle Thread",
+        description:
+          "Traces data flow and function call chains end-to-end. Follow any variable, function, or API call through the entire codebase.",
+        icon: Route,
+        status: "Planning",
+        year: "2026",
+      },
+      {
+        name: "Oracle Rune",
+        description:
+          "Semantic code search — describe what you want in natural language and find where it lives. No exact keyword matching needed.",
+        icon: FileCode,
+        status: "Planning",
+        year: "2026",
+      },
+      {
+        name: "Oracle Ward",
+        description:
+          "Dependency audit — unused packages, version conflicts, license compliance checks, and CVE scanning across your entire dependency tree.",
+        icon: Shield,
+        status: "Planning",
+        year: "2026",
+      },
+    ],
+  },
+  {
+    id: "proteus",
+    name: "Proteus",
+    tagline: "Parallel Refactoring",
+    description:
+      "The shape-shifting sea god. Parallel agents that transform different dimensions of your code simultaneously — structure, patterns, types, and dead code — without breaking anything.",
+    accentColor: "#34d399",
+    accentDim: "rgba(52,211,153,0.08)",
+    products: [
+      {
+        name: "Proteus Shift",
+        description:
+          "Pattern migration — class to functional, callbacks to async, imperative to declarative. Change form without losing function.",
+        icon: Repeat,
+        status: "Planning",
+        year: "2026",
+      },
+      {
+        name: "Proteus Split",
+        description:
+          "Extract functions, split monoliths, break circular dependencies. Divide to conquer — one agent per extraction target.",
+        icon: Split,
+        status: "Planning",
+        year: "2026",
+      },
+      {
+        name: "Proteus Cull",
+        description:
+          "Dead code elimination — unused imports, orphaned files, unreachable branches, and legacy code that no longer serves a purpose.",
+        icon: Trash2,
+        status: "Planning",
+        year: "2026",
+      },
+      {
+        name: "Proteus Cast",
+        description:
+          "Type generation and enforcement — add TypeScript types, fix `any` typing, generate interfaces from runtime data structures.",
+        icon: Layers,
+        status: "Planning",
+        year: "2026",
+      },
+    ],
+  },
+  {
+    id: "aletheia",
+    name: "Aletheia",
+    tagline: "Testing & QA",
+    description:
+      "Named after the Greek goddess of truth. Parallel agents that reveal what's broken — each testing a different dimension of your code simultaneously.",
+    accentColor: "#f472b6",
+    accentDim: "rgba(244,114,182,0.08)",
+    products: [
+      {
+        name: "Aletheia Reveal",
+        description:
+          "Auto-generates unit and integration tests from code analysis. Uncover what's hidden — edge cases, boundary conditions, and error paths.",
+        icon: Eye,
+        status: "Planning",
+        year: "2026",
+      },
+      {
+        name: "Aletheia Proof",
+        description:
+          "Property-based testing — generate thousands of edge cases automatically. Prove your code holds under any input combination.",
+        icon: CheckCircle,
+        status: "Planning",
+        year: "2026",
+      },
+      {
+        name: "Aletheia Sight",
+        description:
+          "Visual regression testing — screenshot diffs, UI anomaly detection, and responsive layout verification across viewports.",
+        icon: Monitor,
+        status: "Planning",
+        year: "2026",
+      },
+      {
+        name: "Aletheia Strain",
+        description:
+          "Load and stress testing — simulate real user patterns at scale. Push it to breaking point before your users do.",
+        icon: Activity,
+        status: "Planning",
+        year: "2026",
+      },
+    ],
+  },
+  {
+    id: "iatros",
+    name: "Iatros",
+    tagline: "Debugging",
+    description:
+      "The healer of code. Parallel agents that diagnose, trace, and fix bugs simultaneously — each attacking the problem from a different angle.",
+    accentColor: "#fb923c",
+    accentDim: "rgba(251,146,60,0.08)",
+    products: [
+      {
+        name: "Iatros Pathos",
+        description:
+          "Root cause analysis — trace the error back to its origin. Understand the disease before attempting the cure.",
+        icon: Bug,
+        status: "Planning",
+        year: "2026",
+      },
+      {
+        name: "Iatros Iasis",
+        description:
+          "Automated bug fix suggestions with diff previews. The healing — apply fixes with confidence using side-by-side comparisons.",
+        icon: HeartPulse,
+        status: "Planning",
+        year: "2026",
+      },
+      {
+        name: "Iatros Ichne",
+        description:
+          "Error trail reconstruction — follow the bug through the call stack, data flow, and state changes to find where it started.",
+        icon: Route,
+        status: "Planning",
+        year: "2026",
+      },
+      {
+        name: "Iatros Phylax",
+        description:
+          "Regression prevention — ensure the fix doesn't break anything else. The guard that watches your cure.",
+        icon: Shield,
+        status: "Planning",
+        year: "2026",
+      },
+    ],
+  },
+  {
+    id: "janus",
+    name: "Janus",
+    tagline: "API & Integration",
+    description:
+      "Roman god of doorways and thresholds. Agents that build, test, and orchestrate the connections between your systems — APIs, webhooks, and integrations.",
+    accentColor: "#60a5fa",
+    accentDim: "rgba(96,165,250,0.08)",
+    products: [
+      {
+        name: "Janus Portal",
+        description:
+          "API gateway and routing — manage endpoints, rate limits, authentication, and versioning from a single unified control plane.",
+        icon: Globe,
+        status: "Planning",
+        year: "2026",
+      },
+      {
+        name: "Janus Pact",
+        description:
+          "API contract generation — OpenAPI specs, type-safe client SDKs, and mock servers generated from your codebase automatically.",
+        icon: FileCode,
+        status: "Planning",
+        year: "2026",
+      },
+      {
+        name: "Janus Mirror",
+        description:
+          "API mock server — generate realistic mocks from contracts for local development. Test against the reflection before hitting production.",
+        icon: Copy,
+        status: "Planning",
+        year: "2026",
+      },
+      {
+        name: "Janus Weave",
+        description:
+          "Webhook and integration orchestration — connect services with event-driven flows. The interconnection between all your systems.",
+        icon: Network,
         status: "Planning",
         year: "2026",
       },
@@ -396,7 +703,7 @@ function EcosystemOverviewCard({
   index: number;
   disableReveal?: boolean;
 }) {
-  const icons = [Code2, Plug, Container, GitBranch];
+  const icons = [Code2, BookOpen, Container, GitBranch, Eye, Search, Repeat, CheckCircle, HeartPulse, Globe];
   const Icon = icons[index] || Code2;
 
   const content = (
@@ -438,11 +745,6 @@ function EcosystemOverviewCard({
           <h3 className="font-head font-800 text-2xl tracking-tight text-text group-hover:text-accent transition-colors duration-300">
             {ecosystem.name}
           </h3>
-          {ecosystem.id === "forge" && (
-            <span className="text-[9px] font-mono uppercase tracking-[0.15em] px-2 py-0.5 border border-orange-500/25 text-orange-400 bg-orange-500/[0.06]">
-              NEW
-            </span>
-          )}
         </div>
 
         <p
@@ -540,7 +842,9 @@ function EcosystemCarousel({ ecosystems }: { ecosystems: Ecosystem[] }) {
               }}
               style={{
                 pointerEvents: isHidden ? "none" : "auto",
-                boxShadow: isActive ? `0 20px 40px -10px ${eco.accentColor}60` : '0 10px 30px -10px rgba(0,0,0,0.8)',
+                boxShadow: isActive
+                  ? `var(--shadow-elevated), 0 20px 40px -10px ${eco.accentColor}45`
+                  : "var(--shadow-elevated)",
               }}
             >
               <EcosystemOverviewCard ecosystem={eco} index={index} disableReveal />
@@ -733,7 +1037,7 @@ function EcosystemSection({ ecosystem }: { ecosystem: Ecosystem }) {
       id={ecosystem.id}
       className="py-28 px-6 relative z-[1] border-y border-border-dim"
       style={{
-        backgroundColor: ecosystem.id === "sentinel" ? undefined : "#0a0a0d",
+        backgroundColor: ecosystem.id === "sentinel" ? undefined : "var(--bg2)",
       }}
     >
       {/* Ambient glow */}
@@ -852,18 +1156,18 @@ export default function EcosystemPage() {
           <div className="flex flex-wrap justify-center gap-4 text-[11px] font-mono uppercase tracking-[0.15em] text-muted-text/60">
             <span className="flex items-center gap-1.5">
               <span className="w-1.5 h-1.5 rounded-full bg-accent" />
-              3 Ecosystems
+              10 Ecosystems
             </span>
             <span className="flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-purple-400" />
-              11 Products
+              <span className="w-1.5 h-1.5 rounded-full bg-purple-500 dark:bg-purple-400" />
+              44 Products
             </span>
             <span className="flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />
+              <span className="w-1.5 h-1.5 rounded-full bg-blue-500 dark:bg-blue-400" />
               Open Source
             </span>
             <span className="flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-orange-400" />
+              <span className="w-1.5 h-1.5 rounded-full bg-orange-500 dark:bg-orange-400" />
               MCP Compatible
             </span>
           </div>
@@ -876,7 +1180,7 @@ export default function EcosystemPage() {
           <ScrollReveal>
             <div className="text-center mb-14">
               <h2 className="font-head font-800 text-3xl md:text-4xl tracking-tighter leading-tight mb-4">
-                Three ecosystems, one platform.
+                Ten ecosystems, one platform.
               </h2>
               <p className="text-muted-text max-w-[500px] mx-auto text-lg leading-relaxed">
                 Each ecosystem serves a distinct purpose, but they&apos;re
@@ -891,17 +1195,17 @@ export default function EcosystemPage() {
         </div>
       </section>
 
-      {/* ═══ SENTINEL SECTION ═══ */}
+      {/* ═══ ECOSYSTEM SECTIONS ═══ */}
       <EcosystemSection ecosystem={ecosystems[0]} />
-
-      {/* ═══ AEGIS SECTION ═══ */}
       <EcosystemSection ecosystem={ecosystems[1]} />
-
-      {/* ═══ NEXUS SECTION ═══ */}
       <EcosystemSection ecosystem={ecosystems[2]} />
-
-      {/* ═══ FORGE SECTION ═══ */}
       <EcosystemSection ecosystem={ecosystems[3]} />
+      <EcosystemSection ecosystem={ecosystems[4]} />
+      <EcosystemSection ecosystem={ecosystems[5]} />
+      <EcosystemSection ecosystem={ecosystems[6]} />
+      <EcosystemSection ecosystem={ecosystems[7]} />
+      <EcosystemSection ecosystem={ecosystems[8]} />
+      <EcosystemSection ecosystem={ecosystems[9]} />
 
       {/* ═══ CTA ═══ */}
       <section className="py-28 px-6 relative z-[1] text-center">

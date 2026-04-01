@@ -276,11 +276,11 @@ function StatusBadge({ status }: { status: EcosystemItem["status"] }) {
     },
     beta: {
       label: "Beta",
-      className: "bg-amber-500/10 text-amber-400 border-amber-500/20",
+      className: "bg-amber-500/10 text-amber-700 dark:text-amber-400 border-amber-500/20",
     },
     alpha: {
       label: "Alpha",
-      className: "bg-blue-500/10 text-blue-400 border-blue-500/20",
+      className: "bg-blue-500/10 text-blue-700 dark:text-blue-400 border-blue-500/20",
     },
     planned: {
       label: "Planned",
@@ -299,9 +299,9 @@ function StatusBadge({ status }: { status: EcosystemItem["status"] }) {
           status === "stable"
             ? "bg-accent"
             : status === "beta"
-            ? "bg-amber-400"
+            ? "bg-amber-500 dark:bg-amber-400"
             : status === "alpha"
-            ? "bg-blue-400"
+            ? "bg-blue-500 dark:bg-blue-400"
             : "bg-muted-text/40"
         } ${status === "stable" ? "animate-pulse" : ""}`}
       />
@@ -637,11 +637,11 @@ export default function RoadmapPage() {
             1 Stable Release
           </span>
           <span className="flex items-center gap-1.5">
-            <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
+            <span className="w-1.5 h-1.5 rounded-full bg-amber-500 dark:bg-amber-400" />
             2 In Beta
           </span>
           <span className="flex items-center gap-1.5">
-            <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />
+            <span className="w-1.5 h-1.5 rounded-full bg-blue-500 dark:bg-blue-400" />
             2 In Alpha
           </span>
           <span className="flex items-center gap-1.5">

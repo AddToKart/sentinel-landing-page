@@ -4,13 +4,13 @@ import { Cpu, Terminal, Code2, Layout, Zap, Activity, Package } from "lucide-rea
 
 export const ArchitectureStack = () => {
   const stack = [
-    { icon: Cpu, layer: "Desktop", tech: "Tauri v2", detail: "— Rust backend", badge: "Rust", badgeClass: "bg-amber-400/10 text-amber-400 border-amber-400/20" },
+    { icon: Cpu, layer: "Desktop", tech: "Tauri v2", detail: "- Rust backend", badge: "Rust", badgeClass: "bg-amber-500/10 text-amber-700 dark:text-amber-400 border-amber-500/20" },
     { icon: Terminal, layer: "Terminal", tech: "xterm.js", detail: "+ portable-pty", badge: "Both", badgeClass: "bg-accent/10 text-accent border-accent/20" },
-    { icon: Code2, layer: "Editor", tech: "Monaco Editor", detail: "— VS Code core", badge: "TypeScript", badgeClass: "bg-blue-400/10 text-blue-400 border-blue-400/20" },
-    { icon: Layout, layer: "Frontend", tech: "React 19", detail: "+ TypeScript + Vite", badge: "TypeScript", badgeClass: "bg-blue-400/10 text-blue-400 border-blue-400/20" },
-    { icon: Zap, layer: "Styling", tech: "Tailwind CSS 4", detail: "— CSS-first", badge: "TypeScript", badgeClass: "bg-blue-400/10 text-blue-400 border-blue-400/20" },
-    { icon: Activity, layer: "Metrics", tech: "sysinfo crate", detail: "— process tree", badge: "Rust", badgeClass: "bg-amber-400/10 text-amber-400 border-amber-400/20" },
-    { icon: Package, layer: "Packages", tech: "Bun", detail: "— fast package manager", badge: "TypeScript", badgeClass: "bg-blue-400/10 text-blue-400 border-blue-400/20" },
+    { icon: Code2, layer: "Editor", tech: "Monaco Editor", detail: "- VS Code core", badge: "TypeScript", badgeClass: "bg-blue-500/10 text-blue-700 dark:text-blue-400 border-blue-500/20" },
+    { icon: Layout, layer: "Frontend", tech: "React 19", detail: "+ TypeScript + Vite", badge: "TypeScript", badgeClass: "bg-blue-500/10 text-blue-700 dark:text-blue-400 border-blue-500/20" },
+    { icon: Zap, layer: "Styling", tech: "Tailwind CSS 4", detail: "- CSS-first", badge: "TypeScript", badgeClass: "bg-blue-500/10 text-blue-700 dark:text-blue-400 border-blue-500/20" },
+    { icon: Activity, layer: "Metrics", tech: "sysinfo crate", detail: "- process tree", badge: "Rust", badgeClass: "bg-amber-500/10 text-amber-700 dark:text-amber-400 border-amber-500/20" },
+    { icon: Package, layer: "Packages", tech: "Bun", detail: "- fast package manager", badge: "TypeScript", badgeClass: "bg-blue-500/10 text-blue-700 dark:text-blue-400 border-blue-500/20" },
   ];
 
   return (
@@ -20,12 +20,10 @@ export const ArchitectureStack = () => {
           key={i}
           className="arch-row flex items-center border border-border-dim bg-bg2/30 hover:bg-bg2/70 hover:border-border-dim2 transition-all duration-300 group overflow-hidden relative contain-layout-style"
         >
-          {/* Scan line on hover */}
           <div className="absolute inset-0 opacity-0 group-hover:opacity-100 pointer-events-none overflow-hidden transition-opacity duration-300">
             <div className="absolute top-0 bottom-0 w-1/3 bg-gradient-to-r from-transparent via-accent/[0.03] to-transparent animate-scan-sweep" />
           </div>
 
-          {/* Left accent */}
           <div className="absolute left-0 top-0 bottom-0 w-px bg-accent/0 group-hover:bg-accent/50 transition-colors duration-300" />
 
           <div className="p-4 w-12 flex items-center justify-center text-muted-text/60 group-hover:text-accent transition-colors duration-300">

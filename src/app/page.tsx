@@ -274,14 +274,14 @@ export default function Home() {
                   whileInView={{ width: "50.6%" }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                  className="h-full bg-amber-400/80"
+                  className="h-full bg-amber-500/80 dark:bg-amber-400/80"
                 />
                 <motion.div
                   initial={{ width: 0 }}
                   whileInView={{ width: "47.3%" }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.8, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                  className="h-full bg-blue-400/80"
+                  className="h-full bg-blue-500/80 dark:bg-blue-400/80"
                 />
                 <motion.div
                   initial={{ width: 0 }}
@@ -293,11 +293,11 @@ export default function Home() {
               </div>
               <div className="flex gap-5 text-[10px] font-mono text-muted-text/60">
                 <div className="flex items-center gap-1.5">
-                  <div className="w-1.5 h-1.5 rounded-full bg-amber-400/80" />
+                  <div className="w-1.5 h-1.5 rounded-full bg-amber-500/80 dark:bg-amber-400/80" />
                   <span>50.6% Rust</span>
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <div className="w-1.5 h-1.5 rounded-full bg-blue-400/80" />
+                  <div className="w-1.5 h-1.5 rounded-full bg-blue-500/80 dark:bg-blue-400/80" />
                   <span>47.3% TypeScript</span>
                 </div>
               </div>
@@ -381,7 +381,7 @@ export default function Home() {
                 Latest Activity
               </div>
               <h2 className="font-head font-800 text-4xl md:text-5xl tracking-tighter leading-tight">
-                What's happening now.
+                What&apos;s happening now.
               </h2>
             </div>
           </ScrollReveal>
@@ -398,14 +398,14 @@ export default function Home() {
             <MobileTeaser />
           </ScrollReveal>
           <ScrollReveal variant="fade-right" className="order-1 lg:order-2">
-            <div className="inline-flex items-center gap-2 text-[10px] tracking-[0.2em] uppercase border border-purple-500/20 px-3 py-1 mb-7 bg-purple-500/[0.04] text-purple-400/80 font-bold">
+            <div className="inline-flex items-center gap-2 text-[10px] tracking-[0.2em] uppercase border border-violet-700/20 dark:border-purple-500/20 px-3 py-1 mb-7 bg-violet-600/10 dark:bg-purple-500/[0.04] text-violet-700/85 dark:text-purple-400/80 font-bold">
               <Activity className="w-3 h-3" />
               Mobile Telemetry
             </div>
             <h2 className="font-head font-800 text-4xl md:text-5xl tracking-tighter leading-tight mb-7">
               Your agents,
               <br />
-              <span className="text-purple-400 italic">everywhere.</span>
+              <span className="text-violet-700 dark:text-purple-400 italic">everywhere.</span>
             </h2>
             <p className="text-muted-text text-lg leading-relaxed mb-8">
               Monitor active sessions, review diffs, and approve changes directly from your mobile device with
@@ -419,7 +419,7 @@ export default function Home() {
                 { icon: Code2, text: "Review & approve code on the go" },
               ].map((item, i) => (
                 <li key={i} className="flex items-center gap-3.5 text-muted-text group">
-                  <div className="w-8 h-8 rounded-lg bg-purple-500/[0.06] flex items-center justify-center text-purple-400/70 group-hover:bg-purple-500/10 group-hover:text-purple-400 transition-all duration-200">
+                  <div className="w-8 h-8 rounded-lg bg-violet-600/10 dark:bg-purple-500/[0.06] flex items-center justify-center text-violet-700/80 dark:text-purple-400/70 group-hover:bg-violet-600/15 dark:group-hover:bg-purple-500/10 group-hover:text-violet-700 dark:group-hover:text-purple-400 transition-all duration-200">
                     <item.icon className="w-[15px] h-[15px]" />
                   </div>
                   <span className="text-[14px] group-hover:text-text transition-colors duration-200">{item.text}</span>
@@ -430,9 +430,9 @@ export default function Home() {
               <input
                 type="email"
                 placeholder="your@email.com"
-                className="flex-1 font-mono text-sm bg-bg2 border border-border-dim text-text px-4 py-3 focus:border-purple-400/50 outline-none transition-all duration-200 placeholder:text-muted-text/40"
+                className="flex-1 font-mono text-sm bg-bg2 border border-border-dim text-text px-4 py-3 focus:border-violet-700/35 dark:focus:border-purple-400/50 outline-none transition-all duration-200 placeholder:text-muted-text/40"
               />
-              <button className="bg-purple-500/90 text-bg font-mono text-[11px] font-bold px-7 py-3 hover:bg-purple-400 transition-colors duration-200 whitespace-nowrap">
+              <button className="bg-violet-700 text-white dark:bg-purple-500/90 dark:text-bg font-mono text-[11px] font-bold px-7 py-3 hover:bg-violet-600 dark:hover:bg-purple-400 transition-colors duration-200 whitespace-nowrap">
                 Join Mobile Beta
               </button>
             </div>

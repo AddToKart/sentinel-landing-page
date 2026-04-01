@@ -104,8 +104,8 @@ const lineColor: Record<LineType, string> = {
   cmd: "text-text",
   output: "text-muted-text",
   success: "text-accent",
-  info: "text-blue-400",
-  warn: "text-amber-400",
+  info: "text-blue-700 dark:text-blue-400",
+  warn: "text-amber-700 dark:text-amber-400",
   spacer: "",
 };
 
@@ -197,8 +197,12 @@ export const InteractiveTerminal = () => {
   useEffect(() => {
     if (!currentScenario || status !== "streaming") return;
     if (streamIdx >= currentScenario.lines.length) {
-      setStatus("done");
-      return;
+      timerRef.current = setTimeout(() => {
+        setStatus("done");
+      }, 0);
+      return () => {
+        if (timerRef.current) clearTimeout(timerRef.current);
+      };
     }
 
     const line = currentScenario.lines[streamIdx];

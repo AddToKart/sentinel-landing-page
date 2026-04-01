@@ -16,7 +16,8 @@ export const TelemetryOverlay = () => {
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
         onClick={() => setIsVisible(true)}
-        className="fixed bottom-6 right-6 z-50 p-3 bg-bg2/80 backdrop-blur-md border border-accent/20 rounded-full shadow-2xl text-accent hover:bg-accent/10 transition-colors pointer-events-auto"
+        className="fixed bottom-6 right-6 z-50 p-3 bg-bg2/80 backdrop-blur-md border border-accent/20 rounded-full text-accent hover:bg-accent/10 transition-colors pointer-events-auto"
+        style={{ boxShadow: "var(--shadow-elevated)" }}
         title="Open SPE Telemetry"
       >
         <BarChart3 className="w-5 h-5" />
@@ -30,9 +31,12 @@ export const TelemetryOverlay = () => {
       animate={{ opacity: 1, y: 0 }}
       className="fixed bottom-6 right-6 z-50 font-mono select-none pointer-events-auto"
     >
-      <div className="bg-bg2/90 backdrop-blur-xl border border-white/10 rounded-lg shadow-[0_20px_50px_rgba(0,0,0,0.5)] min-w-[220px] overflow-hidden">
+      <div
+        className="bg-bg2/90 backdrop-blur-xl border border-border-dim rounded-lg min-w-[220px] overflow-hidden"
+        style={{ boxShadow: "var(--shadow-overlay)" }}
+      >
         {/* Header */}
-        <div className="flex items-center justify-between px-4 py-3 border-b border-white/5 bg-white/[0.02]">
+        <div className="flex items-center justify-between px-4 py-3 border-b border-border-dim bg-bg/35">
           <div className="flex items-center gap-2">
             <Activity className={`w-3.5 h-3.5 ${metrics.fps < 50 ? 'text-red-400' : 'text-accent'} animate-pulse`} />
             <span className="text-[10px] uppercase tracking-widest text-accent font-bold">SPE Engine</span>
@@ -40,13 +44,13 @@ export const TelemetryOverlay = () => {
           <div className="flex items-center gap-1">
             <button 
               onClick={() => setIsCollapsed(!isCollapsed)}
-              className="p-1 hover:bg-white/5 rounded transition-colors text-muted-text hover:text-text"
+              className="p-1 hover:bg-bg3 rounded transition-colors text-muted-text hover:text-text"
             >
               {isCollapsed ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
             </button>
             <button 
               onClick={() => setIsVisible(false)}
-              className="p-1 hover:bg-white/5 rounded transition-colors text-muted-text hover:text-red-400"
+              className="p-1 hover:bg-bg3 rounded transition-colors text-muted-text hover:text-red-400"
             >
               <X className="w-3.5 h-3.5" />
             </button>
@@ -96,12 +100,12 @@ export const TelemetryOverlay = () => {
                 </div>
 
                 {metrics.memoryUsage && (
-                  <div className="pt-3 border-t border-white/5">
+                  <div className="pt-3 border-t border-border-dim">
                     <div className="flex justify-between items-center mb-1.5">
                       <span className="text-[9px] text-muted-text uppercase tracking-tighter">Heap Usage</span>
                       <span className="text-[10px] text-text">{metrics.memoryUsage}MB</span>
                     </div>
-                    <div className="w-full h-1 bg-white/5 rounded-full overflow-hidden">
+                    <div className="w-full h-1 bg-bg3 rounded-full overflow-hidden">
                       <motion.div 
                         initial={{ width: 0 }}
                         animate={{ width: `${Math.min(100, (metrics.memoryUsage / 512) * 100)}%` }}
@@ -120,7 +124,7 @@ export const TelemetryOverlay = () => {
                         className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${
                           metrics.gpuPressure === level 
                             ? (level === 'low' ? 'bg-accent shadow-[0_0_8px_rgba(74,222,128,0.5)]' : level === 'medium' ? 'bg-yellow-400' : 'bg-red-500')
-                            : 'bg-white/5'
+                            : 'bg-bg3'
                         }`}
                       />
                     ))}

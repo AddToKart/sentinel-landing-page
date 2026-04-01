@@ -193,7 +193,7 @@ const resources: ResourceItem[] = [
     title: "GitHub Repository",
     description: "Source code, issues, releases, and contribution guidelines.",
     href: "https://github.com/AddToKart/sentinel-v2",
-    accentColor: "#f0eee8",
+    accentColor: "#475569",
   },
   {
     icon: FileText,
@@ -403,7 +403,7 @@ function EndpointRow({
     PUT: "#f59e0b",
     DELETE: "#f87171",
   };
-  const methodColor = methodColors[method] ?? "#f0eee8";
+  const methodColor = methodColors[method] ?? "#475569";
 
   return (
     <motion.div
@@ -623,15 +623,15 @@ export default function DocsPage() {
             v2.1 Stable
           </span>
           <span className="flex items-center gap-1.5">
-            <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />
+            <span className="w-1.5 h-1.5 rounded-full bg-blue-500 dark:bg-blue-400" />
             REST API
           </span>
           <span className="flex items-center gap-1.5">
-            <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
+            <span className="w-1.5 h-1.5 rounded-full bg-amber-500 dark:bg-amber-400" />
             MIT Licensed
           </span>
           <span className="flex items-center gap-1.5">
-            <span className="w-1.5 h-1.5 rounded-full bg-purple-400" />
+            <span className="w-1.5 h-1.5 rounded-full bg-purple-500 dark:bg-purple-400" />
             MCP Compatible
           </span>
         </motion.div>

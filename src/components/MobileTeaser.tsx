@@ -17,7 +17,10 @@ export const MobileTeaser = () => {
   return (
     <div className="mobile-phones relative flex justify-center items-end gap-4 h-[480px] group">
       {/* Left phone */}
-      <div className="phone phone-left w-[175px] h-[360px] border border-border-dim2 rounded-[28px] bg-bg3 overflow-hidden absolute bottom-5 left-0 z-2 rotate-[-6deg] translate-x-2.5 opacity-50 shadow-[0_20px_60px_rgba(0,0,0,0.4)] group-hover:rotate-[-9deg] group-hover:opacity-60 transition-all duration-700 hidden lg:block">
+      <div
+        className="phone phone-left w-[175px] h-[360px] border border-border-dim2 rounded-[28px] bg-bg3 overflow-hidden absolute bottom-5 left-0 z-2 rotate-[-6deg] translate-x-2.5 opacity-50 group-hover:rotate-[-9deg] group-hover:opacity-60 transition-all duration-700 hidden lg:block"
+        style={{ boxShadow: "var(--shadow-elevated)" }}
+      >
         <div className="phone-screen h-full flex flex-col">
           <div className="phone-notch h-7 bg-bg flex items-center justify-center">
             <div className="w-[60px] h-[10px] rounded-[10px] bg-bg2" />
@@ -39,7 +42,10 @@ export const MobileTeaser = () => {
       </div>
 
       {/* Main phone */}
-      <div className="phone phone-main w-[200px] h-[400px] border border-accent/20 rounded-[28px] bg-bg3 overflow-hidden absolute bottom-0 left-1/2 -translate-x-1/2 z-3 shadow-[0_24px_48px_rgba(0,0,0,0.5)] group-hover:-translate-y-2 transition-all duration-700 animate-float-y" style={{ animationDuration: "6s" }}>
+      <div
+        className="phone phone-main w-[200px] h-[400px] border border-accent/20 rounded-[28px] bg-bg3 overflow-hidden absolute bottom-0 left-1/2 -translate-x-1/2 z-3 group-hover:-translate-y-2 transition-all duration-700 animate-float-y"
+        style={{ animationDuration: "6s", boxShadow: "var(--shadow-elevated)" }}
+      >
         <div className="phone-screen h-full flex flex-col">
           <div className="phone-notch h-7 bg-bg flex items-center justify-center">
             <div className="w-[60px] h-[10px] rounded-[10px] bg-bg2" />
@@ -84,7 +90,7 @@ export const MobileTeaser = () => {
                 <span className="text-[8px] text-muted-text">RAM <span className="text-text">112</span>MB</span>
               </div>
               <div className="h-[2px] bg-bg2 rounded-[2px] mt-1.5 overflow-hidden">
-                <div className="h-full rounded-[2px] bg-blue-400/70 transition-all duration-500" style={{ width: `${Math.min(parseFloat(cpu2) * 10, 60)}%` }} />
+                <div className="h-full rounded-[2px] bg-blue-600/70 dark:bg-blue-400/70 transition-all duration-500" style={{ width: `${Math.min(parseFloat(cpu2) * 10, 60)}%` }} />
               </div>
             </div>
             {/* Mini terminal */}
@@ -106,7 +112,10 @@ export const MobileTeaser = () => {
       </div>
 
       {/* Right phone */}
-      <div className="phone phone-right w-[175px] h-[360px] border border-border-dim2 rounded-[28px] bg-bg3 overflow-hidden absolute bottom-5 right-0 z-2 rotate-[6deg] -translate-x-2.5 opacity-50 shadow-[0_20px_60px_rgba(0,0,0,0.4)] group-hover:rotate-[9deg] group-hover:opacity-60 transition-all duration-700 hidden lg:block">
+      <div
+        className="phone phone-right w-[175px] h-[360px] border border-border-dim2 rounded-[28px] bg-bg3 overflow-hidden absolute bottom-5 right-0 z-2 rotate-[6deg] -translate-x-2.5 opacity-50 group-hover:rotate-[9deg] group-hover:opacity-60 transition-all duration-700 hidden lg:block"
+        style={{ boxShadow: "var(--shadow-elevated)" }}
+      >
         <div className="phone-screen h-full flex flex-col">
           <div className="phone-notch h-7 bg-bg flex items-center justify-center">
             <div className="w-[60px] h-[10px] rounded-[10px] bg-bg2" />
@@ -120,7 +129,7 @@ export const MobileTeaser = () => {
             <div className="bg-bg border border-border-dim rounded-sm p-1.5 mt-1 text-[7px] leading-[1.9] font-mono">
               <div className="text-accent/80">● feature/auth</div>
               <div className="text-muted-text/60 pl-1.5">writing auth.ts...</div>
-              <div className="text-blue-400/70 pl-1.5">2 tests passing</div>
+              <div className="text-blue-700/80 dark:text-blue-400/70 pl-1.5">2 tests passing</div>
             </div>
           </div>
         </div>

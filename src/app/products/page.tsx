@@ -203,15 +203,15 @@ export default function ProductsPage() {
               42 Repositories
             </span>
             <span className="flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-purple-400" />
+              <span className="w-1.5 h-1.5 rounded-full bg-purple-500 dark:bg-purple-400" />
               Full-Stack Developer
             </span>
             <span className="flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />
+              <span className="w-1.5 h-1.5 rounded-full bg-blue-500 dark:bg-blue-400" />
               Linux Enthusiast
             </span>
             <span className="flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
+              <span className="w-1.5 h-1.5 rounded-full bg-amber-500 dark:bg-amber-400" />
               Arch + Hyprland
             </span>
           </div>
@@ -246,10 +246,10 @@ export default function ProductsPage() {
         <div className="max-w-[1100px] mx-auto">
           <ScrollReveal>
             <div className="flex items-center gap-3 mb-4">
-              <div className="text-[11px] tracking-[0.2em] uppercase text-purple-400/80 font-bold">
+              <div className="text-[11px] tracking-[0.2em] uppercase text-violet-700/85 dark:text-purple-400/80 font-bold">
                 Collaborative
               </div>
-              <div className="h-px flex-1 bg-purple-500/10" />
+              <div className="h-px flex-1 bg-violet-600/15 dark:bg-purple-500/10" />
             </div>
             <h2 className="font-head font-800 text-4xl md:text-5xl tracking-tighter leading-tight mb-4">
               Nexus Ecosystem.
