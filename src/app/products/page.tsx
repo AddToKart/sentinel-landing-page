@@ -111,7 +111,7 @@ const personalProjects: Project[] = [
 /* ─── Nav ───────────────────────────────────────── */
 function Nav() {
   return (
-    <nav className="fixed top-0 left-0 right-0 z-[200] flex items-center justify-between px-6 md:px-10 h-[60px] backdrop-blur-xl bg-bg/80 border-b border-white/[0.06]">
+    <nav className="fixed top-0 left-0 right-0 z-[200] flex items-center justify-between px-6 md:px-10 h-[60px] backdrop-blur-xl bg-bg/80 border-b border-border-dim">
       <Link
         href="/"
         className="font-head font-800 text-[17px] tracking-tight text-text flex items-center gap-2.5 hover:text-accent transition-colors duration-200"
@@ -124,7 +124,7 @@ function Nav() {
         <a
           href="https://github.com/AddToKart"
           target="_blank"
-          className="flex items-center gap-2 text-muted-text font-mono text-[11px] border border-white/[0.08] px-3.5 py-1.5 hover:text-text hover:border-white/20 transition-all duration-200 bg-white/[0.02]"
+          className="flex items-center gap-2 text-muted-text font-mono text-[11px] border border-border-dim2 px-3.5 py-1.5 hover:text-text hover:border-border-dim2 transition-all duration-200 bg-bg2"
         >
           <Github className="w-3.5 h-3.5" />
           AddToKart
@@ -192,7 +192,7 @@ export default function ProductsPage() {
 
         {/* Tech highlights */}
         <ScrollReveal delay={300}>
-          <div className="max-w-[700px] mx-auto mt-12 grid grid-cols-2 md:grid-cols-4 gap-px bg-white/[0.04] border border-white/[0.04]">
+          <div className="max-w-[700px] mx-auto mt-12 grid grid-cols-2 md:grid-cols-4 gap-px bg-border-dim border border-border-dim">
             {[
               { icon: Code2, label: "TypeScript", sub: "Primary Language" },
               { icon: Sparkles, label: "AI / Gemini", sub: "ML Integration" },
@@ -201,7 +201,7 @@ export default function ProductsPage() {
             ].map((item, i) => (
               <div
                 key={i}
-                className="p-5 bg-bg flex flex-col items-center gap-2 hover:bg-white/[0.02] transition-colors duration-300 group"
+                className="p-5 bg-bg flex flex-col items-center gap-2 hover:bg-bg2 transition-colors duration-300 group"
               >
                 <item.icon className="w-4 h-4 text-accent/50 group-hover:text-accent transition-colors duration-200" />
                 <div className="font-mono text-[12px] text-text">{item.label}</div>
@@ -215,7 +215,7 @@ export default function ProductsPage() {
       </section>
 
       {/* ═══ NEXUS ECOSYSTEM ═══ */}
-      <section className="py-28 px-6 relative z-[1] bg-bg2 border-y border-white/[0.04]">
+      <section className="py-28 px-6 relative z-[1] bg-bg2 border-y border-border-dim">
         <div className="max-w-[1100px] mx-auto">
           <ScrollReveal>
             <div className="flex items-center gap-3 mb-4">
@@ -284,7 +284,7 @@ export default function ProductsPage() {
             </a>
             <Link
               href="/"
-              className="w-full sm:w-auto font-mono text-sm text-text border border-white/[0.08] px-9 py-4 inline-flex items-center justify-center gap-2 hover:bg-white/[0.03] hover:border-white/15 transition-all duration-200"
+              className="w-full sm:w-auto font-mono text-sm text-text border border-border-dim2 px-9 py-4 inline-flex items-center justify-center gap-2 hover:bg-bg3 hover:border-border-dim2 transition-all duration-200"
             >
               <ArrowLeft className="w-4 h-4" />
               Back to Sentinel
@@ -294,7 +294,7 @@ export default function ProductsPage() {
       </section>
 
       {/* ═══ FOOTER ═══ */}
-      <footer className="border-t border-white/[0.04] px-6 py-12 bg-bg relative z-[1]">
+      <footer className="border-t border-border-dim px-6 py-12 bg-bg relative z-[1]">
         <div className="max-w-[1100px] mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
           <div className="space-y-3">
             <div className="font-head font-800 tracking-tighter text-text text-xl">
@@ -321,7 +321,7 @@ export default function ProductsPage() {
             </Link>
           </div>
         </div>
-        <div className="max-w-[1100px] mx-auto mt-10 pt-6 border-t border-white/[0.04] text-[9px] uppercase tracking-[0.15em] text-muted-text/40">
+        <div className="max-w-[1100px] mx-auto mt-10 pt-6 border-t border-border-dim text-[9px] uppercase tracking-[0.15em] text-muted-text/40">
           &copy; 2026 AddToKart. All projects are open source under the MIT License.
         </div>
       </footer>

@@ -18,7 +18,7 @@ export const RoadmapGrid = () => {
   ];
 
   return (
-    <div className="roadmap-grid max-w-[1100px] mx-auto grid grid-cols-1 md:grid-cols-3 gap-px bg-white/[0.04] border border-white/[0.04]">
+    <div className="roadmap-grid max-w-[1100px] mx-auto grid grid-cols-1 md:grid-cols-3 gap-px bg-border-dim border border-border-dim">
       {quarters.map((q, i) => (
         <div
           key={i}
@@ -33,9 +33,9 @@ export const RoadmapGrid = () => {
             {q.items.map((item, j) => (
               <li
                 key={j}
-                className="text-[12px] text-muted-text py-[7px] border-b border-white/[0.04] flex items-center gap-2 transition-all duration-200 hover:text-text hover:pl-1.5 group/item"
+                className="text-[12px] text-muted-text py-[7px] border-b border-border-dim flex items-center gap-2 transition-all duration-200 hover:text-text hover:pl-1.5 group/item"
               >
-                <span className="text-white/[0.06] group-hover/item:text-accent/60 transition-colors duration-200 text-[13px]">›</span>
+                <span className="text-muted-text/50 group-hover/item:text-accent/60 transition-colors duration-200 text-[13px]">›</span>
                 {item}
               </li>
             ))}

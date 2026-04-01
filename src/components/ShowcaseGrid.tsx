@@ -57,7 +57,7 @@ function ProjectCard({ project }: { project: Project }) {
       href={project.url}
       target="_blank"
       rel="noopener noreferrer"
-      className="group relative flex flex-col bg-bg2 border border-white/[0.05] hover:border-white/[0.1] transition-all duration-300 overflow-hidden"
+      className="group relative flex flex-col bg-bg2 border border-border-dim hover:border-border-dim2 transition-all duration-300 overflow-hidden"
     >
       {/* Hover accent top border */}
       <div
@@ -96,7 +96,7 @@ function ProjectCard({ project }: { project: Project }) {
         </div>
 
         {/* Footer */}
-        <div className="flex items-center justify-between pt-4 border-t border-white/[0.04]">
+        <div className="flex items-center justify-between pt-4 border-t border-border-dim">
           <div className="flex items-center gap-3 text-[10px] font-mono uppercase tracking-[0.15em] text-muted-text/50">
             {project.language && (
               <span className="flex items-center gap-1.5">
@@ -125,7 +125,7 @@ function ProjectCard({ project }: { project: Project }) {
 
 export function ShowcaseGrid({ projects }: { projects: Project[] }) {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-white/[0.03] border border-white/[0.04]">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-bg3 border border-border-dim">
       {projects.map((p) => (
         <ProjectCard key={p.name} project={p} />
       ))}

@@ -2,7 +2,7 @@
 
 export const PricingGrid = () => {
   return (
-    <div className="pricing-grid max-w-[720px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-px bg-white/[0.04] border border-white/[0.04]">
+    <div className="pricing-grid max-w-[720px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-px bg-border-dim border border-border-dim">
       {/* Free */}
       <div className="price-card bg-bg p-10 transition-all duration-500 hover:bg-bg2/50 relative group">
         <div className="price-label text-[11px] tracking-[0.12em] uppercase text-muted-text mb-3">For individuals</div>
@@ -25,11 +25,11 @@ export const PricingGrid = () => {
           ].map((feat, i) => (
             <li
               key={i}
-              className={`text-[13px] py-2 border-b border-white/[0.04] flex items-center gap-2.5 ${
+              className={`text-[13px] py-2 border-b border-border-dim flex items-center gap-2.5 ${
                 typeof feat === "object" && feat.dim ? "opacity-35" : "text-muted-text"
               }`}
             >
-              <span className={`text-[11px] ${typeof feat === "object" && feat.dim ? "text-white/10" : "text-accent"}`}>
+              <span className={`text-[11px] ${typeof feat === "object" && feat.dim ? "text-muted-text" : "text-accent"}`}>
                 {typeof feat === "object" && feat.dim ? "—" : "✓"}
               </span>
               {typeof feat === "string" ? feat : feat.text}
@@ -39,7 +39,7 @@ export const PricingGrid = () => {
         <a
           href="https://github.com/AddToKart/sentinel-v2#installation"
           target="_blank"
-          className="block text-center p-3 font-mono text-[13px] border border-white/[0.08] text-text hover:border-white/20 hover:bg-white/[0.02] transition-all duration-300"
+          className="block text-center p-3 font-mono text-[13px] border border-border-dim2 text-text hover:border-border-dim2 hover:bg-bg2 transition-all duration-300"
         >
           ↓ Download for Free
         </a>
@@ -72,7 +72,7 @@ export const PricingGrid = () => {
             "Plugin system access",
             "Priority support",
           ].map((feat, i) => (
-            <li key={i} className="text-[13px] text-muted-text py-2 border-b border-white/[0.04] flex items-center gap-2.5">
+            <li key={i} className="text-[13px] text-muted-text py-2 border-b border-border-dim flex items-center gap-2.5">
               <span className="text-accent text-[11px]">✓</span>
               {feat}
             </li>

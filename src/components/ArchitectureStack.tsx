@@ -18,7 +18,7 @@ export const ArchitectureStack = () => {
       {stack.map((row, i) => (
         <div
           key={i}
-          className="arch-row flex items-center border border-white/[0.04] bg-bg2/30 hover:bg-bg2/70 hover:border-white/[0.08] transition-all duration-300 group overflow-hidden relative contain-layout-style"
+          className="arch-row flex items-center border border-border-dim bg-bg2/30 hover:bg-bg2/70 hover:border-border-dim2 transition-all duration-300 group overflow-hidden relative contain-layout-style"
         >
           {/* Scan line on hover */}
           <div className="absolute inset-0 opacity-0 group-hover:opacity-100 pointer-events-none overflow-hidden transition-opacity duration-300">
@@ -31,7 +31,7 @@ export const ArchitectureStack = () => {
           <div className="p-4 w-12 flex items-center justify-center text-muted-text/60 group-hover:text-accent transition-colors duration-300">
             <row.icon className="w-[15px] h-[15px]" />
           </div>
-          <div className="p-4 text-[10px] font-mono font-bold w-24 text-muted-text/60 border-x border-white/[0.04] uppercase tracking-widest text-right">
+          <div className="p-4 text-[10px] font-mono font-bold w-24 text-muted-text/60 border-x border-border-dim uppercase tracking-widest text-right">
             {row.layer}
           </div>
           <div className="p-4 text-sm text-text flex-1">

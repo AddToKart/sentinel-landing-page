@@ -17,8 +17,8 @@ const lines: Line[] = [
   { type: "success", text: "✓ Sandbox ready. Spawning agent session [pid: 28553]" },
   { type: "spacer" },
   { type: "cmd", text: "sentinel status" },
-  { type: "info", text: "● feature/auth   — Claude Sonnet  │ CPU: 2.1%  │ RAM: 148MB  │ 14 files" },
-  { type: "info", text: "● refactor/db     — Claude Opus    │ CPU: 0.8%  │ RAM: 112MB  │  6 files" },
+  { type: "info", text: "● feature/auth — Claude Sonnet │ CPU: 2.1% │ RAM: 148MB │ 14 files" },
+  { type: "info", text: "● refactor/db — Claude Opus │ CPU: 0.8% │ RAM: 112MB │ 6 files" },
   { type: "spacer" },
   { type: "prompt_only" },
 ];
@@ -75,21 +75,21 @@ export const TypewriterTerminal = () => {
   }, [visibleLines, lineIdx]);
 
   return (
-    <div className="terminal-wrap group relative overflow-hidden bg-bg2 border border-white/[0.08] shadow-[0_32px_64px_rgba(0,0,0,0.4)]">
+    <div className="terminal-wrap group relative overflow-hidden bg-bg2 border border-border-dim2 shadow-[0_32px_64px_rgba(0,0,0,0.4)]">
       {/* Subtle top gradient */}
       <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-accent/[0.02] to-transparent z-0" />
 
       {/* Tab bar */}
-      <div className="terminal-bar flex items-center gap-[7px] px-4 py-[10px] bg-bg3/80 border-b border-white/[0.05] relative z-1">
-        <div className="w-[10px] h-[10px] rounded-full bg-[#f87171]/80" />
-        <div className="w-[10px] h-[10px] rounded-full bg-[#fbbf24]/80" />
-        <div className="w-[10px] h-[10px] rounded-full bg-[#4ade80]/80" />
+      <div className="terminal-bar flex items-center gap-[7px] px-4 py-[10px] bg-bg3/80 border-b border-border-dim relative z-1">
+        <div className="w-[10px] h-[10px] rounded-full bg-red-400/80" />
+        <div className="w-[10px] h-[10px] rounded-full bg-amber-400/80" />
+        <div className="w-[10px] h-[10px] rounded-full bg-green-400/80" />
         <div className="terminal-tabs flex gap-0 flex-1 ml-4 overflow-hidden">
-          <div className="px-[14px] py-[3px] text-[11px] font-mono text-accent bg-accent/[0.06] border-r border-white/[0.04] whitespace-nowrap cursor-pointer">
+          <div className="px-[14px] py-[3px] text-[11px] font-mono text-accent bg-accent/[0.06] border-r border-border-dim whitespace-nowrap cursor-pointer">
             Agents Dashboard
           </div>
           {["terminal-1", "terminal-2", "IDE", "+ New"].map((tab) => (
-            <div key={tab} className="px-[14px] py-[3px] text-[11px] font-mono text-muted-text/60 border-r border-white/[0.04] whitespace-nowrap cursor-pointer hover:text-text hover:bg-white/[0.03] transition-all">
+            <div key={tab} className="px-[14px] py-[3px] text-[11px] font-mono text-muted-text/60 border-r border-border-dim whitespace-nowrap cursor-pointer hover:text-text hover:bg-bg3 transition-all">
               {tab}
             </div>
           ))}

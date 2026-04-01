@@ -17,6 +17,10 @@ import { IntegrationsGrid } from "@/components/IntegrationsGrid";
 import { TestimonialsGrid } from "@/components/TestimonialsGrid";
 import { FAQ } from "@/components/FAQ";
 import { MagneticWrapper } from "@/components/MagneticWrapper";
+import { Newsletter } from "@/components/Newsletter";
+import { ThemeToggle } from "@/components/ThemeToggle";
+import { InteractiveTerminal } from "@/components/InteractiveTerminal";
+import { GitHubFeed } from "@/components/GitHubFeed";
 import { Github, Download, Star, Activity, Globe, Zap, Terminal, Code2 } from "lucide-react";
 import Link from "next/link";
 
@@ -37,7 +41,7 @@ function Nav() {
       transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
       className={`fixed top-0 left-0 right-0 z-[200] flex items-center justify-between px-6 md:px-10 h-[60px] backdrop-blur-xl border-b transition-all duration-500 ${
         scrolled
-          ? "bg-bg/80 border-white/[0.06] shadow-[0_2px_20px_rgba(0,0,0,0.2)]"
+          ? "bg-bg/80 border-border-dim shadow-[0_2px_20px_rgba(0,0,0,0.2)]"
           : "bg-bg/40 border-transparent"
       }`}
     >
@@ -69,7 +73,7 @@ function Nav() {
         <a
           href="https://github.com/AddToKart/sentinel-v2"
           target="_blank"
-          className="hidden sm:flex items-center gap-2 text-muted-text font-mono text-[11px] border border-white/[0.08] px-3.5 py-1.5 hover:text-text hover:border-white/20 transition-all duration-200 bg-white/[0.02]"
+          className="hidden sm:flex items-center gap-2 text-muted-text font-mono text-[11px] border border-border-dim px-3.5 py-1.5 hover:text-text hover:border-border-dim2 transition-all duration-200 bg-bg2"
         >
           <Github className="w-3.5 h-3.5" />
           GitHub
@@ -82,6 +86,7 @@ function Nav() {
           <Download className="w-3 h-3" />
           Download
         </a>
+        <ThemeToggle />
       </div>
     </motion.nav>
   );
@@ -165,14 +170,14 @@ export default function Home() {
             >
               <Download className="w-4 h-4" />
               <span className="relative z-10">Get Started Free</span>
-              <div className="absolute top-0 -left-full w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-all duration-700 group-hover:left-full" />
+              <div className="absolute top-0 -left-full w-full h-full bg-gradient-to-r from-transparent via-text/20 to-transparent transition-all duration-700 group-hover:left-full" />
             </a>
           </MagneticWrapper>
           <MagneticWrapper>
             <a
               href="https://github.com/AddToKart/sentinel-v2"
               target="_blank"
-              className="w-full sm:w-auto font-mono text-[13px] text-text border border-white/[0.08] px-8 py-3.5 inline-flex items-center justify-center gap-2 hover:bg-white/[0.03] hover:border-white/15 transition-all duration-200"
+              className="w-full sm:w-auto font-mono text-[13px] text-text border border-border-dim px-8 py-3.5 inline-flex items-center justify-center gap-2 hover:bg-bg3 hover:border-border-dim2 transition-all duration-200"
             >
               <Star className="w-4 h-4 text-accent" />
               Star on GitHub
@@ -224,7 +229,7 @@ export default function Home() {
       </section>
 
       {/* ═══ WORKFLOW ═══ */}
-      <section className="py-28 px-6 relative z-[1] bg-bg2 border-y border-white/[0.04]">
+      <section className="py-28 px-6 relative z-[1] bg-bg2 border-y border-border-dim">
         <div className="max-w-[1100px] mx-auto">
           <ScrollReveal>
             <div className="text-center mb-16">
@@ -258,7 +263,7 @@ export default function Home() {
               Sentinel bypasses the bloat of Electron by using Tauri&apos;s Rust-based runtime, resulting in 90%
               smaller binaries and 3x less RAM usage.
             </p>
-            <div className="bg-white/[0.02] p-5 border border-white/[0.06] space-y-4">
+            <div className="bg-bg2 p-5 border border-border-dim space-y-4">
               <div className="flex justify-between text-[10px] font-mono uppercase tracking-[0.15em] text-muted-text/60">
                 <span>Codebase Composition</span>
                 <span className="text-accent/70">V2.0.4</span>
@@ -283,7 +288,7 @@ export default function Home() {
                   whileInView={{ width: "2.1%" }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.8, delay: 0.7, ease: [0.16, 1, 0.3, 1] }}
-                  className="h-full bg-white/10"
+                  className="h-full bg-muted-text"
                 />
               </div>
               <div className="flex gap-5 text-[10px] font-mono text-muted-text/60">
@@ -305,7 +310,7 @@ export default function Home() {
       </section>
 
       {/* ═══ INTEGRATIONS (NEW) ═══ */}
-      <section className="py-28 px-6 relative z-[1] bg-bg2 border-y border-white/[0.04]">
+      <section className="py-28 px-6 relative z-[1] bg-bg2 border-y border-border-dim">
         <div className="max-w-[1100px] mx-auto">
           <ScrollReveal>
             <div className="text-center mb-14">
@@ -326,6 +331,28 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ═══ INTERACTIVE TERMINAL ═══ */}
+      <section className="py-28 px-6 relative z-[1]">
+        <div className="max-w-[1100px] mx-auto">
+          <ScrollReveal>
+            <div className="text-center mb-14">
+              <div className="text-[11px] tracking-[0.2em] uppercase text-accent/80 mb-4 font-bold">
+                Try It Now
+              </div>
+              <h2 className="font-head font-800 text-4xl md:text-5xl tracking-tighter leading-tight mb-4">
+                Experience the power.
+              </h2>
+              <p className="text-muted-text max-w-[520px] mx-auto text-[15px] leading-relaxed">
+                Watch Sentinel orchestrate AI agents in real-time. Click a scenario below to see it in action.
+              </p>
+            </div>
+          </ScrollReveal>
+          <ScrollReveal delay={80}>
+            <InteractiveTerminal />
+          </ScrollReveal>
+        </div>
+      </section>
+
       {/* ═══ TESTIMONIALS ═══ */}
       <section className="py-28 px-6 relative z-[1]">
         <div className="max-w-[1100px] mx-auto">
@@ -341,6 +368,25 @@ export default function Home() {
           </ScrollReveal>
           <ScrollReveal delay={100}>
             <TestimonialsGrid />
+          </ScrollReveal>
+        </div>
+      </section>
+
+      {/* ═══ GITHUB FEED ═══ */}
+      <section className="py-28 px-6 relative z-[1] bg-bg2 border-y border-border-dim">
+        <div className="max-w-[1100px] mx-auto">
+          <ScrollReveal>
+            <div className="text-center mb-14">
+              <div className="text-[11px] tracking-[0.2em] uppercase text-accent/80 mb-4 font-bold">
+                Latest Activity
+              </div>
+              <h2 className="font-head font-800 text-4xl md:text-5xl tracking-tighter leading-tight">
+                What's happening now.
+              </h2>
+            </div>
+          </ScrollReveal>
+          <ScrollReveal delay={80}>
+            <GitHubFeed />
           </ScrollReveal>
         </div>
       </section>
@@ -384,7 +430,7 @@ export default function Home() {
               <input
                 type="email"
                 placeholder="your@email.com"
-                className="flex-1 font-mono text-sm bg-bg2 border border-white/[0.08] text-text px-4 py-3 focus:border-purple-400/50 outline-none transition-all duration-200 placeholder:text-muted-text/40"
+                className="flex-1 font-mono text-sm bg-bg2 border border-border-dim text-text px-4 py-3 focus:border-purple-400/50 outline-none transition-all duration-200 placeholder:text-muted-text/40"
               />
               <button className="bg-purple-500/90 text-bg font-mono text-[11px] font-bold px-7 py-3 hover:bg-purple-400 transition-colors duration-200 whitespace-nowrap">
                 Join Mobile Beta
@@ -395,7 +441,7 @@ export default function Home() {
       </section>
 
       {/* ═══ PRICING ═══ */}
-      <section id="pricing" className="py-28 px-6 relative z-[1] bg-bg2 border-y border-white/[0.04]">
+      <section id="pricing" className="py-28 px-6 relative z-[1] bg-bg2 border-y border-border-dim">
         <div className="max-w-[1100px] mx-auto text-center">
           <ScrollReveal>
             <div className="text-[11px] tracking-[0.2em] uppercase text-accent/80 mb-4 font-bold">Pricing Models</div>
@@ -433,7 +479,7 @@ export default function Home() {
       </section>
 
       {/* ═══ ROADMAP ═══ */}
-      <section id="roadmap" className="py-28 px-6 relative z-[1] bg-bg2 border-y border-white/[0.04]">
+      <section id="roadmap" className="py-28 px-6 relative z-[1] bg-bg2 border-y border-border-dim">
         <div className="max-w-[1100px] mx-auto">
           <ScrollReveal>
             <div className="text-[11px] tracking-[0.2em] uppercase text-accent/80 mb-4 font-bold">Future trajectory</div>
@@ -444,6 +490,13 @@ export default function Home() {
           <ScrollReveal delay={80}>
             <RoadmapGrid />
           </ScrollReveal>
+        </div>
+      </section>
+
+      {/* ═══ NEWSLETTER ═══ */}
+      <section className="py-28 px-6 relative z-[1]">
+        <div className="max-w-[1100px] mx-auto">
+          <Newsletter />
         </div>
       </section>
 
@@ -470,12 +523,12 @@ export default function Home() {
             >
               <Download className="w-4 h-4" />
               <span className="relative z-10">Download Sentinel</span>
-              <div className="absolute top-0 -left-full w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-all duration-700 group-hover:left-full" />
+              <div className="absolute top-0 -left-full w-full h-full bg-gradient-to-r from-transparent via-text/20 to-transparent transition-all duration-700 group-hover:left-full" />
             </a>
             <a
               href="https://github.com/AddToKart/sentinel-v2"
               target="_blank"
-              className="w-full sm:w-auto font-mono text-sm text-text border border-white/[0.08] px-9 py-4 inline-flex items-center justify-center gap-2 hover:bg-white/[0.03] hover:border-white/15 transition-all duration-200"
+              className="w-full sm:w-auto font-mono text-sm text-text border border-border-dim px-9 py-4 inline-flex items-center justify-center gap-2 hover:bg-bg3 hover:border-border-dim2 transition-all duration-200"
             >
               <Github className="w-4 h-4" />
               Source Code
@@ -485,7 +538,7 @@ export default function Home() {
       </section>
 
       {/* ═══ FOOTER ═══ */}
-      <footer className="border-t border-white/[0.04] px-6 py-12 bg-bg relative z-[1]">
+      <footer className="border-t border-border-dim px-6 py-12 bg-bg relative z-[1]">
         <div className="max-w-[1100px] mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
           <div className="space-y-3">
             <div className="font-head font-800 tracking-tighter text-text text-xl">SENTINEL.</div>
@@ -520,7 +573,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <div className="max-w-[1100px] mx-auto mt-10 pt-6 border-t border-white/[0.04] flex flex-col sm:flex-row justify-between gap-4 text-[9px] uppercase tracking-[0.15em] text-muted-text/40">
+        <div className="max-w-[1100px] mx-auto mt-10 pt-6 border-t border-border-dim flex flex-col sm:flex-row justify-between gap-4 text-[9px] uppercase tracking-[0.15em] text-muted-text/40">
           <span>&copy; 2026 Sentinel Open Source Project.</span>
           <div className="flex gap-5">
             <a href="#" className="hover:text-accent/60 transition-colors duration-150 flex items-center gap-1.5">

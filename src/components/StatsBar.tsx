@@ -36,11 +36,11 @@ export const StatsBar = () => {
   ];
 
   return (
-    <div className="max-w-[1100px] mx-auto grid grid-cols-2 md:grid-cols-4 border-t border-white/[0.06] relative z-1 contain-layout">
+    <div className="max-w-[1100px] mx-auto grid grid-cols-2 md:grid-cols-4 border-t border-border-dim relative z-1 contain-layout">
       {stats.map((stat, i) => (
         <div
           key={i}
-          className="stat-cell p-10 border-r border-white/[0.04] flex flex-col gap-3 transition-all duration-500 hover:bg-white/[0.02] last:border-r-0 group relative overflow-hidden contain-layout-style"
+          className="stat-cell p-10 border-r border-border-dim flex flex-col gap-3 transition-all duration-500 hover:bg-bg2 last:border-r-0 group relative overflow-hidden contain-layout-style"
           style={{ transitionDelay: `${i * 50}ms` }}
         >
           <div className="font-head text-4xl md:text-5xl font-800 text-accent leading-none tracking-tighter">

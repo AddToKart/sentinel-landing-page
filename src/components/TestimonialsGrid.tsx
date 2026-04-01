@@ -31,7 +31,7 @@ export const TestimonialsGrid = () => {
       {testimonials.map((t, i) => (
         <div
           key={i}
-          className="relative group p-8 border border-white/[0.04] bg-bg2 hover:bg-white/[0.02] hover:border-white/[0.08] transition-all duration-300"
+          className="relative group p-8 border border-border-dim bg-bg2 hover:bg-bg2 hover:border-border-dim2 transition-all duration-300"
         >
           <div className="absolute inset-0 opacity-0 group-hover:opacity-100 bg-gradient-to-br from-accent/[0.03] to-transparent pointer-events-none transition-opacity duration-500" />
           
@@ -44,7 +44,7 @@ export const TestimonialsGrid = () => {
             &quot;{t.quote}&quot;
           </p>
           <div className="flex items-center gap-4 relative z-10">
-            <div className="w-10 h-10 rounded-full bg-white/[0.04] border border-white/[0.08] flex items-center justify-center font-mono text-accent text-sm">
+            <div className="w-10 h-10 rounded-full bg-border-dim border border-border-dim2 flex items-center justify-center font-mono text-accent text-sm">
               {t.avatar}
             </div>
             <div>

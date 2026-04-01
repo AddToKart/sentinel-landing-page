@@ -17,7 +17,7 @@ export const MobileTeaser = () => {
   return (
     <div className="mobile-phones relative flex justify-center items-end gap-4 h-[480px] group">
       {/* Left phone */}
-      <div className="phone phone-left w-[175px] h-[360px] border border-white/[0.08] rounded-[28px] bg-bg3 overflow-hidden absolute bottom-5 left-0 z-2 rotate-[-6deg] translate-x-2.5 opacity-50 shadow-[0_20px_60px_rgba(0,0,0,0.4)] group-hover:rotate-[-9deg] group-hover:opacity-60 transition-all duration-700 hidden lg:block">
+      <div className="phone phone-left w-[175px] h-[360px] border border-border-dim2 rounded-[28px] bg-bg3 overflow-hidden absolute bottom-5 left-0 z-2 rotate-[-6deg] translate-x-2.5 opacity-50 shadow-[0_20px_60px_rgba(0,0,0,0.4)] group-hover:rotate-[-9deg] group-hover:opacity-60 transition-all duration-700 hidden lg:block">
         <div className="phone-screen h-full flex flex-col">
           <div className="phone-notch h-7 bg-bg flex items-center justify-center">
             <div className="w-[60px] h-[10px] rounded-[10px] bg-bg2" />
@@ -28,10 +28,10 @@ export const MobileTeaser = () => {
           </div>
           <div className="flex-1 p-[10px_12px] overflow-hidden">
             <div className="font-head text-[14px] font-700 mb-3">Sessions</div>
-            <div className="bg-bg border border-white/[0.06] rounded-md p-2 mb-1.5">
+            <div className="bg-bg border border-border-dim rounded-md p-2 mb-1.5">
               <span className="text-[9px] font-600 font-head">feature/auth</span>
             </div>
-            <div className="bg-bg border border-white/[0.06] rounded-md p-2 mb-1.5">
+            <div className="bg-bg border border-border-dim rounded-md p-2 mb-1.5">
               <span className="text-[9px] font-600 font-head">refactor/db</span>
             </div>
           </div>
@@ -54,7 +54,7 @@ export const MobileTeaser = () => {
               <div className="text-[8px] text-accent/80 border border-accent/20 px-[6px] py-[2px] tracking-[0.08em]">2 ACTIVE</div>
             </div>
             {/* Session 1 */}
-            <div className="bg-bg border border-white/[0.06] rounded-md p-[8px_10px] mb-1.5">
+            <div className="bg-bg border border-border-dim rounded-md p-[8px_10px] mb-1.5">
               <div className="flex items-center justify-between mb-1">
                 <span className="text-[10px] font-600 font-head">feature/auth</span>
                 <span className="flex items-center gap-1 text-[8px]">
@@ -71,7 +71,7 @@ export const MobileTeaser = () => {
               </div>
             </div>
             {/* Session 2 */}
-            <div className="bg-bg border border-white/[0.06] rounded-md p-[8px_10px] mb-1.5">
+            <div className="bg-bg border border-border-dim rounded-md p-[8px_10px] mb-1.5">
               <div className="flex items-center justify-between mb-1">
                 <span className="text-[10px] font-600 font-head">refactor/db</span>
                 <span className="flex items-center gap-1 text-[8px]">
@@ -88,7 +88,7 @@ export const MobileTeaser = () => {
               </div>
             </div>
             {/* Mini terminal */}
-            <div className="bg-bg border border-white/[0.04] rounded-sm p-[6px_8px] mt-2 text-[8px] leading-[1.8] font-mono">
+            <div className="bg-bg border border-border-dim rounded-sm p-[6px_8px] mt-2 text-[8px] leading-[1.8] font-mono">
               <div className="flex gap-[10px]">
                 <span className="text-accent select-none">›</span>
                 <span>sentinel status</span>
@@ -97,16 +97,16 @@ export const MobileTeaser = () => {
             </div>
           </div>
           {/* Action bar */}
-          <div className="flex gap-1 p-2 border-t border-white/[0.04] bg-bg">
-            <div className="flex-1 bg-bg2 border border-white/[0.04] rounded-sm p-[6px] text-center text-[7px] text-muted-text cursor-pointer hover:border-accent/20 hover:text-accent transition-all">Monitor</div>
+          <div className="flex gap-1 p-2 border-t border-border-dim bg-bg">
+            <div className="flex-1 bg-bg2 border border-border-dim rounded-sm p-[6px] text-center text-[7px] text-muted-text cursor-pointer hover:border-accent/20 hover:text-accent transition-all">Monitor</div>
             <div className="flex-1 bg-accent/[0.06] border border-accent/20 rounded-sm p-[6px] text-center text-[7px] text-accent/80 cursor-pointer">Terminal</div>
-            <div className="flex-1 bg-bg2 border border-white/[0.04] rounded-sm p-[6px] text-center text-[7px] text-muted-text cursor-pointer hover:border-accent/20 hover:text-accent transition-all">Apply</div>
+            <div className="flex-1 bg-bg2 border border-border-dim rounded-sm p-[6px] text-center text-[7px] text-muted-text cursor-pointer hover:border-accent/20 hover:text-accent transition-all">Apply</div>
           </div>
         </div>
       </div>
 
       {/* Right phone */}
-      <div className="phone phone-right w-[175px] h-[360px] border border-white/[0.08] rounded-[28px] bg-bg3 overflow-hidden absolute bottom-5 right-0 z-2 rotate-[6deg] -translate-x-2.5 opacity-50 shadow-[0_20px_60px_rgba(0,0,0,0.4)] group-hover:rotate-[9deg] group-hover:opacity-60 transition-all duration-700 hidden lg:block">
+      <div className="phone phone-right w-[175px] h-[360px] border border-border-dim2 rounded-[28px] bg-bg3 overflow-hidden absolute bottom-5 right-0 z-2 rotate-[6deg] -translate-x-2.5 opacity-50 shadow-[0_20px_60px_rgba(0,0,0,0.4)] group-hover:rotate-[9deg] group-hover:opacity-60 transition-all duration-700 hidden lg:block">
         <div className="phone-screen h-full flex flex-col">
           <div className="phone-notch h-7 bg-bg flex items-center justify-center">
             <div className="w-[60px] h-[10px] rounded-[10px] bg-bg2" />
@@ -117,7 +117,7 @@ export const MobileTeaser = () => {
           </div>
           <div className="flex-1 p-[10px_12px] overflow-hidden">
             <div className="font-head text-[14px] font-700 mb-3">Terminal</div>
-            <div className="bg-bg border border-white/[0.04] rounded-sm p-1.5 mt-1 text-[7px] leading-[1.9] font-mono">
+            <div className="bg-bg border border-border-dim rounded-sm p-1.5 mt-1 text-[7px] leading-[1.9] font-mono">
               <div className="text-accent/80">● feature/auth</div>
               <div className="text-muted-text/60 pl-1.5">writing auth.ts...</div>
               <div className="text-blue-400/70 pl-1.5">2 tests passing</div>

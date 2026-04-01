@@ -246,7 +246,7 @@ function ProductCard({
       href={product.url || "#"}
       target={product.url ? "_blank" : undefined}
       rel={product.url ? "noopener noreferrer" : undefined}
-      className={`group relative flex flex-col h-full bg-bg2 border border-white/[0.05] hover:border-white/[0.1] transition-all duration-300 overflow-hidden ${
+      className={`group relative flex flex-col h-full bg-bg2 border border-border-dim hover:border-border-dim2 transition-all duration-300 overflow-hidden ${
         !product.url ? "cursor-default" : ""
       }`}
     >
@@ -299,7 +299,7 @@ function ProductCard({
         </p>
 
         {/* Footer */}
-        <div className="flex items-center justify-between pt-4 border-t border-white/[0.04]">
+        <div className="flex items-center justify-between pt-4 border-t border-border-dim">
           <span className="flex items-center gap-1.5 text-[10px] font-mono uppercase tracking-[0.15em] text-muted-text/50">
             <Calendar className="w-3 h-3" />
             {product.year}
@@ -334,7 +334,7 @@ function EcosystemOverviewCard({
     <ScrollReveal delay={index * 120} className="h-full">
       <a
         href={`#${ecosystem.id}`}
-        className="group relative flex flex-col h-full bg-bg2 border border-white/[0.05] hover:border-white/[0.12] transition-all duration-300 overflow-hidden"
+        className="group relative flex flex-col h-full bg-bg2 border border-border-dim hover:border-border-dim2 transition-all duration-300 overflow-hidden"
       >
         {/* Hover accent top border */}
         <div
@@ -388,7 +388,7 @@ function EcosystemOverviewCard({
             {ecosystem.description}
           </p>
 
-          <div className="mt-5 pt-4 border-t border-white/[0.04] flex items-center justify-between">
+          <div className="mt-5 pt-4 border-t border-border-dim flex items-center justify-between">
             <span className="text-[10px] font-mono uppercase tracking-[0.15em] text-muted-text/50">
               {ecosystem.products.length} Products
             </span>
@@ -412,7 +412,7 @@ function EcosystemSection({ ecosystem }: { ecosystem: Ecosystem }) {
   return (
     <section
       id={ecosystem.id}
-      className="py-28 px-6 relative z-[1] border-y border-white/[0.04]"
+      className="py-28 px-6 relative z-[1] border-y border-border-dim"
       style={{
         backgroundColor: ecosystem.id === "sentinel" ? undefined : "#0a0a0d",
       }}
@@ -447,7 +447,7 @@ function EcosystemSection({ ecosystem }: { ecosystem: Ecosystem }) {
         </ScrollReveal>
 
         <ScrollReveal delay={100}>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-white/[0.03] border border-white/[0.04]">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-bg3 border border-border-dim">
             {ecosystem.products.map((product) => (
               <ProductCard
                 key={product.name}
@@ -465,7 +465,7 @@ function EcosystemSection({ ecosystem }: { ecosystem: Ecosystem }) {
 /* ─── Nav ───────────────────────────────────────── */
 function Nav() {
   return (
-    <nav className="fixed top-0 left-0 right-0 z-[200] flex items-center justify-between px-6 md:px-10 h-[60px] backdrop-blur-xl bg-bg/80 border-b border-white/[0.06]">
+    <nav className="fixed top-0 left-0 right-0 z-[200] flex items-center justify-between px-6 md:px-10 h-[60px] backdrop-blur-xl bg-bg/80 border-b border-border-dim">
       <Link
         href="/"
         className="font-head font-800 text-[17px] tracking-tight text-text flex items-center gap-2.5 hover:text-accent transition-colors duration-200"
@@ -478,7 +478,7 @@ function Nav() {
         <a
           href="https://github.com/AddToKart"
           target="_blank"
-          className="flex items-center gap-2 text-muted-text font-mono text-[11px] border border-white/[0.08] px-3.5 py-1.5 hover:text-text hover:border-white/20 transition-all duration-200 bg-white/[0.02]"
+          className="flex items-center gap-2 text-muted-text font-mono text-[11px] border border-border-dim2 px-3.5 py-1.5 hover:text-text hover:border-border-dim2 transition-all duration-200 bg-bg2"
         >
           <Github className="w-3.5 h-3.5" />
           AddToKart
@@ -560,7 +560,7 @@ export default function EcosystemPage() {
       </section>
 
       {/* ═══ ECOSYSTEM OVERVIEW CARDS ═══ */}
-      <section className="py-20 px-6 relative z-[1] bg-bg2 border-y border-white/[0.04]">
+      <section className="py-20 px-6 relative z-[1] bg-bg2 border-y border-border-dim">
         <div className="max-w-[1100px] mx-auto">
           <ScrollReveal>
             <div className="text-center mb-14">
@@ -574,7 +574,7 @@ export default function EcosystemPage() {
             </div>
           </ScrollReveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-white/[0.03] border border-white/[0.04]">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-bg3 border border-border-dim">
             {ecosystems.map((eco, i) => (
               <EcosystemOverviewCard key={eco.id} ecosystem={eco} index={i} />
             ))}
@@ -628,7 +628,7 @@ export default function EcosystemPage() {
             </a>
             <Link
               href="/"
-              className="w-full sm:w-auto font-mono text-sm text-text border border-white/[0.08] px-9 py-4 inline-flex items-center justify-center gap-2 hover:bg-white/[0.03] hover:border-white/15 transition-all duration-200"
+              className="w-full sm:w-auto font-mono text-sm text-text border border-border-dim2 px-9 py-4 inline-flex items-center justify-center gap-2 hover:bg-bg3 hover:border-border-dim2 transition-all duration-200"
             >
               <ArrowLeft className="w-4 h-4" />
               Back to Home
@@ -638,7 +638,7 @@ export default function EcosystemPage() {
       </section>
 
       {/* ═══ FOOTER ═══ */}
-      <footer className="border-t border-white/[0.04] px-6 py-12 bg-bg relative z-[1]">
+      <footer className="border-t border-border-dim px-6 py-12 bg-bg relative z-[1]">
         <div className="max-w-[1100px] mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
           <div className="space-y-3">
             <div className="font-head font-800 tracking-tighter text-text text-xl">
@@ -671,7 +671,7 @@ export default function EcosystemPage() {
             </Link>
           </div>
         </div>
-        <div className="max-w-[1100px] mx-auto mt-10 pt-6 border-t border-white/[0.04] text-[9px] uppercase tracking-[0.15em] text-muted-text/40">
+        <div className="max-w-[1100px] mx-auto mt-10 pt-6 border-t border-border-dim text-[9px] uppercase tracking-[0.15em] text-muted-text/40">
           &copy; 2026 Sentinel Ecosystem. All projects are open source under the
           MIT License.
         </div>

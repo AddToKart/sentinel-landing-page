@@ -40,7 +40,7 @@ export const FAQ = () => {
         return (
           <div
             key={i}
-            className="faq-item border-b border-white/[0.04] group"
+            className="faq-item border-b border-border-dim group"
           >
             <button
               onClick={() => setOpenIndex(isOpen ? null : i)}

@@ -87,7 +87,7 @@ function Nav() {
       initial={{ y: -16, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-      className="fixed top-0 left-0 right-0 z-[200] flex items-center justify-between px-6 md:px-10 h-[60px] backdrop-blur-xl bg-bg/80 border-b border-white/[0.06]"
+      className="fixed top-0 left-0 right-0 z-[200] flex items-center justify-between px-6 md:px-10 h-[60px] backdrop-blur-xl bg-bg/80 border-b border-border-dim"
     >
       <Link
         href="/"
@@ -101,7 +101,7 @@ function Nav() {
         <a
           href="https://github.com/AddToKart/sentinel-v2"
           target="_blank"
-          className="flex items-center gap-2 text-muted-text font-mono text-[11px] border border-white/[0.08] px-3.5 py-1.5 hover:text-text hover:border-white/20 transition-all duration-200 bg-white/[0.02]"
+          className="flex items-center gap-2 text-muted-text font-mono text-[11px] border border-border-dim2 px-3.5 py-1.5 hover:text-text hover:border-border-dim2 transition-all duration-200 bg-bg2"
         >
           <Github className="w-3.5 h-3.5" />
           GitHub
@@ -132,7 +132,7 @@ function ValueCard({
         delay: index * 0.08,
         ease: [0.16, 1, 0.3, 1],
       }}
-      className="group relative bg-bg border border-white/[0.04] p-7 hover:border-white/[0.08] transition-all duration-300"
+      className="group relative bg-bg border border-border-dim p-7 hover:border-border-dim2 transition-all duration-300"
     >
       {/* Top accent line */}
       <div
@@ -179,7 +179,7 @@ function StatCell({
         delay: index * 0.08,
         ease: [0.16, 1, 0.3, 1],
       }}
-      className="p-8 border-r border-white/[0.04] last:border-r-0 flex flex-col items-center gap-3 group hover:bg-white/[0.02] transition-all duration-300 relative overflow-hidden"
+      className="p-8 border-r border-border-dim last:border-r-0 flex flex-col items-center gap-3 group hover:bg-bg2 transition-all duration-300 relative overflow-hidden"
     >
       <Icon className="w-4 h-4 text-accent/50 group-hover:text-accent transition-colors duration-300" />
       <div className="font-head text-3xl md:text-4xl font-800 text-text leading-none tracking-tighter">
@@ -287,7 +287,7 @@ export default function AboutPage() {
             </p>
           </ScrollReveal>
           <ScrollReveal variant="fade-right" delay={100}>
-            <div className="bg-bg2 border border-white/[0.04] p-8 space-y-6">
+            <div className="bg-bg2 border border-border-dim p-8 space-y-6">
               <div className="flex items-start gap-4">
                 <div className="w-9 h-9 rounded-lg bg-accent/[0.08] flex items-center justify-center flex-shrink-0 mt-0.5">
                   <Terminal className="w-4 h-4 text-accent/80" />
@@ -303,7 +303,7 @@ export default function AboutPage() {
                   </p>
                 </div>
               </div>
-              <div className="h-px bg-white/[0.04]" />
+              <div className="h-px bg-border-dim" />
               <div className="flex items-start gap-4">
                 <div className="w-9 h-9 rounded-lg bg-accent/[0.08] flex items-center justify-center flex-shrink-0 mt-0.5">
                   <Lock className="w-4 h-4 text-accent/80" />
@@ -319,7 +319,7 @@ export default function AboutPage() {
                   </p>
                 </div>
               </div>
-              <div className="h-px bg-white/[0.04]" />
+              <div className="h-px bg-border-dim" />
               <div className="flex items-start gap-4">
                 <div className="w-9 h-9 rounded-lg bg-accent/[0.08] flex items-center justify-center flex-shrink-0 mt-0.5">
                   <Zap className="w-4 h-4 text-accent/80" />
@@ -341,7 +341,7 @@ export default function AboutPage() {
       </section>
 
       {/* ═══ STORY ═══ */}
-      <section className="py-28 px-6 relative z-[1] bg-bg2 border-y border-white/[0.04]">
+      <section className="py-28 px-6 relative z-[1] bg-bg2 border-y border-border-dim">
         <div className="max-w-[1100px] mx-auto">
           <ScrollReveal>
             <div className="text-center mb-16">
@@ -446,7 +446,7 @@ export default function AboutPage() {
       </section>
 
       {/* ═══ TEAM ═══ */}
-      <section className="py-28 px-6 relative z-[1] bg-bg2 border-y border-white/[0.04]">
+      <section className="py-28 px-6 relative z-[1] bg-bg2 border-y border-border-dim">
         <div className="max-w-[1100px] mx-auto">
           <ScrollReveal>
             <div className="text-center mb-16">
@@ -463,7 +463,7 @@ export default function AboutPage() {
 
           <ScrollReveal delay={80}>
             <div className="max-w-[500px] mx-auto">
-              <div className="bg-bg border border-white/[0.04] p-8 text-center group hover:border-white/[0.08] transition-all duration-300 relative overflow-hidden">
+              <div className="bg-bg border border-border-dim p-8 text-center group hover:border-border-dim2 transition-all duration-300 relative overflow-hidden">
                 {/* Top accent line */}
                 <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-accent/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
@@ -512,7 +512,7 @@ export default function AboutPage() {
           </ScrollReveal>
 
           <ScrollReveal delay={80}>
-            <div className="max-w-[800px] mx-auto grid grid-cols-2 md:grid-cols-4 border border-white/[0.04] bg-bg2">
+            <div className="max-w-[800px] mx-auto grid grid-cols-2 md:grid-cols-4 border border-border-dim bg-bg2">
               {stats.map((stat, i) => (
                 <StatCell key={stat.label} {...stat} index={i} />
               ))}
@@ -550,7 +550,7 @@ export default function AboutPage() {
             </a>
             <Link
               href="/"
-              className="w-full sm:w-auto font-mono text-sm text-text border border-white/[0.08] px-9 py-4 inline-flex items-center justify-center gap-2 hover:bg-white/[0.03] hover:border-white/15 transition-all duration-200"
+              className="w-full sm:w-auto font-mono text-sm text-text border border-border-dim2 px-9 py-4 inline-flex items-center justify-center gap-2 hover:bg-bg3 hover:border-border-dim2 transition-all duration-200"
             >
               <ArrowLeft className="w-4 h-4" />
               Back to Home
@@ -560,7 +560,7 @@ export default function AboutPage() {
       </section>
 
       {/* ═══ FOOTER ═══ */}
-      <footer className="border-t border-white/[0.04] px-6 py-12 bg-bg relative z-[1]">
+      <footer className="border-t border-border-dim px-6 py-12 bg-bg relative z-[1]">
         <div className="max-w-[1100px] mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
           <div className="space-y-3">
             <div className="font-head font-800 tracking-tighter text-text text-xl">
@@ -670,7 +670,7 @@ export default function AboutPage() {
             </div>
           </div>
         </div>
-        <div className="max-w-[1100px] mx-auto mt-10 pt-6 border-t border-white/[0.04] flex flex-col sm:flex-row justify-between gap-4 text-[9px] uppercase tracking-[0.15em] text-muted-text/40">
+        <div className="max-w-[1100px] mx-auto mt-10 pt-6 border-t border-border-dim flex flex-col sm:flex-row justify-between gap-4 text-[9px] uppercase tracking-[0.15em] text-muted-text/40">
           <span>&copy; 2026 Sentinel Open Source Project.</span>
           <div className="flex gap-5">
             <Link

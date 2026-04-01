@@ -11,15 +11,15 @@ export const WorkflowGrid = () => {
   ];
 
   return (
-    <div className="max-w-[1100px] mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-0 border border-white/[0.04] bg-bg">
+    <div className="max-w-[1100px] mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-0 border border-border-dim bg-bg">
       {steps.map((step, i) => (
         <div
           key={i}
-          className="workflow-step p-8 md:p-10 border border-white/[0.04] relative bg-bg overflow-hidden group transition-all duration-500 hover:bg-bg2/50 contain-layout-style"
+          className="workflow-step p-8 md:p-10 border border-border-dim relative bg-bg overflow-hidden group transition-all duration-500 hover:bg-bg2/50 contain-layout-style"
         >
           {/* Flow dot connector (between steps) */}
           {i < steps.length - 1 && (
-            <div className="hidden lg:block absolute right-0 top-1/2 w-px h-12 -translate-y-1/2 bg-white/[0.06]">
+            <div className="hidden lg:block absolute right-0 top-1/2 w-px h-12 -translate-y-1/2 bg-border-dim2">
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-accent/40 group-hover:bg-accent transition-colors duration-300" />
               {/* Animated flow dot */}
               <div className="absolute top-0 left-0 w-1 h-1 rounded-full bg-accent/60 animate-flow-dot" style={{ animationDuration: "2.5s", animationDelay: `${i * 0.6}s` }} />
@@ -27,7 +27,7 @@ export const WorkflowGrid = () => {
           )}
 
           {/* Step number */}
-          <div className="font-head text-5xl font-800 text-white/[0.03] leading-none mb-6 group-hover:text-accent/[0.08] transition-colors duration-500 select-none">
+          <div className="font-head text-5xl font-800 text-muted-text/30 leading-none mb-6 group-hover:text-accent/[0.08] transition-colors duration-500 select-none">
             {step.num}
           </div>
 

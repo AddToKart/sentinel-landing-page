@@ -29,7 +29,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body
-        className={`${ibmPlexMono.variable} ${syne.variable} font-mono antialiased bg-[#08080a] text-[#f0eee8]`}
+        className={`${ibmPlexMono.variable} ${syne.variable} font-mono antialiased bg-background text-foreground transition-colors duration-300`}
       >
         <SPEProvider>
           {children}

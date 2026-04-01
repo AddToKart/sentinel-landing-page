@@ -15,7 +15,7 @@ export const Ticker = () => {
   const displayItems = [...items, ...items];
 
   return (
-    <div className="overflow-hidden border-t border-b border-white/[0.04] bg-bg2 relative z-1">
+    <div className="overflow-hidden border-t border-b border-border-dim bg-bg2 relative z-1">
       {/* Edge fades */}
       <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-bg2 to-transparent z-[2] pointer-events-none" />
       <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-bg2 to-transparent z-[2] pointer-events-none" />
@@ -24,7 +24,7 @@ export const Ticker = () => {
         {displayItems.map((item, i) => (
           <div
             key={i}
-            className="inline-flex items-center gap-2.5 px-7 py-[11px] text-[11px] text-muted-text tracking-[0.06em] uppercase border-r border-white/[0.04] whitespace-nowrap hover:text-text transition-colors duration-200 cursor-default"
+            className="inline-flex items-center gap-2.5 px-7 py-[11px] text-[11px] text-muted-text tracking-[0.06em] uppercase border-r border-border-dim whitespace-nowrap hover:text-text transition-colors duration-200 cursor-default"
           >
             <span className="w-1 h-1 rounded-full bg-accent/20" />
             {item.label} <span className="text-accent/80 font-medium">{item.detail}</span>

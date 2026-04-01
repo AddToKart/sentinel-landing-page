@@ -63,7 +63,7 @@ const FeatureCard = ({ feature, index }: { feature: (typeof features)[0]; index:
       ref={cardRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className="feature-card group relative bg-bg border border-white/[0.06] p-8 overflow-hidden cursor-default gpu-accelerated contain-layout-style"
+      className="feature-card group relative bg-bg border border-border-dim p-8 overflow-hidden cursor-default gpu-accelerated contain-layout-style"
       style={{ "--mx": "50%", "--my": "50%", transitionDelay: `${index * 60}ms` } as React.CSSProperties}
     >
       {/* Cursor-following highlight (subtle) */}
@@ -72,7 +72,7 @@ const FeatureCard = ({ feature, index }: { feature: (typeof features)[0]; index:
       {/* Top accent line */}
       <div className="absolute top-0 left-0 right-0 h-px bg-transparent group-hover:bg-accent/40 transition-colors duration-500" />
 
-      <div className="feat-icon w-11 h-11 flex items-center justify-center border border-white/[0.08] mb-5 bg-bg3/50 transition-all duration-500 group-hover:border-accent/30 group-hover:text-accent">
+      <div className="feat-icon w-11 h-11 flex items-center justify-center border border-border-dim2 mb-5 bg-bg3/50 transition-all duration-500 group-hover:border-accent/30 group-hover:text-accent">
         <feature.icon className="w-[18px] h-[18px]" />
       </div>
       
@@ -84,14 +84,14 @@ const FeatureCard = ({ feature, index }: { feature: (typeof features)[0]; index:
       </p>
 
       {/* Bottom corner accent */}
-      <div className="absolute bottom-0 right-0 w-6 h-6 border-r border-b border-white/[0.03] group-hover:border-accent/15 transition-colors duration-500" />
+      <div className="absolute bottom-0 right-0 w-6 h-6 border-r border-b border-border-dim group-hover:border-accent/15 transition-colors duration-500" />
     </div>
   );
 };
 
 export const FeatureGrid = () => {
   return (
-    <div className="features-grid max-w-[1100px] mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-white/[0.04] border border-white/[0.04]">
+    <div className="features-grid max-w-[1100px] mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-border-dim border border-border-dim">
       {features.map((f, i) => (
         <FeatureCard key={i} index={i} feature={f} />
       ))}

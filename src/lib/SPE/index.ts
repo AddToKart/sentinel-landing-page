@@ -6,9 +6,9 @@
 import { useEffect } from "react";
 
 export enum TaskPriority {
-  CRITICAL = 0,   // Input, UI Response (RAF immediate)
-  ANIMATION = 1,  // Active visual elements (RAF sync)
-  VISIBLE = 2,    // Visible but non-essential updates
+  CRITICAL = 0, // Input, UI Response (RAF immediate)
+  ANIMATION = 1, // Active visual elements (RAF sync)
+  VISIBLE = 2, // Visible but non-essential updates
   BACKGROUND = 3, // Off-screen warming, non-visible logic (IdleCallback)
 }
 

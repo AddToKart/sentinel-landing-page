@@ -8,16 +8,44 @@
   --font-mono: var(--font-mono);
   --font-head: var(--font-head);
   
-  --color-bg: #08080a;
-  --color-bg2: #0f0f12;
-  --color-bg3: #16161a;
-  --color-border-dim: rgba(255, 255, 255, 0.06);
-  --color-border-dim2: rgba(255, 255, 255, 0.11);
-  --color-text: #f0eee8;
-  --color-muted-text: #7a7870;
-  --color-accent: #4ade80;
-  --color-accent2: #22c55e;
-  --color-accent-dim: rgba(74, 222, 128, 0.1);
+  --color-bg: var(--bg);
+  --color-bg2: var(--bg2);
+  --color-bg3: var(--bg3);
+  --color-border-dim: var(--border-dim);
+  --color-border-dim2: var(--border-dim2);
+  --color-text: var(--text);
+  --color-muted-text: var(--muted-text);
+  --color-accent: var(--accent);
+  --color-accent2: var(--accent2);
+  --color-accent-dim: var(--accent-dim);
+}
+
+@layer base {
+  :root {
+    --bg: #f9fafb;
+    --bg2: #f4f4f5;
+    --bg3: #e4e4e7;
+    --border-dim: rgba(0, 0, 0, 0.08);
+    --border-dim2: rgba(0, 0, 0, 0.15);
+    --text: #18181b;
+    --muted-text: #71717a;
+    --accent: #16a34a;
+    --accent2: #15803d;
+    --accent-dim: rgba(22, 163, 74, 0.1);
+  }
+  
+  .dark {
+    --bg: #08080a;
+    --bg2: #0f0f12;
+    --bg3: #16161a;
+    --border-dim: rgba(255, 255, 255, 0.06);
+    --border-dim2: rgba(255, 255, 255, 0.11);
+    --text: #f0eee8;
+    --muted-text: #7a7870;
+    --accent: #4ade80;
+    --accent2: #22c55e;
+    --accent-dim: rgba(74, 222, 128, 0.1);
+  }
 }
 
 @theme inline {
