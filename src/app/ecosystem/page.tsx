@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { GridCanvas } from "@/components/GridCanvas";
@@ -580,6 +580,152 @@ function EcosystemCarousel({ ecosystems }: { ecosystems: Ecosystem[] }) {
   );
 }
 
+/* ─── Ecosystem Products Showcase ───────────────── */
+function EcosystemProductsShowcase({
+  ecosystem,
+}: {
+  ecosystem: Ecosystem;
+}) {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const activeProduct = ecosystem.products[activeIndex];
+  const Icon = activeProduct.icon;
+
+  return (
+    <div className="flex flex-col md:flex-row gap-6 md:gap-px bg-bg3 border border-border-dim rounded-lg overflow-hidden">
+      {/* Sidebar Navigation */}
+      <div className="w-full md:w-[320px] lg:w-[380px] bg-bg2 flex flex-col border-b md:border-b-0 md:border-r border-border-dim shrink-0">
+        <div className="p-5 border-b border-border-dim hidden md:block">
+          <div className="text-[11px] font-mono uppercase tracking-[0.15em] text-muted-text/60 flex items-center gap-2">
+            <Boxes className="w-3.5 h-3.5" />
+            Modules Index
+          </div>
+        </div>
+        <div className="flex flex-row md:flex-col overflow-x-auto md:overflow-y-auto hide-scrollbar max-h-[450px]">
+          {ecosystem.products.map((product, idx) => {
+            const isActive = idx === activeIndex;
+            const ProductIcon = product.icon;
+            
+            return (
+              <button
+                key={product.name}
+                onClick={() => setActiveIndex(idx)}
+                className={`flex items-center gap-3 p-4 md:p-5 border-b border-r md:border-r-0 border-border-dim transition-all duration-300 relative group shrink-0 w-[240px] md:w-auto text-left
+                  ${isActive ? "bg-bg" : "hover:bg-bg/50"}
+                `}
+              >
+                {/* Active Indicator Line */}
+                <div 
+                  className={`absolute left-0 top-0 bottom-0 w-[2px] transition-all duration-300
+                    ${isActive ? "opacity-100" : "opacity-0 group-hover:opacity-50"}
+                  `}
+                  style={{ backgroundColor: ecosystem.accentColor }}
+                />
+
+                <div className={`w-10 h-10 flex items-center justify-center shrink-0 border transition-colors duration-300
+                  ${isActive ? "" : "opacity-60"}
+                `}
+                style={{
+                  borderColor: isActive ? `${ecosystem.accentColor}40` : `${ecosystem.accentColor}10`,
+                  backgroundColor: isActive ? `${ecosystem.accentColor}10` : "transparent",
+                }}>
+                  <ProductIcon 
+                    className="w-5 h-5" 
+                    style={{ color: isActive ? ecosystem.accentColor : "currentColor" }} 
+                  />
+                </div>
+                
+                <div className="overflow-hidden">
+                  <div className={`font-mono text-[13px] md:text-sm font-bold truncate transition-colors duration-300
+                    ${isActive ? "text-text" : "text-muted-text group-hover:text-text/80"}
+                  `}>
+                    {product.name}
+                  </div>
+                  <div className="text-[10px] font-mono uppercase tracking-[0.15em] text-muted-text/50 mt-1 truncate">
+                    {product.status}
+                  </div>
+                </div>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Main Display Area */}
+      <div className="flex-1 bg-bg relative overflow-hidden min-h-[420px] md:min-h-[500px] flex flex-col">
+        {/* Decorative Grid Background */}
+        <div 
+          className="absolute inset-x-0 top-0 h-[300px] opacity-20 pointer-events-none"
+          style={{
+            background: `linear-gradient(to bottom, ${ecosystem.accentColor}15, transparent)`,
+            maskImage: "linear-gradient(to bottom, black 10%, transparent 100%)",
+            backgroundImage: `radial-gradient(${ecosystem.accentColor}40 1px, transparent 1px)`,
+            backgroundSize: "24px 24px",
+          }}
+        />
+
+        <div className="flex-1 p-6 md:p-12 relative z-10 flex flex-col justify-center">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeProduct.name}
+              initial={{ opacity: 0, y: 15, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -15, scale: 0.98 }}
+              transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+              className="max-w-[540px]"
+            >
+              <div className="flex items-start md:items-center gap-4 mb-6 md:mb-8 flex-col md:flex-row">
+                <div className="w-16 h-16 md:w-20 md:h-20 flex items-center justify-center border bg-bg2 shrink-0 transition-all duration-500"
+                  style={{
+                    borderColor: `${ecosystem.accentColor}30`,
+                    boxShadow: `0 0 40px -10px ${ecosystem.accentColor}40`,
+                  }}
+                >
+                  <Icon className="w-8 h-8 md:w-10 md:h-10 transition-colors duration-500" style={{ color: ecosystem.accentColor }} />
+                </div>
+                <div>
+                  <h3 className="font-head font-800 text-3xl md:text-5xl tracking-tight text-text mb-2 md:mb-3">
+                    {activeProduct.name}
+                  </h3>
+                  <div className="flex flex-wrap items-center gap-3">
+                    <StatusBadge status={activeProduct.status} accentColor={ecosystem.accentColor} />
+                    <span className="flex items-center gap-1.5 text-[11px] font-mono uppercase tracking-[0.15em] text-muted-text/50">
+                      <Calendar className="w-3.5 h-3.5" />
+                      {activeProduct.year}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <p className="text-muted-text text-[15px] md:text-base leading-[1.8] mb-8 md:mb-10 border-l-2 pl-4"
+                style={{ borderColor: `${ecosystem.accentColor}40` }}
+              >
+                {activeProduct.description}
+              </p>
+
+              {activeProduct.url ? (
+                <a
+                  href={activeProduct.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 px-6 py-3 font-mono text-[13px] font-bold text-bg bg-accent hover:brightness-110 transition-all duration-200 w-full sm:w-auto text-center"
+                >
+                  <Github className="w-4 h-4" />
+                  View Repository
+                </a>
+              ) : (
+                <div className="inline-flex items-center justify-center gap-2 px-6 py-3 font-mono text-[13px] border border-border-dim text-muted-text/50 bg-bg2 cursor-not-allowed w-full sm:w-auto text-center">
+                  <Terminal className="w-4 h-4" />
+                  Source Closed / Planning
+                </div>
+              )}
+            </motion.div>
+          </AnimatePresence>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 /* ─── Ecosystem Section ─────────────────────────── */
 function EcosystemSection({ ecosystem }: { ecosystem: Ecosystem }) {
   return (
@@ -620,15 +766,7 @@ function EcosystemSection({ ecosystem }: { ecosystem: Ecosystem }) {
         </ScrollReveal>
 
         <ScrollReveal delay={100}>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-bg3 border border-border-dim">
-            {ecosystem.products.map((product) => (
-              <ProductCard
-                key={product.name}
-                product={product}
-                accentColor={ecosystem.accentColor}
-              />
-            ))}
-          </div>
+          <EcosystemProductsShowcase ecosystem={ecosystem} />
         </ScrollReveal>
       </div>
     </section>
