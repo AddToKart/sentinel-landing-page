@@ -168,6 +168,14 @@ const ecosystems: Ecosystem[] = [
         status: "Planning",
         year: "2026",
       },
+      {
+        name: "Aegis-Critique",
+        description:
+          "Advanced peer-review simulation engine. Stress-tests research methodologies and logical frameworks against rigorous academic standards to identify structural weaknesses.",
+        icon: Shield,
+        status: "Planning",
+        year: "2026",
+      },
     ],
   },
   {
