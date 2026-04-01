@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { IBM_Plex_Mono, Syne } from "next/font/google";
 import "./globals.css";
 import { SPEProvider } from "@/lib/SPE/SPEProvider";
-import { TelemetryOverlay } from "@/components/SPE/TelemetryOverlay";
 import { AegisChat } from "@/components/AegisChat";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
@@ -38,7 +37,6 @@ export default function RootLayout({
           <Navbar />
           {children}
           <Footer />
-          <TelemetryOverlay />
           <AegisChat />
         </SPEProvider>
       </body>
