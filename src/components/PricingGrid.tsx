@@ -4,14 +4,14 @@ export const PricingGrid = () => {
   return (
     <div className="pricing-grid max-w-[720px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-px bg-border-dim border border-border-dim">
       {/* Free */}
-      <div className="price-card bg-bg p-10 transition-all duration-500 hover:bg-bg2/50 relative group">
+      <div className="price-card bg-bg p-10 transition-all duration-500 hover:bg-bg2/50 relative group flex flex-col h-full">
         <div className="price-label text-[11px] tracking-[0.12em] uppercase text-muted-text mb-3">For individuals</div>
         <div className="price-name font-head font-800 text-[1.5rem] mb-6">Free</div>
         <div className="price-amount mb-1">
           <span className="price-num font-head text-[3.2rem] font-800 text-text leading-none">$0</span>
         </div>
         <div className="text-[11px] text-accent/80 tracking-[0.04em] mt-1.5 mb-6">Open-source · MIT · Forever free</div>
-        <ul className="list-none mb-8">
+        <ul className="list-none mb-8 flex-1">
           {[
             "Unlimited agent sessions",
             "Sandbox & Git worktree isolation",
@@ -46,7 +46,7 @@ export const PricingGrid = () => {
       </div>
 
       {/* Pro */}
-      <div className="price-card bg-bg2 p-10 relative group overflow-hidden">
+      <div className="price-card bg-bg2 p-10 relative group overflow-hidden flex flex-col h-full">
         {/* Animated top border */}
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-accent/0 via-accent/40 to-accent/0 bg-[length:200%_100%] animate-shimmer" />
 
@@ -60,7 +60,7 @@ export const PricingGrid = () => {
           <span className="text-muted-text text-[13px]"> / seat / mo</span>
         </div>
         <div className="text-[11px] text-muted-text tracking-[0.04em] mt-1.5 mb-6">Billed annually · Cancel anytime</div>
-        <ul className="list-none mb-8">
+        <ul className="list-none mb-8 flex-1">
           {[
             "Everything in Free",
             "Team session sharing",

@@ -3,6 +3,7 @@ import { IBM_Plex_Mono, Syne } from "next/font/google";
 import "./globals.css";
 import { SPEProvider } from "@/lib/SPE/SPEProvider";
 import { TelemetryOverlay } from "@/components/SPE/TelemetryOverlay";
+import { AegisChat } from "@/components/AegisChat";
 
 const ibmPlexMono = IBM_Plex_Mono({
   variable: "--font-mono",
@@ -34,6 +35,7 @@ export default function RootLayout({
         <SPEProvider>
           {children}
           <TelemetryOverlay />
+          <AegisChat />
         </SPEProvider>
       </body>
     </html>
