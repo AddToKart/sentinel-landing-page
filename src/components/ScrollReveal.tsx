@@ -42,13 +42,13 @@ export function ScrollReveal({
             setIsRevealed(true);
           });
 
-          if (once) observer.unobserve(el);
-
-          // Remove will-change after animation is done to free up GPU memory
-          const totalTime = delay + duration + 100;
-          setTimeout(() => {
-            setIsAnimating(false);
-          }, totalTime);
+          // Simply remove unobserve after revealing if once is true
+          if (once) {
+            observer.unobserve(el);
+          } else {
+            // Keep animating state true if it's continuously intersecting
+            setIsAnimating(true);
+          }
         } else if (!once) {
           setIsRevealed(false);
           setIsAnimating(false);
@@ -69,8 +69,6 @@ export function ScrollReveal({
         position: "relative",
         "--sr-delay": `${delay}ms`,
         "--sr-duration": `${duration}ms`,
-        // Only apply will-change during the actual animation phase
-        willChange: isAnimating ? "opacity, transform" : "auto",
       } as React.CSSProperties}
     >
       {children}

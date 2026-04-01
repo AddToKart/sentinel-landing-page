@@ -83,8 +83,15 @@
   * {
     @apply border-border outline-ring/50;
   }
+  html {
+    overflow-x: clip;
+    overflow-y: scroll;
+    scrollbar-gutter: stable;
+  }
   body {
     @apply bg-background text-foreground font-mono;
+    min-height: 100%;
+    overflow-x: clip;
   }
   /* Reduced motion: disable all CSS animations */
   @media (prefers-reduced-motion: reduce) {

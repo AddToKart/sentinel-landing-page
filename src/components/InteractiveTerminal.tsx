@@ -304,8 +304,7 @@ export const InteractiveTerminal = () => {
         {/* Terminal body */}
         <div
           ref={scrollRef}
-          className="relative z-10 p-5 min-h-[260px] max-h-[420px] overflow-y-auto font-mono scroll-smooth
-            scrollbar-thin scrollbar-track-transparent scrollbar-thumb-black/10 "
+          className="relative z-10 p-5 min-h-[320px] font-mono scroll-smooth"
         >
           {/* Idle prompt when nothing is running */}
           {!activeScenario && (
