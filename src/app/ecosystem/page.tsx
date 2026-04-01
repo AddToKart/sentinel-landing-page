@@ -1,12 +1,14 @@
 "use client";
 
 import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { GridCanvas } from "@/components/GridCanvas";
 import {
   Github,
   ArrowLeft,
+  ChevronLeft,
+  ChevronRight,
   Cpu,
   Smartphone,
   Cloud,
@@ -380,87 +382,193 @@ function ProductCard({
 function EcosystemOverviewCard({
   ecosystem,
   index,
+  disableReveal = false,
 }: {
   ecosystem: Ecosystem;
   index: number;
+  disableReveal?: boolean;
 }) {
-  const icons = [Code2, Plug, Container];
+  const icons = [Code2, Plug, Container, GitBranch];
   const Icon = icons[index] || Code2;
+
+  const content = (
+    <a
+      href={`#${ecosystem.id}`}
+      className="group relative flex flex-col h-full bg-bg2 border border-border-dim hover:border-border-dim2 transition-all duration-300 overflow-hidden"
+    >
+      {/* Hover accent top border */}
+      <div
+        className="absolute top-0 left-0 right-0 h-[2px] transition-all duration-500 opacity-0 group-hover:opacity-100"
+        style={{
+          background: `linear-gradient(90deg, transparent, ${ecosystem.accentColor}80, transparent)`,
+        }}
+      />
+
+      {/* Hover gradient */}
+      <div
+        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+        style={{
+          background: `radial-gradient(ellipse at 50% 20%, ${ecosystem.accentColor}08, transparent 60%)`,
+        }}
+      />
+
+      <div className="p-7 md:p-8 relative z-10 flex-1 flex flex-col">
+        <div
+          className="w-12 h-12 flex items-center justify-center border mb-5 transition-colors duration-300"
+          style={{
+            borderColor: `${ecosystem.accentColor}25`,
+            backgroundColor: `${ecosystem.accentColor}08`,
+          }}
+        >
+          <Icon
+            className="w-6 h-6 transition-colors duration-300"
+            style={{ color: ecosystem.accentColor }}
+          />
+        </div>
+
+        <div className="flex items-center gap-2 mb-2">
+          <h3 className="font-head font-800 text-2xl tracking-tight text-text group-hover:text-accent transition-colors duration-300">
+            {ecosystem.name}
+          </h3>
+          {ecosystem.id === "forge" && (
+            <span className="text-[9px] font-mono uppercase tracking-[0.15em] px-2 py-0.5 border border-orange-500/25 text-orange-400 bg-orange-500/[0.06]">
+              NEW
+            </span>
+          )}
+        </div>
+
+        <p
+          className="text-[11px] font-mono uppercase tracking-[0.15em] mb-3"
+          style={{ color: ecosystem.accentColor }}
+        >
+          {ecosystem.tagline}
+        </p>
+
+        <p className="text-muted-text text-[13px] leading-[1.7] flex-1">
+          {ecosystem.description}
+        </p>
+
+        <div className="mt-5 pt-4 border-t border-border-dim flex items-center justify-between">
+          <span className="text-[10px] font-mono uppercase tracking-[0.15em] text-muted-text/50">
+            {ecosystem.products.length} Products
+          </span>
+          <span
+            className="text-[10px] font-mono uppercase tracking-[0.15em] transition-colors duration-200"
+            style={{
+              color: `${ecosystem.accentColor}60`,
+            }}
+          >
+            Explore &darr;
+          </span>
+        </div>
+      </div>
+    </a>
+  );
+
+  if (disableReveal) {
+    return <div className="h-full w-full">{content}</div>;
+  }
 
   return (
     <ScrollReveal delay={index * 120} className="h-full">
-      <a
-        href={`#${ecosystem.id}`}
-        className="group relative flex flex-col h-full bg-bg2 border border-border-dim hover:border-border-dim2 transition-all duration-300 overflow-hidden"
+      {content}
+    </ScrollReveal>
+  );
+}
+
+/* ─── Ecosystem Carousel ────────────────────────── */
+function EcosystemCarousel({ ecosystems }: { ecosystems: Ecosystem[] }) {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const handleNext = () => {
+    setCurrentIndex((prev) => (prev + 1) % ecosystems.length);
+  };
+
+  const handlePrev = () => {
+    setCurrentIndex((prev) => (prev - 1 + ecosystems.length) % ecosystems.length);
+  };
+
+  return (
+    <div className="relative w-full py-10 md:py-16 flex flex-col items-center justify-center overflow-hidden min-h-[500px] md:min-h-[550px] group">
+      {/* Scroll controls */}
+      <button
+        onClick={handlePrev}
+        className="absolute left-2 md:left-10 top-1/2 -translate-y-1/2 z-50 w-12 h-12 bg-bg2/80 backdrop-blur-md border border-border-dim hover:border-border-dim2 hover:bg-bg3 rounded-full flex items-center justify-center transition-all duration-300 shadow-2xl md:opacity-0 md:group-hover:opacity-100"
+        aria-label="Previous"
       >
-        {/* Hover accent top border */}
-        <div
-          className="absolute top-0 left-0 right-0 h-[2px] transition-all duration-500 opacity-0 group-hover:opacity-100"
-          style={{
-            background: `linear-gradient(90deg, transparent, ${ecosystem.accentColor}80, transparent)`,
-          }}
-        />
+        <ChevronLeft className="w-5 h-5 text-text" />
+      </button>
 
-        {/* Hover gradient */}
-        <div
-          className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-          style={{
-            background: `radial-gradient(ellipse at 50% 20%, ${ecosystem.accentColor}08, transparent 60%)`,
-          }}
-        />
+      {/* Cards container */}
+      <div className="relative w-full max-w-[320px] md:max-w-[400px] h-[450px] md:h-[480px] flex items-center justify-center">
+        {ecosystems.map((eco, index) => {
+          let position = index - currentIndex;
+          if (position > ecosystems.length / 2) position -= ecosystems.length;
+          else if (position < -ecosystems.length / 2) position += ecosystems.length;
 
-        <div className="p-7 md:p-8 relative z-10 flex-1 flex flex-col">
-          <div
-            className="w-12 h-12 flex items-center justify-center border mb-5 transition-colors duration-300"
-            style={{
-              borderColor: `${ecosystem.accentColor}25`,
-              backgroundColor: `${ecosystem.accentColor}08`,
-            }}
-          >
-            <Icon
-              className="w-6 h-6 transition-colors duration-300"
-              style={{ color: ecosystem.accentColor }}
-            />
-          </div>
+          const isActive = position === 0;
+          const isLeft = position === -1;
+          const isRight = position === 1;
+          const isHidden = Math.abs(position) > 1;
 
-          <div className="flex items-center gap-2 mb-2">
-            <h3 className="font-head font-800 text-2xl tracking-tight text-text group-hover:text-accent transition-colors duration-300">
-              {ecosystem.name}
-            </h3>
-            {ecosystem.id === "forge" && (
-              <span className="text-[9px] font-mono uppercase tracking-[0.15em] px-2 py-0.5 border border-orange-500/25 text-orange-400 bg-orange-500/[0.06]">
-                NEW
-              </span>
-            )}
-          </div>
-
-          <p
-            className="text-[11px] font-mono uppercase tracking-[0.15em] mb-3"
-            style={{ color: ecosystem.accentColor }}
-          >
-            {ecosystem.tagline}
-          </p>
-
-          <p className="text-muted-text text-[13px] leading-[1.7] flex-1">
-            {ecosystem.description}
-          </p>
-
-          <div className="mt-5 pt-4 border-t border-border-dim flex items-center justify-between">
-            <span className="text-[10px] font-mono uppercase tracking-[0.15em] text-muted-text/50">
-              {ecosystem.products.length} Products
-            </span>
-            <span
-              className="text-[10px] font-mono uppercase tracking-[0.15em] transition-colors duration-200"
+          return (
+            <motion.div
+              key={eco.id}
+              initial={false}
+              animate={{
+                x: isActive ? "0%" : isLeft ? "-75%" : isRight ? "75%" : position > 0 ? "150%" : "-150%",
+                scale: isActive ? 1 : 0.85,
+                opacity: isActive ? 1 : isHidden ? 0 : 0.4,
+                zIndex: 30 - Math.abs(position),
+              }}
+              transition={{
+                duration: 0.5,
+                ease: [0.32, 0.72, 0, 1], // fluid spring feeling
+              }}
+              className="absolute top-0 left-0 w-full h-full cursor-pointer rounded-2xl overflow-hidden shadow-2xl bg-bg2"
+              onClick={() => {
+                if (isLeft) handlePrev();
+                if (isRight) handleNext();
+              }}
               style={{
-                color: `${ecosystem.accentColor}60`,
+                pointerEvents: isHidden ? "none" : "auto",
+                boxShadow: isActive ? `0 20px 40px -10px ${eco.accentColor}60` : '0 10px 30px -10px rgba(0,0,0,0.8)',
               }}
             >
-              Explore &darr;
-            </span>
-          </div>
-        </div>
-      </a>
-    </ScrollReveal>
+              <EcosystemOverviewCard ecosystem={eco} index={index} disableReveal />
+
+              {/* Dim overlay for non-active cards */}
+              {!isActive && (
+                <div className="absolute inset-0 bg-bg/50 backdrop-blur-[1px] transition-all duration-500 pointer-events-none" />
+              )}
+            </motion.div>
+          );
+        })}
+      </div>
+
+      <button
+        onClick={handleNext}
+        className="absolute right-2 md:right-10 top-1/2 -translate-y-1/2 z-50 w-12 h-12 bg-bg2/80 backdrop-blur-md border border-border-dim hover:border-border-dim2 hover:bg-bg3 rounded-full flex items-center justify-center transition-all duration-300 shadow-2xl md:opacity-0 md:group-hover:opacity-100"
+        aria-label="Next"
+      >
+        <ChevronRight className="w-5 h-5 text-text" />
+      </button>
+
+      {/* Pagination indicators */}
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 flex items-center gap-2 z-40">
+        {ecosystems.map((_, idx) => (
+          <button
+            key={idx}
+            onClick={() => setCurrentIndex(idx)}
+            className={`transition-all duration-300 rounded-full ${
+              idx === currentIndex
+                ? "w-8 h-1.5 bg-accent"
+                : "w-2 h-1.5 bg-border-dim hover:bg-border-dim2"
+            }`}
+          />
+        ))}
+      </div>
+    </div>
   );
 }
 
@@ -631,10 +739,8 @@ export default function EcosystemPage() {
             </div>
           </ScrollReveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-bg3 border border-border-dim">
-            {ecosystems.map((eco, i) => (
-              <EcosystemOverviewCard key={eco.id} ecosystem={eco} index={i} />
-            ))}
+          <div className="mt-10">
+            <EcosystemCarousel ecosystems={ecosystems} />
           </div>
         </div>
       </section>
