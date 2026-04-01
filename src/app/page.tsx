@@ -49,6 +49,7 @@ function Nav() {
         {[
           { name: "Features", href: "#features" },
           { name: "Docs", href: "/docs" },
+          { name: "Ecosystem", href: "/ecosystem" },
           { name: "Roadmap", href: "/roadmap" },
           { name: "About", href: "/about" },
           { name: "Showcase", href: "/products" }

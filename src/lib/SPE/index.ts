@@ -55,7 +55,9 @@ export class SentinelPerformanceEngine {
 
   public onMetricsUpdate(cb: (m: SPEMetrics) => void) {
     this.listeners.add(cb);
-    return () => this.listeners.delete(cb);
+    return () => {
+      this.listeners.delete(cb);
+    };
   }
 
   private start() {
