@@ -150,7 +150,7 @@ function TerminalCrystal({ values }: { values: ValueItem[] }) {
   }, [values.length]);
 
   return (
-    <div className="relative w-full max-w-4xl mx-auto rounded-none border border-accent/30 bg-black/80 shadow-[0_0_40px_rgba(0,240,255,0.05)] overflow-hidden">
+    <div className="relative w-full max-w-4xl mx-auto rounded-none border border-accent/30 bg-bg2/90 shadow-lg dark:shadow-[0_0_40px_rgba(0,240,255,0.05)] overflow-hidden">
       {/* Scanline effect */}
       <div className="absolute inset-0 pointer-events-none bg-[linear-gradient(rgba(0,240,255,0.03)_1px,transparent_1px)] bg-[size:100%_4px] z-20" />
       <motion.div
@@ -171,8 +171,8 @@ function TerminalCrystal({ values }: { values: ValueItem[] }) {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 relative z-10">
-        <div className="col-span-1 border-r border-accent/20 bg-black/40 p-4 font-mono text-sm flex flex-col gap-2">
+      <div className="grid grid-cols-1 md:grid-cols-3 relative z-10 bg-bg">
+        <div className="col-span-1 border-r border-accent/20 bg-bg/50 p-4 font-mono text-sm flex flex-col gap-2">
           {values.map((v, i) => (
             <button
               key={v.title}
@@ -180,7 +180,7 @@ function TerminalCrystal({ values }: { values: ValueItem[] }) {
               className={`text-left px-4 py-3 border-l-2 transition-all duration-300 flex items-center gap-3 ${
                 i === activeIndex
                   ? "border-accent text-accent bg-accent/10"
-                  : "border-transparent text-muted-text hover:text-text hover:bg-white/5"
+                  : "border-transparent text-muted-text hover:text-text hover:bg-accent/5"
               }`}
             >
               <v.icon className={`w-4 h-4 ${i === activeIndex ? "animate-pulse" : ""}`} />
@@ -206,7 +206,7 @@ function TerminalCrystal({ values }: { values: ValueItem[] }) {
                 style: { color: values[activeIndex].accentColor },
               })}
             </div>
-            <h3 className="font-head font-800 text-2xl tracking-tight text-white mb-4 uppercase flex items-center gap-3">
+            <h3 className="font-head font-800 text-2xl tracking-tight text-text mb-4 uppercase flex items-center gap-3">
               <span className="text-accent">&gt;</span> {values[activeIndex].title}
               <motion.span
                 animate={{ opacity: [1, 0] }}
@@ -260,7 +260,7 @@ export default function AboutPage() {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="inline-flex items-center gap-2 text-[10px] text-accent font-mono tracking-[0.3em] uppercase border border-accent/30 px-5 py-2 mb-10 bg-black/40 backdrop-blur-md shadow-[0_0_15px_rgba(0,240,255,0.2)]"
+          className="inline-flex items-center gap-2 text-[10px] text-accent font-mono tracking-[0.3em] uppercase border border-accent/30 px-5 py-2 mb-10 bg-bg2/40 backdrop-blur-md shadow-lg dark:shadow-[0_0_15px_rgba(0,240,255,0.2)]"
         >
           <Database className="w-3 h-3" />
           SYSTEM_ARCHIVE // ORIGINS
@@ -274,7 +274,7 @@ export default function AboutPage() {
         >
           Genesis of
           <br />
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-accent to-white relative inline-block">
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-text via-accent to-text relative inline-block">
             The Construct
             <motion.div
               initial={{ width: 0 }}
@@ -316,7 +316,7 @@ export default function AboutPage() {
             </h2>
             <div className="space-y-6 text-muted-text text-lg font-mono leading-relaxed border-l border-accent/20 pl-6">
               <p>
-                <span className="text-white">&gt; INITIALIZING PROTOCOL...</span>
+                <span className="text-text font-bold">&gt; INITIALIZING PROTOCOL...</span>
                 <br />
                 AI entities were fracturing the workflow. Running multiple agents simultaneously led to overlapping directives, corrupted files, and zero operational isolation. Creators were fighting the very constructs designed to assist them.
               </p>
@@ -343,11 +343,11 @@ export default function AboutPage() {
                 { icon: Zap, title: "The Synchronization", desc: "Parallel multi-agent execution with zero latency." }
               ].map((item, i) => (
                 <GlowingCard key={item.title} className="p-6 flex items-start gap-5">
-                  <div className="w-12 h-12 rounded-none bg-black border border-accent/30 flex items-center justify-center flex-shrink-0 shadow-[0_0_15px_rgba(0,240,255,0.1)]">
+                  <div className="w-12 h-12 rounded-none bg-bg2 border border-accent/30 flex items-center justify-center flex-shrink-0 shadow-sm dark:shadow-[0_0_15px_rgba(0,240,255,0.1)]">
                     <item.icon className="w-5 h-5 text-accent" />
                   </div>
                   <div>
-                    <h4 className="font-mono font-bold text-[15px] tracking-tight text-white mb-2 uppercase flex items-center gap-2">
+                    <h4 className="font-mono font-bold text-[15px] tracking-tight text-text mb-2 uppercase flex items-center gap-2">
                       <span className="text-accent opacity-50">0{i+1}</span> {item.title}
                     </h4>
                     <p className="text-muted-text text-[13px] font-mono leading-relaxed">
@@ -362,7 +362,7 @@ export default function AboutPage() {
       </section>
 
       {/* ----------------- THE ARCHITECT ----------------- */}
-      <section className="py-32 px-6 relative z-[1] bg-black/40 border-y border-accent/10">
+      <section className="py-32 px-6 relative z-[1] bg-bg2/40 border-y border-accent/10">
         <div className="max-w-[1200px] mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -373,9 +373,9 @@ export default function AboutPage() {
             <div className="text-[10px] tracking-[0.3em] uppercase text-accent font-mono mb-4">
               Creator Identity
             </div>
-            <h2 className="font-head font-800 text-5xl md:text-7xl tracking-tighter leading-tight uppercase">
-              The <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-white">Architect.</span>
-            </h2>
+              <h2 className="font-head font-800 text-5xl md:text-7xl tracking-tighter leading-tight uppercase text-text">
+                The <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-text">Architect.</span>
+              </h2>
           </motion.div>
 
           <div className="max-w-[600px] mx-auto relative">
@@ -391,12 +391,12 @@ export default function AboutPage() {
                 <div className="w-24 h-24 mx-auto mb-8 relative">
                   <div className="absolute inset-0 border-2 border-accent/30 animate-[spin_10s_linear_infinite]" />
                   <div className="absolute inset-2 border border-accent/50 animate-[spin_15s_linear_infinite_reverse]" />
-                  <div className="absolute inset-0 flex items-center justify-center bg-black/50 backdrop-blur-sm">
-                    <Code2 className="w-8 h-8 text-accent shadow-accent drop-shadow-[0_0_10px_rgba(0,240,255,0.8)]" />
+                  <div className="absolute inset-0 flex items-center justify-center bg-bg/50 backdrop-blur-sm">
+                    <Code2 className="w-8 h-8 text-accent drop-shadow-md dark:drop-shadow-[0_0_10px_rgba(0,240,255,0.8)]" />
                   </div>
                 </div>
 
-                <h3 className="font-mono font-bold text-3xl tracking-tight text-white mb-2 uppercase">
+                <h3 className="font-mono font-bold text-3xl tracking-tight text-text mb-2 uppercase">
                   AddToKart
                 </h3>
                 <div className="inline-flex items-center gap-2 px-3 py-1 bg-accent/10 border border-accent/20 text-accent font-mono text-xs mb-8 uppercase tracking-widest">
@@ -411,7 +411,7 @@ export default function AboutPage() {
                 <a
                   href="https://github.com/AddToKart"
                   target="_blank"
-                  className="inline-flex items-center gap-3 font-mono text-[13px] uppercase tracking-widest bg-white text-black px-8 py-4 hover:bg-accent hover:text-black transition-all duration-300 font-bold group"
+                  className="inline-flex items-center gap-3 font-mono text-[13px] uppercase tracking-widest bg-text text-bg px-8 py-4 hover:bg-accent hover:text-bg transition-all duration-300 font-bold group"
                 >
                   <Github className="w-5 h-5 group-hover:scale-110 transition-transform" />
                   Initialize Link
@@ -454,14 +454,14 @@ export default function AboutPage() {
       </section>
 
       {/* ----------------- STATS ----------------- */}
-      <section className="py-24 px-6 relative z-[1] bg-black/60 border-y border-border-dim">
+      <section className="py-24 px-6 relative z-[1] bg-bg2/60 border-y border-border-dim">
         <div className="max-w-[1200px] mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-accent/20 border border-accent/20 p-px">
             {stats.map((stat, i) => (
-              <div key={stat.label} className="bg-black p-8 md:p-12 relative overflow-hidden group">
+              <div key={stat.label} className="bg-bg p-8 md:p-12 relative overflow-hidden group">
                 <div className="absolute inset-0 bg-gradient-to-b from-accent/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 <stat.icon className="w-6 h-6 text-accent/40 mb-6 group-hover:text-accent group-hover:scale-110 transition-all duration-500" />
-                <div className="font-head text-4xl md:text-5xl font-800 text-white leading-none tracking-tighter mb-3 flex items-baseline">
+                <div className="font-head text-4xl md:text-5xl font-800 text-text leading-none tracking-tighter mb-3 flex items-baseline">
                   <AnimatedNumber value={stat.value} suffix={stat.suffix} />
                 </div>
                 <div className="font-mono text-[10px] uppercase text-accent/60 tracking-[0.2em] group-hover:text-accent transition-colors duration-300">
@@ -486,11 +486,11 @@ export default function AboutPage() {
           transition={{ duration: 0.8 }}
           className="relative z-10"
         >
-          <div className="w-16 h-16 mx-auto bg-black border border-accent/30 flex items-center justify-center mb-8 shadow-[0_0_30px_rgba(0,240,255,0.2)]">
+          <div className="w-16 h-16 mx-auto bg-bg border border-accent/30 flex items-center justify-center mb-8 shadow-sm dark:shadow-[0_0_30px_rgba(0,240,255,0.2)]">
             <Layers className="w-8 h-8 text-accent" />
           </div>
-          <h2 className="font-head font-800 text-5xl md:text-8xl tracking-tighter leading-none mb-8 uppercase">
-            Join The <span className="text-transparent bg-clip-text bg-gradient-to-b from-white to-white/40">Grid.</span>
+          <h2 className="font-head font-800 text-5xl md:text-8xl tracking-tighter leading-none mb-8 uppercase text-text">
+            Join The <span className="text-transparent bg-clip-text bg-gradient-to-b from-text to-text/40">Grid.</span>
           </h2>
           <p className="text-muted-text max-w-[500px] mx-auto text-lg font-mono mb-12">
             &gt; Sentinel is forged in the open. Synchronize your node, contribute to the core, and elevate the construct.
@@ -499,17 +499,17 @@ export default function AboutPage() {
             <a
               href="https://github.com/AddToKart/sentinel-v2"
               target="_blank"
-              className="group relative px-8 py-4 bg-accent text-black font-mono text-sm font-bold uppercase tracking-widest overflow-hidden"
+              className="group relative px-8 py-4 bg-accent text-bg font-mono text-sm font-bold uppercase tracking-widest overflow-hidden"
             >
-              <div className="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out" />
-              <div className="relative z-10 flex items-center gap-3">
+              <div className="absolute inset-0 bg-text translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out" />
+              <div className="relative z-10 flex items-center gap-3 mix-blend-difference text-white dark:text-black">
                 <Github className="w-5 h-5" />
                 Star on GitHub
               </div>
             </a>
             <Link
               href="/"
-              className="group px-8 py-4 border border-accent/30 bg-black/50 text-white font-mono text-sm uppercase tracking-widest hover:bg-accent/10 hover:border-accent transition-all duration-300 flex items-center gap-3"
+              className="group px-8 py-4 border border-accent/30 bg-bg2/50 text-text font-mono text-sm uppercase tracking-widest hover:bg-accent/10 hover:border-accent transition-all duration-300 flex items-center gap-3"
             >
               <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
               Return to Nexus
