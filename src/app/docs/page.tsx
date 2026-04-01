@@ -805,7 +805,7 @@ export default function DocsPage() {
 
               <div className="space-y-0">
                 {endpoints.map((endpoint, i) => (
-                  <EndpointRow key={endpoint.path} {...endpoint} index={i} />
+                  <EndpointRow key={`${endpoint.method} ${endpoint.path}`} {...endpoint} index={i} />
                 ))}
               </div>
 

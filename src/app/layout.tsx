@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { IBM_Plex_Mono, Syne } from "next/font/google";
 import "./globals.css";
+import { SPEProvider } from "@/lib/SPE/SPEProvider";
+import { TelemetryOverlay } from "@/components/SPE/TelemetryOverlay";
 
 const ibmPlexMono = IBM_Plex_Mono({
   variable: "--font-mono",
@@ -29,7 +31,10 @@ export default function RootLayout({
       <body
         className={`${ibmPlexMono.variable} ${syne.variable} font-mono antialiased bg-[#08080a] text-[#f0eee8]`}
       >
-        {children}
+        <SPEProvider>
+          {children}
+          <TelemetryOverlay />
+        </SPEProvider>
       </body>
     </html>
   );
