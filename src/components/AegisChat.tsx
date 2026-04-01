@@ -5,6 +5,166 @@ import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Terminal, X, Send, User, Loader2, Minus, Maximize2 } from 'lucide-react';
 import { Message } from 'ai';
+import type { ReactNode } from 'react';
+
+function renderInline(text: string) {
+  const parts = text.split(/(`[^`]+`|\*\*[^*]+\*\*)/g).filter(Boolean);
+
+  return parts.map((part, index) => {
+    if (part.startsWith('`') && part.endsWith('`')) {
+      return (
+        <code
+          key={`${part}-${index}`}
+          className="rounded-md border border-border-dim bg-bg3 px-1.5 py-0.5 font-mono text-[11px] text-accent"
+        >
+          {part.slice(1, -1)}
+        </code>
+      );
+    }
+
+    if (part.startsWith('**') && part.endsWith('**')) {
+      return (
+        <strong key={`${part}-${index}`} className="font-semibold text-text">
+          {part.slice(2, -2)}
+        </strong>
+      );
+    }
+
+    return <span key={`${part}-${index}`}>{part}</span>;
+  });
+}
+
+function renderMessageContent(content: string) {
+  const lines = content.replace(/\r\n/g, '\n').split('\n');
+  const blocks: ReactNode[] = [];
+
+  for (let i = 0; i < lines.length; ) {
+    const line = lines[i];
+    const trimmed = line.trim();
+
+    if (!trimmed) {
+      i += 1;
+      continue;
+    }
+
+    if (trimmed.startsWith('```')) {
+      const codeLines: string[] = [];
+      const language = trimmed.slice(3).trim();
+      i += 1;
+
+      while (i < lines.length && !lines[i].trim().startsWith('```')) {
+        codeLines.push(lines[i]);
+        i += 1;
+      }
+
+      if (i < lines.length) {
+        i += 1;
+      }
+
+      blocks.push(
+        <div key={`code-${blocks.length}`} className="overflow-hidden rounded-xl border border-border-dim bg-bg3">
+          {language ? (
+            <div className="border-b border-border-dim bg-bg px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.18em] text-muted-text/70">
+              {language}
+            </div>
+          ) : null}
+          <pre className="overflow-x-auto px-3 py-3 font-mono text-[11px] leading-6 text-text">
+            <code>{codeLines.join('\n')}</code>
+          </pre>
+        </div>
+      );
+      continue;
+    }
+
+    if (/^#{1,3}\s/.test(trimmed)) {
+      const level = trimmed.match(/^#+/)?.[0].length ?? 1;
+      const text = trimmed.replace(/^#{1,3}\s+/, '');
+      const headingClass =
+        level === 1
+          ? 'text-[15px] font-semibold text-text'
+          : level === 2
+            ? 'text-[14px] font-semibold text-text'
+            : 'text-[13px] font-semibold text-text/90';
+
+      blocks.push(
+        <div key={`heading-${blocks.length}`} className={headingClass}>
+          {renderInline(text)}
+        </div>
+      );
+      i += 1;
+      continue;
+    }
+
+    if (/^[-*]\s+/.test(trimmed)) {
+      const items: string[] = [];
+
+      while (i < lines.length && /^[-*]\s+/.test(lines[i].trim())) {
+        items.push(lines[i].trim().replace(/^[-*]\s+/, ''));
+        i += 1;
+      }
+
+      blocks.push(
+        <ul key={`list-${blocks.length}`} className="space-y-2 pl-1">
+          {items.map((item, index) => (
+            <li key={`${item}-${index}`} className="flex items-start gap-2 text-muted-text">
+              <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
+              <span>{renderInline(item)}</span>
+            </li>
+          ))}
+        </ul>
+      );
+      continue;
+    }
+
+    if (/^\d+\.\s+/.test(trimmed)) {
+      const items: string[] = [];
+
+      while (i < lines.length && /^\d+\.\s+/.test(lines[i].trim())) {
+        items.push(lines[i].trim().replace(/^\d+\.\s+/, ''));
+        i += 1;
+      }
+
+      blocks.push(
+        <ol key={`ordered-${blocks.length}`} className="space-y-2 pl-1">
+          {items.map((item, index) => (
+            <li key={`${item}-${index}`} className="flex items-start gap-2 text-muted-text">
+              <span className="mt-0.5 w-5 shrink-0 font-mono text-[11px] text-accent">{index + 1}.</span>
+              <span>{renderInline(item)}</span>
+            </li>
+          ))}
+        </ol>
+      );
+      continue;
+    }
+
+    const paragraphLines: string[] = [];
+
+    while (i < lines.length) {
+      const current = lines[i].trim();
+
+      if (
+        !current ||
+        current.startsWith('```') ||
+        /^#{1,3}\s/.test(current) ||
+        /^[-*]\s+/.test(current) ||
+        /^\d+\.\s+/.test(current)
+      ) {
+        break;
+      }
+
+      paragraphLines.push(current);
+      i += 1;
+    }
+
+    blocks.push(
+      <p key={`paragraph-${blocks.length}`} className="leading-7 text-inherit">
+        {renderInline(paragraphLines.join(' '))}
+      </p>
+    );
+  }
+
+  return blocks;
+}
 
 export function AegisChat() {
   const [isOpen, setIsOpen] = useState(false);
@@ -115,11 +275,8 @@ export function AegisChat() {
                             ? 'bg-bg3 border border-border-dim text-text rounded-tr-sm' 
                             : 'bg-bg border border-border-dim text-muted-text rounded-tl-sm'
                         }`}>
-                          <div className="prose prose-sm dark:prose-invert prose-p:leading-relaxed prose-pre:bg-bg3 prose-pre:border prose-pre:border-border-dim max-w-none">
-                            {/* Simple text rendering. In a real app, use react-markdown here */}
-                            {m.content.split('\\n').map((line: string, i: number) => (
-                              <p key={i} className="mb-2 last:mb-0">{line}</p>
-                            ))}
+                          <div className="space-y-3">
+                            {renderMessageContent(m.content)}
                           </div>
                         </div>
                       </div>

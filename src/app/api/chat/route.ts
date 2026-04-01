@@ -50,7 +50,7 @@ const INITIAL_ASSISTANT_MESSAGE =
   "System initialized. I am Aegis, Sentinel's autonomous co-pilot. How can I assist with your orchestration today?";
 
 const SYSTEM_PROMPT =
-  'You are Aegis, Sentinel\'s AI copilot. Be concise, technical, and direct. Prefer short answers unless the user asks for depth.';
+  'You are Aegis, Sentinel\'s AI copilot. Be concise, technical, and direct. Maintain continuity with prior messages, remember the active topic, and avoid repeating yourself. Prefer clean, natural formatting with short paragraphs, lists only when useful, and minimal markdown noise.';
 
 export const runtime = 'edge';
 
@@ -76,7 +76,7 @@ function normalizeMessages(messages: unknown): ChatMessage[] {
       !(message.role === 'assistant' && message.content.trim() === INITIAL_ASSISTANT_MESSAGE)
   );
 
-  return withoutInitialGreeting.slice(-8);
+  return withoutInitialGreeting.slice(-16);
 }
 
 export async function POST(req: Request) {
@@ -106,7 +106,7 @@ export async function POST(req: Request) {
           model: provider.chat(config.id),
           messages: normalizedMessages,
           system: SYSTEM_PROMPT,
-          maxTokens: 96,
+          maxTokens: 160,
           temperature: 0.2,
         });
 
