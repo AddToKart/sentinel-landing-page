@@ -132,7 +132,7 @@ export default function Home() {
   const parallaxY2 = useTransform(smoothProgress, [0, 1], [0, 200]);
 
   return (
-    <main className="min-h-screen relative overflow-x-hidden selection:bg-accent selection:text-bg bg-bg">
+    <main className="relative overflow-x-clip selection:bg-accent selection:text-bg bg-bg">
       <div className="fixed inset-0 z-0 pointer-events-none opacity-40 mix-blend-overlay">
         <div className="absolute inset-0 bg-[url('/noise.png')] opacity-20" />
       </div>
@@ -146,7 +146,7 @@ export default function Home() {
       {/* ═══ HERO ═══ */}
       <motion.section
         style={{ opacity: heroOpacity, scale: heroScale, y: heroY }}
-        className="hero min-h-screen flex flex-col items-center justify-center px-6 py-32 relative text-center z-10"
+        className="hero min-h-[calc(100svh-60px)] flex flex-col items-center justify-center px-6 pt-28 pb-20 md:pt-32 md:pb-24 relative text-center z-10"
       >
         <motion.div
           initial={{ opacity: 0, scale: 0.8, filter: "blur(20px)" }}
@@ -167,8 +167,8 @@ export default function Home() {
             <motion.span
               initial={{ width: 0, opacity: 0 }}
               animate={{ width: "100%", opacity: 1 }}
-              transition={{ duration: 1.5, delay: 1, ease: [0.16, 1, 0.3, 1] }}
-              className="absolute left-0 bottom-1 md:bottom-4 h-[4px] md:h-[8px] bg-accent/30 -z-10 shadow-[0_0_20px_rgba(var(--accent-rgb),0.5)]"
+              transition={{ duration: 1.5, delay: 1.5, ease: [0.16, 1, 0.3, 1] }}
+              className="absolute left-0 -bottom-1 md:-bottom-2 h-[2px] md:h-[3px] bg-accent shadow-[0_0_25px_rgba(var(--accent-rgb),0.6)]"
             />
           </span>
         </h1>

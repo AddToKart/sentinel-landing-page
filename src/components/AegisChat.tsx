@@ -201,6 +201,22 @@ export function AegisChat() {
     }
   }, [isOpen, isMinimized]);
 
+  useEffect(() => {
+    if (!isOpen || isMinimized) return;
+
+    const { body, documentElement } = document;
+    const previousHtmlOverflow = documentElement.style.overflow;
+    const previousBodyOverflow = body.style.overflow;
+
+    documentElement.style.overflow = "hidden";
+    body.style.overflow = "hidden";
+
+    return () => {
+      documentElement.style.overflow = previousHtmlOverflow;
+      body.style.overflow = previousBodyOverflow;
+    };
+  }, [isOpen, isMinimized]);
+
   return (
     <>
       <AnimatePresence>
