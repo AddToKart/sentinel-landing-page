@@ -1,16 +1,22 @@
 "use client";
 
-import { Bot, Braces, Cpu, GitBranch, Monitor, Package, Terminal, Zap } from "lucide-react";
+import { Bot, Braces, Cpu, GitBranch, Monitor, Package, Terminal, Zap, Sparkles, Box, Cloud, Container, Code2 } from "lucide-react";
 
 const integrations = [
+  // AI Agents
   { icon: Bot, name: "Claude", detail: "Anthropic" },
-  { icon: Zap, name: "GPT-4", detail: "OpenAI" },
-  { icon: Cpu, name: "Gemini", detail: "Google" },
   { icon: Braces, name: "Codex", detail: "OpenAI" },
+  { icon: Cpu, name: "Gemini", detail: "Google" },
+  { icon: Sparkles, name: "Qwen", detail: "Alibaba" },
+  { icon: Box, name: "Kilo", detail: "AI Agent" },
+  { icon: Cloud, name: "Kimi", detail: "Moonshot" },
+  // Tools & Runtime
   { icon: Terminal, name: "xterm.js", detail: "Terminal" },
   { icon: Monitor, name: "Monaco", detail: "Editor" },
   { icon: GitBranch, name: "Git", detail: "Worktrees" },
   { icon: Package, name: "Bun", detail: "Runtime" },
+  { icon: Container, name: "Docker", detail: "Containers" },
+  { icon: Code2, name: "VS Code", detail: "Extensions" },
 ];
 
 export const IntegrationsGrid = () => {

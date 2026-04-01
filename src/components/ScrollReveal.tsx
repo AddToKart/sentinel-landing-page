@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 
 type RevealVariant = "fade-up" | "fade-down" | "fade-left" | "fade-right" | "scale-in" | "fade";
 
@@ -24,18 +24,34 @@ export function ScrollReveal({
   threshold = 0.15,
 }: ScrollRevealProps) {
   const ref = useRef<HTMLDivElement>(null);
+  const [isRevealed, setIsRevealed] = useState(false);
+  const [isAnimating, setIsAnimating] = useState(false);
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
 
+    // Use a slightly larger margin for the "preparation" observer if we wanted to be super fancy,
+    // but for now, we'll just apply will-change when intersecting and remove after duration.
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          el.classList.add("revealed");
+          setIsAnimating(true);
+          // Small delay to ensure will-change is picked up before the transition starts
+          requestAnimationFrame(() => {
+            setIsRevealed(true);
+          });
+
           if (once) observer.unobserve(el);
+
+          // Remove will-change after animation is done to free up GPU memory
+          const totalTime = delay + duration + 100;
+          setTimeout(() => {
+            setIsAnimating(false);
+          }, totalTime);
         } else if (!once) {
-          el.classList.remove("revealed");
+          setIsRevealed(false);
+          setIsAnimating(false);
         }
       },
       { threshold, rootMargin: "0px 0px -40px 0px" }
@@ -43,16 +59,18 @@ export function ScrollReveal({
 
     observer.observe(el);
     return () => observer.disconnect();
-  }, [once, threshold]);
+  }, [once, threshold, delay, duration]);
 
   return (
     <div
       ref={ref}
-      className={`scroll-reveal sr-${variant} ${className}`}
+      className={`scroll-reveal sr-${variant} ${isRevealed ? "revealed" : ""} ${className}`}
       style={{
         position: "relative",
         "--sr-delay": `${delay}ms`,
         "--sr-duration": `${duration}ms`,
+        // Only apply will-change during the actual animation phase
+        willChange: isAnimating ? "opacity, transform" : "auto",
       } as React.CSSProperties}
     >
       {children}

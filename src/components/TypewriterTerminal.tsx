@@ -25,10 +25,9 @@ const lines: Line[] = [
 
 export const TypewriterTerminal = () => {
   const [visibleLines, setVisibleLines] = useState<Line[]>([]);
-  const [currentText, setCurrentText] = useState("");
   const [lineIdx, setLineIdx] = useState(0);
-  const [charIdx, setCharIdx] = useState(0);
   const terminalRef = useRef<HTMLDivElement>(null);
+  const currentLineRef = useRef<HTMLSpanElement>(null);
 
   const CHAR_DELAY = 22;
   const PAUSE = 400;
@@ -42,35 +41,38 @@ export const TypewriterTerminal = () => {
       const timer = setTimeout(() => {
         setVisibleLines((prev) => [...prev, line]);
         setLineIdx((prev) => prev + 1);
-        setCharIdx(0);
-        setCurrentText("");
+        if (currentLineRef.current) currentLineRef.current.textContent = "";
       }, 10);
       return () => clearTimeout(timer);
     }
 
-    const timer = setTimeout(
-      () => {
-        if (line.text && charIdx < line.text.length) {
-          setCurrentText(line.text.slice(0, charIdx + 1));
-          setCharIdx((prev) => prev + 1);
-        } else {
-          setVisibleLines((prev) => [...prev, { ...line, text: line.text }]);
-          setLineIdx((prev) => prev + 1);
-          setCharIdx(0);
-          setCurrentText("");
+    let charIdx = 0;
+    const text = line.text || "";
+    
+    const typeChar = () => {
+      if (charIdx < text.length) {
+        if (currentLineRef.current) {
+          currentLineRef.current.textContent = text.slice(0, charIdx + 1);
         }
-      },
-      line.type === "cmd" ? CHAR_DELAY : charIdx === 0 ? PAUSE : CHAR_DELAY / 2
-    );
+        charIdx++;
+        setTimeout(typeChar, line.type === "cmd" ? CHAR_DELAY : CHAR_DELAY / 2);
+      } else {
+        // Line complete, move to React state
+        setVisibleLines((prev) => [...prev, { ...line, text }]);
+        if (currentLineRef.current) currentLineRef.current.textContent = "";
+        setLineIdx((prev) => prev + 1);
+      }
+    };
 
-    return () => clearTimeout(timer);
-  }, [lineIdx, charIdx]);
+    const startTimer = setTimeout(typeChar, charIdx === 0 ? PAUSE : 0);
+    return () => clearTimeout(startTimer);
+  }, [lineIdx]);
 
   useEffect(() => {
     if (terminalRef.current) {
       terminalRef.current.scrollTop = terminalRef.current.scrollHeight;
     }
-  }, [visibleLines, currentText]);
+  }, [visibleLines, lineIdx]);
 
   return (
     <div className="terminal-wrap group relative overflow-hidden bg-bg2 border border-white/[0.08] shadow-[0_32px_64px_rgba(0,0,0,0.4)]">
@@ -86,18 +88,11 @@ export const TypewriterTerminal = () => {
           <div className="px-[14px] py-[3px] text-[11px] font-mono text-accent bg-accent/[0.06] border-r border-white/[0.04] whitespace-nowrap cursor-pointer">
             Agents Dashboard
           </div>
-          <div className="px-[14px] py-[3px] text-[11px] font-mono text-muted-text/60 border-r border-white/[0.04] whitespace-nowrap cursor-pointer hover:text-text hover:bg-white/[0.03] transition-all">
-            terminal-1
-          </div>
-          <div className="px-[14px] py-[3px] text-[11px] font-mono text-muted-text/60 border-r border-white/[0.04] whitespace-nowrap cursor-pointer hover:text-text hover:bg-white/[0.03] transition-all">
-            terminal-2
-          </div>
-          <div className="px-[14px] py-[3px] text-[11px] font-mono text-muted-text/60 border-r border-white/[0.04] whitespace-nowrap cursor-pointer hover:text-text hover:bg-white/[0.03] transition-all">
-            IDE
-          </div>
-          <div className="px-[14px] py-[3px] text-[11px] font-mono text-muted-text/60 border-r border-white/[0.04] whitespace-nowrap cursor-pointer hover:text-text hover:bg-white/[0.03] transition-all">
-            + New
-          </div>
+          {["terminal-1", "terminal-2", "IDE", "+ New"].map((tab) => (
+            <div key={tab} className="px-[14px] py-[3px] text-[11px] font-mono text-muted-text/60 border-r border-white/[0.04] whitespace-nowrap cursor-pointer hover:text-text hover:bg-white/[0.03] transition-all">
+              {tab}
+            </div>
+          ))}
         </div>
       </div>
 
@@ -129,25 +124,17 @@ export const TypewriterTerminal = () => {
           </div>
         ))}
         {lineIdx < lines.length && (
-          <div>
-            {lines[lineIdx].type === "cmd" && (
-              <div className="flex gap-[10px]">
-                <span className="text-accent select-none">›</span>
-                <span className="text-text">
-                  {currentText}
-                  <span className="inline-block w-2 h-3.5 bg-accent ml-0.5 align-middle animate-blink" />
-                </span>
-              </div>
-            )}
-            {(lines[lineIdx].type === "output" || lines[lineIdx].type === "success" || lines[lineIdx].type === "info") && (
-              <div className={`${
+          <div className={lines[lineIdx].type === "cmd" ? "flex gap-[10px]" : "pl-5"}>
+            {lines[lineIdx].type === "cmd" && <span className="text-accent select-none">›</span>}
+            <span 
+              ref={currentLineRef}
+              className={
                 lines[lineIdx].type === "output" ? "text-muted-text" :
-                lines[lineIdx].type === "success" ? "text-accent" : "text-blue-400/90"
-              } pl-5`}>
-                {currentText}
-                <span className="inline-block w-2 h-3.5 bg-accent ml-0.5 align-middle animate-blink" />
-              </div>
-            )}
+                lines[lineIdx].type === "success" ? "text-accent" :
+                lines[lineIdx].type === "info" ? "text-blue-400/90" : "text-text"
+              }
+            />
+            <span className="inline-block w-2 h-3.5 bg-accent ml-0.5 align-middle animate-blink" />
           </div>
         )}
       </div>

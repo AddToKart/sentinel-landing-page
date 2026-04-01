@@ -309,13 +309,13 @@ export default function Home() {
           <ScrollReveal>
             <div className="text-center mb-14">
               <div className="text-[11px] tracking-[0.2em] uppercase text-accent/80 mb-4 font-bold">
-                Ecosystem
+                AI Agents & Tools
               </div>
               <h2 className="font-head font-800 text-4xl md:text-5xl tracking-tighter leading-tight mb-4">
-                Works with your stack.
+                Powered by top-tier agents.
               </h2>
-              <p className="text-muted-text max-w-[480px] mx-auto text-[15px] leading-relaxed">
-                Sentinel integrates with the tools and AI models you already use.
+              <p className="text-muted-text max-w-[520px] mx-auto text-[15px] leading-relaxed">
+                Sentinel runs Claude, Codex, Gemini, Qwen, Kilo, Kimi and more — with full sandbox isolation and parallel execution.
               </p>
             </div>
           </ScrollReveal>
