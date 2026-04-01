@@ -1,7 +1,7 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
+import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+import { useRef, useState, useEffect } from "react";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { GridCanvas } from "@/components/GridCanvas";
 import {
@@ -22,10 +22,14 @@ import {
   Wifi,
   Lock,
   Webhook,
+  Eye,
+  Activity,
+  Infinity,
+  Database,
+  Search,
 } from "lucide-react";
 import Link from "next/link";
 import type { LucideIcon } from "lucide-react";
-import type { ReactNode } from "react";
 
 /* ═══════════════════════════════════════════════════════════
    DATA
@@ -43,120 +47,181 @@ interface EcosystemItem {
 const ecosystemCards: EcosystemItem[] = [
   {
     icon: Cpu,
-    title: "Sentinel Core",
+    title: "Sentinel",
     description:
-      "The original multi-agent workspace. Orchestrate parallel AI coding sessions in isolated sandboxes with Git worktrees and Docker containers.",
+      "The core multi-agent workspace. Orchestrate parallel AI coding sessions in isolated sandboxes with Git worktrees and Docker containers.",
     status: "stable",
     year: "2025",
     accentColor: "#4ade80",
   },
   {
-    icon: Smartphone,
-    title: "Sentinel Mobile",
+    icon: Shield,
+    title: "Aegis",
     description:
-      "Monitor sessions, review diffs, and approve changes remotely. Push alerts for CPU/RAM with encrypted sync over the wire.",
+      "Enterprise-grade security perimeter. Enforces network policies, data loss prevention, and strict sandboxing for agent runtimes.",
     status: "beta",
     year: "2026",
     accentColor: "#a78bfa",
   },
   {
-    icon: Cloud,
-    title: "Sentinel Cloud",
+    icon: Users,
+    title: "Nexus",
     description:
-      "Hosted agent infrastructure with managed sandboxes, shared context pools, and team-level access controls. Zero-config deployment.",
+      "Collaborative agent orchestration for engineering orgs. Shared sessions, role-based permissions, and audit trails.",
     status: "alpha",
     year: "2026",
     accentColor: "#60a5fa",
   },
   {
-    icon: Users,
-    title: "Sentinel Teams",
+    icon: Terminal,
+    title: "Forge",
     description:
-      "Collaborative agent orchestration for engineering orgs. Shared sessions, role-based permissions, and audit trails for compliance.",
-    status: "beta",
+      "Headless agent management and CI/CD integration. Spin up sessions, pipe output, and script workflows natively.",
+    status: "alpha",
     year: "2026",
     accentColor: "#f59e0b",
   },
   {
-    icon: Terminal,
-    title: "Sentinel CLI",
+    icon: Eye,
+    title: "Argus",
     description:
-      "Headless agent management from your terminal. Spin up sessions, pipe output, and script workflows without leaving the shell.",
-    status: "alpha",
-    year: "2026",
+      "Advanced perception layer. Allows agents to visually inspect UI changes, run visual regression tests, and browse the web.",
+    status: "planned",
+    year: "2027",
     accentColor: "#fb923c",
   },
   {
-    icon: Server,
-    title: "Sentinel Edge",
+    icon: Activity,
+    title: "Iatros",
     description:
-      "On-premise agent runtime for air-gapped and regulated environments. Full feature parity with Sentinel Cloud, zero data leaves your infra.",
+      "Self-healing diagnostics system. Automatically detects regressions, analyzes stack traces, and patches code in real-time.",
     status: "planned",
-    year: "2027",
-    accentColor: "#6b7280",
+    year: "2028",
+    accentColor: "#ec4899",
   },
 ];
 
-interface TimelineItem {
-  quarter: string;
+interface TimelinePhase {
+  phase: string;
   year: string;
   title: string;
   description: string;
   icon: LucideIcon;
   items: string[];
+  projects: string[];
 }
 
-const timelineData: TimelineItem[] = [
+const timelineData: TimelinePhase[] = [
   {
-    quarter: "Q1",
-    year: "2026",
-    title: "Foundation & Mobile",
-    description: "Core platform stabilization and mobile beta launch.",
+    phase: "Phase I",
+    year: "2025",
+    title: "Foundation & Core",
+    description: "Establishing the core platform and unbreachable security perimeter.",
     icon: Rocket,
+    projects: ["Sentinel", "Aegis"],
     items: [
-      "Sentinel v2.1 stable release with plugin architecture",
-      "Mobile companion app beta for iOS and Android",
-      "MCP protocol v2 support with streaming context",
-      "Unified settings sync across desktop and mobile",
+      "Sentinel v1.0 stable release with Docker sandboxing",
+      "Aegis beta launch for network policy enforcement",
+      "Git worktree isolation and multi-agent orchestration",
+      "Local LLM routing and streaming context engine",
     ],
   },
   {
-    quarter: "Q2",
+    phase: "Phase II",
     year: "2026",
-    title: "Cloud & Collaboration",
-    description: "Hosted infrastructure and team features go live.",
-    icon: Cloud,
+    title: "Collaborative Intelligence",
+    description: "Bringing teams together and integrating with headless environments.",
+    icon: Users,
+    projects: ["Nexus", "Forge"],
     items: [
-      "Sentinel Cloud public beta with managed sandboxes",
-      "Real-time collaborative sessions for teams",
-      "Shared context pools across team workspaces",
-      "CI/CD integration hooks for GitHub Actions and GitLab",
+      "Nexus beta: shared workspaces and multiplayer agent sessions",
+      "Forge CLI alpha for headless CI/CD integration",
+      "Role-based access control (RBAC) and audit logging",
+      "Seamless state synchronization across the network",
     ],
   },
   {
-    quarter: "Q3",
+    phase: "Phase III",
     year: "2026",
-    title: "Ecosystem Expansion",
-    description: "CLI, plugins, and third-party integrations.",
+    title: "Perception & Vision",
+    description: "Giving agents eyes to see and understand the visual world.",
+    icon: Eye,
+    projects: ["Argus"],
+    items: [
+      "Argus alpha: visual regression testing capabilities",
+      "Agent-driven UI/UX validation and DOM analysis",
+      "Headless browser integration for end-to-end testing",
+      "Image-to-code multimodal capabilities",
+    ],
+  },
+  {
+    phase: "Phase IV",
+    year: "2027",
+    title: "Predictive Analysis",
+    description: "Anticipating issues before they happen with vast data streams.",
+    icon: Database,
+    projects: ["Oracle"],
+    items: [
+      "Oracle integration: predictive bug detection",
+      "Historical repository analysis and codebase mapping",
+      "Intelligent code completion based on global repo context",
+      "Dependency vulnerability forecasting",
+    ],
+  },
+  {
+    phase: "Phase V",
+    year: "2027",
+    title: "Adaptive Evolution",
+    description: "Self-modifying infrastructure that evolves with the workload.",
     icon: Boxes,
+    projects: ["Proteus"],
     items: [
-      "Sentinel CLI for headless agent management",
-      "Public plugin marketplace with signed extensions",
-      "VS Code and JetBrains IDE extensions",
-      "Custom model provider API and self-hosted LLM routing",
+      "Proteus alpha: dynamic sandbox resizing and scaling",
+      "Morphing architecture based on computational load",
+      "Automated infrastructure-as-code generation",
+      "Fluid resource allocation across agent swarms",
     ],
   },
   {
-    quarter: "Q4",
-    year: "2026",
-    title: "Enterprise & Edge",
-    description: "On-premise deployment and enterprise security.",
-    icon: Shield,
+    phase: "Phase VI",
+    year: "2027",
+    title: "Truth & Validation",
+    description: "Cryptographic proof of agent actions and code integrity.",
+    icon: Search,
+    projects: ["Aletheia"],
     items: [
-      "Sentinel Edge for air-gapped and regulated environments",
-      "SSO/SAML integration with Okta and Azure AD",
-      "SOC 2 Type II compliance certification",
-      "Advanced audit logging and data retention policies",
+      "Aletheia consensus engine for code verification",
+      "Cryptographically signed commits and agent identities",
+      "Deterministic reproducible builds guaranteed by agents",
+      "Zero-trust compliance checks",
+    ],
+  },
+  {
+    phase: "Phase VII",
+    year: "2028",
+    title: "Self-Healing",
+    description: "Autonomous detection and remediation of production issues.",
+    icon: Activity,
+    projects: ["Iatros"],
+    items: [
+      "Iatros beta: continuous production monitoring",
+      "Automated hot-patch generation for runtime errors",
+      "Memory leak detection and automated refactoring",
+      "Self-healing Kubernetes clusters managed by agents",
+    ],
+  },
+  {
+    phase: "Phase VIII",
+    year: "2028+",
+    title: "Multi-dimensional Mastery",
+    description: "Operating across past, present, and future states of the codebase.",
+    icon: Infinity,
+    projects: ["Janus"],
+    items: [
+      "Janus protocol: bidirectional chronological code generation",
+      "Simultaneous refactoring of legacy code and forward feature building",
+      "Branch timeline simulation and outcome prediction",
+      "True autonomous engineering organization",
     ],
   },
 ];
@@ -177,34 +242,34 @@ const inDevFeatures: InDevFeature[] = [
     description:
       "A sandboxed extension system allowing community-built plugins to hook into session lifecycle, UI panels, and agent pipelines.",
     progress: 72,
-    category: "Core",
+    category: "Sentinel",
     accentColor: "#4ade80",
   },
   {
-    icon: Wifi,
-    title: "Remote Session Sync",
+    icon: Lock,
+    title: "Aegis Zero-Trust",
     description:
-      "End-to-end encrypted session state synchronization between desktop and mobile clients via WebSocket relay.",
-    progress: 48,
-    category: "Mobile",
+      "Next-gen microVM sandboxing using Firecracker with per-session resource quotas, network policies, and snapshot restore.",
+    progress: 65,
+    category: "Aegis",
     accentColor: "#a78bfa",
   },
   {
-    icon: Lock,
-    title: "Sandbox Isolation v2",
+    icon: Users,
+    title: "Multiplayer Engine",
     description:
-      "Next-gen microVM sandboxing using Firecracker with per-session resource quotas, network policies, and snapshot restore.",
-    progress: 35,
-    category: "Security",
+      "End-to-end encrypted session state synchronization between clients via WebSocket relay for shared agent sessions.",
+    progress: 48,
+    category: "Nexus",
     accentColor: "#60a5fa",
   },
   {
     icon: Webhook,
-    title: "CI/CD Webhooks",
+    title: "Forge Webhooks",
     description:
       "First-class webhook integration for triggering agent sessions from GitHub, GitLab, and Bitbucket push events and PR reviews.",
-    progress: 61,
-    category: "Integrations",
+    progress: 81,
+    category: "Forge",
     accentColor: "#f59e0b",
   },
   {
@@ -213,7 +278,7 @@ const inDevFeatures: InDevFeature[] = [
     description:
       "Visual worktree lifecycle management with automatic branch creation, merge conflict detection, and stash coordination.",
     progress: 85,
-    category: "Core",
+    category: "Sentinel",
     accentColor: "#4ade80",
   },
   {
@@ -222,16 +287,10 @@ const inDevFeatures: InDevFeature[] = [
     description:
       "Real-time context window optimization that dynamically adjusts token allocation across agents based on priority scoring.",
     progress: 29,
-    category: "AI",
+    category: "Core AI",
     accentColor: "#ec4899",
   },
 ];
-
-/* ═══════════════════════════════════════════════════════════
-   NAV
-   ═══════════════════════════════════════════════════════════ */
-
-
 
 /* ═══════════════════════════════════════════════════════════
    STATUS BADGE
@@ -362,101 +421,6 @@ function EcosystemCard({
 }
 
 /* ═══════════════════════════════════════════════════════════
-   TIMELINE ITEM
-   ═══════════════════════════════════════════════════════════ */
-
-function TimelineItem({
-  quarter,
-  year,
-  title,
-  description,
-  icon: Icon,
-  items,
-  index,
-  isLast,
-}: TimelineItem & { index: number; isLast: boolean }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "end start"],
-  });
-  const lineScale = useTransform(scrollYProgress, [0.2, 0.8], [0, 1]);
-
-  return (
-    <div ref={ref} className="relative flex gap-6 md:gap-10">
-      {/* Vertical line & dot */}
-      <div className="relative flex flex-col items-center flex-shrink-0">
-        {/* Dot */}
-        <motion.div
-          initial={{ scale: 0, opacity: 0 }}
-          whileInView={{ scale: 1, opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-          className="relative z-10 w-10 h-10 rounded-full bg-bg2 border border-accent/30 flex items-center justify-center"
-        >
-          <Icon className="w-4 h-4 text-accent/80" />
-        </motion.div>
-
-        {/* Connecting line */}
-        {!isLast && (
-          <div className="relative w-px flex-1 bg-border-dim2 overflow-hidden">
-            <motion.div
-              style={{ scaleY: lineScale, transformOrigin: "top" }}
-              className="absolute inset-0 bg-accent/30"
-            />
-          </div>
-        )}
-      </div>
-
-      {/* Content */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-40px" }}
-        transition={{
-          duration: 0.6,
-          delay: index * 0.05,
-          ease: [0.16, 1, 0.3, 1],
-        }}
-        className={`flex-1 ${isLast ? "pb-0" : "pb-12 md:pb-16"}`}
-      >
-        <div className="flex items-center gap-3 mb-2">
-          <span className="text-[10px] font-mono uppercase tracking-[0.15em] text-accent/70 font-bold">
-            {quarter} {year}
-          </span>
-          <div className="h-px flex-1 bg-accent/10" />
-        </div>
-        <h3 className="font-head font-800 text-2xl md:text-3xl tracking-tight text-text mb-2">
-          {title}
-        </h3>
-        <p className="text-muted-text text-[14px] leading-relaxed mb-5 max-w-[480px]">
-          {description}
-        </p>
-        <ul className="space-y-2.5">
-          {items.map((item, i) => (
-            <motion.li
-              key={i}
-              initial={{ opacity: 0, x: -12 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{
-                duration: 0.4,
-                delay: 0.15 + i * 0.06,
-                ease: [0.16, 1, 0.3, 1],
-              }}
-              className="flex items-start gap-3 text-[13px] text-muted-text"
-            >
-              <div className="w-1.5 h-1.5 rounded-full bg-accent/40 mt-1.5 flex-shrink-0" />
-              {item}
-            </motion.li>
-          ))}
-        </ul>
-      </motion.div>
-    </div>
-  );
-}
-
-/* ═══════════════════════════════════════════════════════════
    IN-DEV CARD
    ═══════════════════════════════════════════════════════════ */
 
@@ -533,6 +497,178 @@ function InDevCard({
 }
 
 /* ═══════════════════════════════════════════════════════════
+   ANIMATED TIMELINE SECTION
+   ═══════════════════════════════════════════════════════════ */
+
+function GrandTimeline() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start center", "end 80%"],
+  });
+
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 50,
+    damping: 20,
+    restDelta: 0.001
+  });
+
+  // Calculate container height dynamically to draw SVG path
+  const [height, setHeight] = useState(0);
+  
+  useEffect(() => {
+    if (containerRef.current) {
+      setHeight(containerRef.current.scrollHeight);
+    }
+    
+    const handleResize = () => {
+      if (containerRef.current) {
+        setHeight(containerRef.current.scrollHeight);
+      }
+    };
+    
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  return (
+    <div ref={containerRef} className="relative max-w-[900px] mx-auto py-10">
+      
+      {/* BACKGROUND LINE */}
+      <div className="absolute left-[39px] md:left-1/2 top-0 bottom-0 w-px bg-border-dim2 -translate-x-1/2 hidden md:block" />
+      <div className="absolute left-[39px] md:left-1/2 top-0 bottom-0 w-px bg-border-dim2 -translate-x-1/2 block md:hidden" />
+
+      {/* DRAWING SVG LINE */}
+      <div className="absolute left-[39px] md:left-1/2 top-0 bottom-0 w-[40px] -translate-x-1/2 pointer-events-none z-10 hidden md:block">
+        <svg width="40" height={height || 1000} viewBox={`0 0 40 ${height || 1000}`} className="w-full h-full">
+          <motion.line
+            x1="20"
+            y1="0"
+            x2="20"
+            y2={height || 1000}
+            stroke="url(#gradient)"
+            strokeWidth="3"
+            strokeLinecap="round"
+            style={{ pathLength: smoothProgress }}
+          />
+          <defs>
+            <linearGradient id="gradient" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#4ade80" />
+              <stop offset="50%" stopColor="#60a5fa" />
+              <stop offset="100%" stopColor="#ec4899" />
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+
+      <div className="absolute left-[39px] md:hidden top-0 bottom-0 w-[40px] -translate-x-1/2 pointer-events-none z-10">
+        <svg width="40" height={height || 1000} viewBox={`0 0 40 ${height || 1000}`} className="w-full h-full">
+          <motion.line
+            x1="20"
+            y1="0"
+            x2="20"
+            y2={height || 1000}
+            stroke="url(#gradient-mobile)"
+            strokeWidth="3"
+            strokeLinecap="round"
+            style={{ pathLength: smoothProgress }}
+          />
+          <defs>
+            <linearGradient id="gradient-mobile" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#4ade80" />
+              <stop offset="50%" stopColor="#60a5fa" />
+              <stop offset="100%" stopColor="#ec4899" />
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+
+      <div className="relative z-20 flex flex-col gap-12 md:gap-24">
+        {timelineData.map((item, i) => {
+          const isEven = i % 2 === 0;
+          const Icon = item.icon;
+          
+          return (
+            <div key={item.phase} className="relative flex items-center md:justify-between flex-col md:flex-row gap-6 md:gap-0 group">
+              
+              {/* Desktop Left Side / Mobile Content */}
+              <motion.div 
+                initial={{ opacity: 0, x: isEven ? -40 : 40 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                className={`w-full md:w-[45%] pl-20 md:pl-0 ${isEven ? 'md:text-right md:pr-12' : 'md:order-2 md:text-left md:pl-12'}`}
+              >
+                <div className={`flex items-center gap-3 mb-3 ${isEven ? 'md:justify-end' : 'md:justify-start'}`}>
+                  <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-accent/80 font-bold">
+                    {item.phase} • {item.year}
+                  </span>
+                  <div className="flex gap-2">
+                    {item.projects.map(proj => (
+                      <span key={proj} className="text-[9px] font-mono uppercase tracking-[0.1em] px-2 py-0.5 border border-border-dim2 bg-bg2 text-muted-text rounded-sm">
+                        {proj}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                
+                <h3 className="font-head font-800 text-2xl md:text-3xl tracking-tight text-text mb-3">
+                  {item.title}
+                </h3>
+                
+                <p className="text-muted-text text-[14px] leading-relaxed mb-5">
+                  {item.description}
+                </p>
+                
+                <ul className={`space-y-3 ${isEven ? 'md:flex md:flex-col md:items-end' : ''}`}>
+                  {item.items.map((listItem, j) => (
+                    <motion.li
+                      key={j}
+                      initial={{ opacity: 0, y: 10 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{
+                        duration: 0.4,
+                        delay: 0.2 + j * 0.1,
+                        ease: [0.16, 1, 0.3, 1],
+                      }}
+                      className={`flex items-start gap-3 text-[13px] text-muted-text max-w-[400px] ${isEven ? 'md:flex-row-reverse md:text-right' : ''}`}
+                    >
+                      <div className="w-1.5 h-1.5 rounded-full bg-accent/40 mt-1.5 flex-shrink-0" />
+                      {listItem}
+                    </motion.li>
+                  ))}
+                </ul>
+              </motion.div>
+
+              {/* Center Dot (Desktop & Mobile) */}
+              <div className="absolute left-[39px] md:left-1/2 top-0 md:top-1/2 -translate-x-1/2 md:-translate-y-1/2 flex items-center justify-center pointer-events-none">
+                <motion.div
+                  initial={{ scale: 0, opacity: 0 }}
+                  whileInView={{ scale: 1, opacity: 1 }}
+                  viewport={{ once: true, margin: "-100px" }}
+                  transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                  className="w-12 h-12 rounded-full bg-bg border-2 border-border-dim flex items-center justify-center relative z-20 group-hover:border-accent/50 group-hover:scale-110 transition-all duration-300"
+                >
+                  <Icon className="w-5 h-5 text-muted-text group-hover:text-accent transition-colors duration-300" />
+                  
+                  {/* Pulse effect */}
+                  <div className="absolute inset-0 rounded-full border border-accent/0 group-hover:border-accent/30 group-hover:animate-ping opacity-0 group-hover:opacity-100 transition-opacity" />
+                </motion.div>
+              </div>
+
+              {/* Empty placeholder for alignment */}
+              <div className="hidden md:block w-[45%]" />
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════
    ROADMAP PAGE
    ═══════════════════════════════════════════════════════════ */
 
@@ -564,7 +700,7 @@ export default function RoadmapPage() {
           className="inline-flex items-center gap-2 text-[11px] text-accent/80 tracking-[0.2em] uppercase border border-accent/15 px-4 py-1.5 mb-8 bg-accent/[0.03]"
         >
           <Rocket className="w-3.5 h-3.5" />
-          Product Roadmap 2026
+          The Grand Vision
         </motion.div>
 
         <motion.h1
@@ -576,12 +712,12 @@ export default function RoadmapPage() {
           The future of
           <br />
           <span className="text-accent italic relative">
-            agent orchestration
+            autonomous systems
             <motion.span
-              initial={{ width: 0 }}
-              animate={{ width: "100%" }}
-              transition={{ duration: 1, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
-              className="absolute left-0 bottom-1.5 h-[3px] md:h-[5px] bg-accent/15 -z-10"
+               initial={{ width: 0 }}
+               animate={{ width: "100%" }}
+               transition={{ duration: 1, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
+               className="absolute left-0 bottom-1.5 h-[3px] md:h-[5px] bg-accent/15 -z-10"
             />
           </span>
         </motion.h1>
@@ -592,8 +728,7 @@ export default function RoadmapPage() {
           transition={{ duration: 0.9, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
           className="max-w-[620px] mx-auto text-muted-text text-lg md:text-xl leading-relaxed mb-10"
         >
-          From a desktop agent runner to a full ecosystem — here&apos;s where
-          Sentinel is headed and what we&apos;re building right now.
+          From a desktop agent runner to a multi-dimensional platform for AI orchestration across the entire development lifecycle.
         </motion.p>
 
         <motion.div
@@ -608,7 +743,7 @@ export default function RoadmapPage() {
           </span>
           <span className="flex items-center gap-1.5">
             <span className="w-1.5 h-1.5 rounded-full bg-amber-500 dark:bg-amber-400" />
-            2 In Beta
+            1 In Beta
           </span>
           <span className="flex items-center gap-1.5">
             <span className="w-1.5 h-1.5 rounded-full bg-blue-500 dark:bg-blue-400" />
@@ -616,7 +751,7 @@ export default function RoadmapPage() {
           </span>
           <span className="flex items-center gap-1.5">
             <span className="w-1.5 h-1.5 rounded-full bg-muted-text/40" />
-            1 Planned
+            6 Planned
           </span>
         </motion.div>
       </motion.section>
@@ -626,15 +761,13 @@ export default function RoadmapPage() {
         <div className="max-w-[1100px] mx-auto">
           <ScrollReveal>
             <div className="text-[11px] tracking-[0.2em] uppercase text-accent/80 mb-4 font-bold">
-              Sentinel Ecosystem
+              Tenets of the Core
             </div>
             <h2 className="font-head font-800 text-4xl md:text-5xl tracking-tighter leading-tight mb-4">
-              One vision. Six products.
+              Ten projects. One intelligence.
             </h2>
-            <p className="text-muted-text max-w-[560px] text-lg leading-relaxed mb-14">
-              The Sentinel ecosystem is expanding from a single desktop app into a
-              full platform for AI agent orchestration — desktop, mobile, cloud,
-              and on-premise.
+            <p className="text-muted-text max-w-[600px] text-lg leading-relaxed mb-14">
+              The ecosystem is expanding into specialized domains, each represented by a mythological project name. Together, they form an unyielding architecture for autonomous engineering.
             </p>
           </ScrollReveal>
 
@@ -647,33 +780,23 @@ export default function RoadmapPage() {
       </section>
 
       {/* ═══ TIMELINE ═══ */}
-      <section className="py-28 px-6 relative z-[1]">
-        <div className="max-w-[1100px] mx-auto">
+      <section className="py-32 px-6 relative z-[1]">
+        <div className="max-w-[1200px] mx-auto">
           <ScrollReveal>
-            <div className="text-center mb-16">
+            <div className="text-center mb-24">
               <div className="text-[11px] tracking-[0.2em] uppercase text-accent/80 mb-4 font-bold">
-                Release Timeline
+                Evolution Protocol
               </div>
-              <h2 className="font-head font-800 text-4xl md:text-5xl tracking-tighter leading-tight mb-4">
-                Quarter by quarter.
+              <h2 className="font-head font-800 text-4xl md:text-6xl tracking-tighter leading-tight mb-6">
+                The Architect&apos;s Roadmap.
               </h2>
-              <p className="text-muted-text max-w-[480px] mx-auto text-[15px] leading-relaxed">
-                Our planned milestones for 2026. Dates may shift as we prioritize
-                based on community feedback and engineering constraints.
+              <p className="text-muted-text max-w-[500px] mx-auto text-[16px] leading-relaxed">
+                A structured execution plan guiding our expansion from core foundations to multi-dimensional intelligence.
               </p>
             </div>
           </ScrollReveal>
 
-          <div className="max-w-[700px] mx-auto">
-            {timelineData.map((item, i) => (
-              <TimelineItem
-                key={item.quarter + item.year}
-                {...item}
-                index={i}
-                isLast={i === timelineData.length - 1}
-              />
-            ))}
-          </div>
+          <GrandTimeline />
         </div>
       </section>
 
@@ -683,17 +806,15 @@ export default function RoadmapPage() {
           <ScrollReveal>
             <div className="flex items-center gap-3 mb-4">
               <div className="text-[11px] tracking-[0.2em] uppercase text-accent/80 font-bold">
-                Active Development
+                Active Forging
               </div>
               <div className="h-px flex-1 bg-accent/10" />
             </div>
             <h2 className="font-head font-800 text-4xl md:text-5xl tracking-tighter leading-tight mb-4">
-              What we&apos;re building now.
+              What&apos;s in the furnace.
             </h2>
             <p className="text-muted-text max-w-[560px] text-lg leading-relaxed mb-14">
-              Features currently in active development. Progress bars reflect
-              engineering completion — not launch readiness, which includes testing,
-              docs, and polish.
+              Features currently in active development across the ecosystem. Progress bars reflect engineering completion.
             </p>
           </ScrollReveal>
 
