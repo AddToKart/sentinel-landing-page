@@ -1,16 +1,4 @@
-"use client";
-
-import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
-
 export const Ticker = () => {
-  const ref = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "end start"],
-  });
-  const x = useTransform(scrollYProgress, [0, 1], [0, -200]);
-
   const items = [
     { label: "Tauri v2", detail: "Rust Backend" },
     { label: "React 19", detail: "TypeScript" },
@@ -27,35 +15,22 @@ export const Ticker = () => {
   const displayItems = [...items, ...items];
 
   return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.8 }}
-      className="overflow-hidden border-t border-b border-white/5 bg-bg2 relative z-1"
-    >
-      {/* Left gradient fade */}
-      <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-bg2 to-transparent z-[2] pointer-events-none" />
-      {/* Right gradient fade */}
-      <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-bg2 to-transparent z-[2] pointer-events-none" />
-      {/* Top glow line */}
-      <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-accent/20 to-transparent" />
+    <div className="overflow-hidden border-t border-b border-white/[0.04] bg-bg2 relative z-1">
+      {/* Edge fades */}
+      <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-bg2 to-transparent z-[2] pointer-events-none" />
+      <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-bg2 to-transparent z-[2] pointer-events-none" />
 
-      <div
-        className="flex gap-0 whitespace-nowrap animate-ticker-scroll hover:[animation-play-state:paused] w-fit"
-        style={{ x: x.get() as unknown as number }}
-      >
+      <div className="flex gap-0 whitespace-nowrap animate-ticker-scroll hover:[animation-play-state:paused] w-fit">
         {displayItems.map((item, i) => (
           <div
             key={i}
-            className="inline-flex items-center gap-3 px-8 py-[12px] text-[11px] text-muted-text tracking-[0.08em] uppercase border-r border-white/5 whitespace-nowrap hover:text-accent transition-colors cursor-default"
+            className="inline-flex items-center gap-2.5 px-7 py-[11px] text-[11px] text-muted-text tracking-[0.06em] uppercase border-r border-white/[0.04] whitespace-nowrap hover:text-text transition-colors duration-200 cursor-default"
           >
-            <div className="w-1 h-1 rounded-full bg-accent/30 group-hover:bg-accent" />
-            {item.label} <span className="text-accent font-medium">{item.detail}</span>
+            <span className="w-1 h-1 rounded-full bg-accent/20" />
+            {item.label} <span className="text-accent/80 font-medium">{item.detail}</span>
           </div>
         ))}
       </div>
-    </motion.div>
+    </div>
   );
 };

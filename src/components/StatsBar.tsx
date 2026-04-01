@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useSpring, useTransform, useInView } from "framer-motion";
+import { useSpring, useTransform, useInView } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 
 const AnimatedNumber = ({ value, suffix = "" }: { value: string; suffix?: string }) => {
@@ -9,7 +9,7 @@ const AnimatedNumber = ({ value, suffix = "" }: { value: string; suffix?: string
   const [displayValue, setDisplayValue] = useState("0");
   const numValue = parseFloat(value) || 0;
 
-  const spring = useSpring(0, { stiffness: 40, damping: 20 });
+  const spring = useSpring(0, { stiffness: 35, damping: 18 });
   const rounded = useTransform(spring, (latest) => Math.floor(latest).toString());
 
   useEffect(() => {
@@ -19,12 +19,8 @@ const AnimatedNumber = ({ value, suffix = "" }: { value: string; suffix?: string
   }, [isInView, spring, numValue]);
 
   useEffect(() => {
-    return rounded.onChange((v) => {
-      if (value === "∞") {
-        setDisplayValue("∞");
-      } else {
-        setDisplayValue(v);
-      }
+    return rounded.on("change", (v) => {
+      setDisplayValue(value === "∞" ? "∞" : v);
     });
   }, [rounded, value]);
 
@@ -40,29 +36,23 @@ export const StatsBar = () => {
   ];
 
   return (
-    <div className="max-w-[1100px] mx-auto grid grid-cols-2 md:grid-cols-4 border-t border-white/10 relative z-1 bg-bg/50 backdrop-blur-sm">
+    <div className="max-w-[1100px] mx-auto grid grid-cols-2 md:grid-cols-4 border-t border-white/[0.06] relative z-1 contain-layout">
       {stats.map((stat, i) => (
-        <motion.div
+        <div
           key={i}
-          initial={{ opacity: 0, y: 30, scale: 0.95 }}
-          whileInView={{ opacity: 1, y: 0, scale: 1 }}
-          viewport={{ once: true, margin: "-30px" }}
-          transition={{ duration: 0.6, delay: i * 0.12, ease: [0.16, 1, 0.3, 1] }}
-          className="p-10 border-r border-white/5 flex flex-col gap-3 transition-all duration-500 hover:bg-white/[0.03] last:border-r-0 group relative overflow-hidden"
+          className="stat-cell p-10 border-r border-white/[0.04] flex flex-col gap-3 transition-all duration-500 hover:bg-white/[0.02] last:border-r-0 group relative overflow-hidden contain-layout-style"
+          style={{ transitionDelay: `${i * 50}ms` }}
         >
-          {/* Hover glow */}
-          <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 bg-[radial-gradient(ellipse_at_bottom,rgba(74,222,128,0.06)_0%,transparent_70%)]" />
-          
-          <div className="font-head text-4xl md:text-5xl font-800 text-accent leading-none tracking-tighter group-hover:scale-105 transition-transform origin-left relative">
+          <div className="font-head text-4xl md:text-5xl font-800 text-accent leading-none tracking-tighter">
             <AnimatedNumber value={stat.num} suffix={stat.suffix} />
           </div>
-          <div className="text-[10px] uppercase font-bold text-muted-text tracking-[0.2em] group-hover:text-text transition-colors relative">
+          <div className="text-[10px] uppercase font-bold text-muted-text tracking-[0.2em] group-hover:text-text transition-colors duration-300">
             {stat.label}
           </div>
-          
-          {/* Bottom accent line on hover */}
-          <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-accent scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
-        </motion.div>
+
+          {/* Bottom accent */}
+          <div className="absolute bottom-0 left-0 right-0 h-px bg-accent/0 group-hover:bg-accent/25 transition-colors duration-500" />
+        </div>
       ))}
     </div>
   );

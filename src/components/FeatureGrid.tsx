@@ -1,7 +1,6 @@
 "use client";
 
-import { useRef, MouseEvent } from "react";
-import { motion } from "framer-motion";
+import React, { useRef, MouseEvent } from "react";
 import { Layout, Terminal, Code2, Activity, Shield, Share2 } from "lucide-react";
 
 const features = [
@@ -48,66 +47,51 @@ const FeatureCard = ({ feature, index }: { feature: (typeof features)[0]; index:
     cardRef.current.style.setProperty("--mx", `${x}%`);
     cardRef.current.style.setProperty("--my", `${y}%`);
 
-    // Subtle 3D tilt
-    const tiltX = ((y - 50) / 50) * 3;
-    const tiltY = ((x - 50) / 50) * -3;
-    cardRef.current.style.transform = `perspective(800px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale(1.01)`;
+    // Subtle 3D tilt (max 2deg)
+    const tiltX = ((y - 50) / 50) * 2;
+    const tiltY = ((x - 50) / 50) * -2;
+    cardRef.current.style.transform = `perspective(800px) rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
   };
 
   const handleMouseLeave = () => {
     if (!cardRef.current) return;
-    cardRef.current.style.transform = "perspective(800px) rotateX(0deg) rotateY(0deg) scale(1)";
+    cardRef.current.style.transform = "";
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 30, rotateX: 5 }}
-      whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
-      viewport={{ once: true, margin: "-20px" }}
-      transition={{ duration: 0.6, delay: index * 0.08, ease: [0.16, 1, 0.3, 1] }}
+    <div
       ref={cardRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className="feature-card group relative bg-bg border border-white/5 p-8 overflow-hidden cursor-default transition-all duration-300 hover:bg-bg2/80"
-      style={
-        {
-          "--mx": "50%",
-          "--my": "50%",
-          transformStyle: "preserve-3d",
-          willChange: "transform",
-        } as any
-      }
+      className="feature-card group relative bg-bg border border-white/[0.06] p-8 overflow-hidden cursor-default gpu-accelerated contain-layout-style"
+      style={{ "--mx": "50%", "--my": "50%", transitionDelay: `${index * 60}ms` } as React.CSSProperties}
     >
-      {/* Cursor-following radial glow */}
-      <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_var(--mx)_var(--my),rgba(74,222,128,0.08)_0%,transparent_50%)] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+      {/* Cursor-following highlight (subtle) */}
+      <div className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-[radial-gradient(circle_at_var(--mx)_var(--my),rgba(74,222,128,0.04)_0%,transparent_50%)]" />
       
       {/* Top accent line */}
-      <div className="absolute top-0 left-0 right-0 h-[1px] bg-transparent group-hover:bg-accent/60 transition-all duration-500 group-hover:shadow-[0_0_15px_rgba(74,222,128,0.3)]" />
-      
-      {/* Left accent on hover */}
-      <div className="absolute top-0 left-0 bottom-0 w-[1px] bg-transparent group-hover:bg-accent/20 transition-all duration-700 delay-100" />
+      <div className="absolute top-0 left-0 right-0 h-px bg-transparent group-hover:bg-accent/40 transition-colors duration-500" />
 
-      {/* Icon */}
-      <div className="feat-icon w-12 h-12 flex items-center justify-center border border-white/10 mb-6 bg-bg3 transition-all duration-500 group-hover:border-accent/40 group-hover:scale-110 group-hover:text-accent group-hover:shadow-[0_0_20px_rgba(74,222,128,0.15)]">
-        <feature.icon className="w-5 h-5" />
+      <div className="feat-icon w-11 h-11 flex items-center justify-center border border-white/[0.08] mb-5 bg-bg3/50 transition-all duration-500 group-hover:border-accent/30 group-hover:text-accent">
+        <feature.icon className="w-[18px] h-[18px]" />
       </div>
       
-      <h3 className="font-head font-700 text-lg mb-3 text-text group-hover:text-accent transition-colors duration-300">
+      <h3 className="font-head font-700 text-[17px] mb-2.5 text-text group-hover:text-accent transition-colors duration-300">
         {feature.title}
       </h3>
-      <p className="text-muted-text text-[14px] leading-relaxed group-hover:text-muted-text/80 transition-colors">
+      <p className="text-muted-text text-[13px] leading-[1.7]">
         {feature.desc}
       </p>
 
-      {/* Corner decoration */}
-      <div className="absolute bottom-3 right-3 w-4 h-4 border-r border-b border-white/5 group-hover:border-accent/20 transition-colors duration-500" />
-    </motion.div>
+      {/* Bottom corner accent */}
+      <div className="absolute bottom-0 right-0 w-6 h-6 border-r border-b border-white/[0.03] group-hover:border-accent/15 transition-colors duration-500" />
+    </div>
   );
 };
 
 export const FeatureGrid = () => {
   return (
-    <div className="features-grid max-w-[1100px] mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[1px] bg-white/5 border border-white/5">
+    <div className="features-grid max-w-[1100px] mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-white/[0.04] border border-white/[0.04]">
       {features.map((f, i) => (
         <FeatureCard key={i} index={i} feature={f} />
       ))}
