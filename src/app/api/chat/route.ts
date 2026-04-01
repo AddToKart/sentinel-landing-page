@@ -62,7 +62,7 @@ function getMaxTokens(messages: ChatMessage[]) {
       lastUserMessage
     );
 
-  return needsDepth ? 280 : 160;
+  return needsDepth ? 200 : 120;
 }
 
 function normalizeMessages(messages: unknown): ChatMessage[] {
@@ -124,6 +124,7 @@ export async function POST(req: Request) {
           system: AEGIS_SYSTEM_PROMPT,
           maxTokens: getMaxTokens(normalizedMessages),
           temperature: 0.2,
+          topP: 0.9,
         });
 
         return result.toDataStreamResponse();

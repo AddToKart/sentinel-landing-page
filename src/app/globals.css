@@ -82,7 +82,34 @@
 @layer base {
   * {
     @apply border-border outline-ring/50;
+    /* Custom Scrollbar for Firefox */
+    scrollbar-width: thin;
+    scrollbar-color: var(--border-dim2) transparent;
   }
+  
+  /* Custom Scrollbar for Webkit */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+    border-left: 1px solid var(--border-dim);
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: var(--border-dim2);
+    border: 2px solid transparent;
+    background-clip: padding-box;
+    border-radius: 9999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: var(--accent);
+    border: 1px solid transparent;
+  }
+  ::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+
   html {
     overflow-x: clip;
   }

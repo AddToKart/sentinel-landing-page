@@ -1,12 +1,13 @@
 "use client";
 
 import { useChat } from 'ai/react';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Terminal, X, Send, User, Loader2, Minus, Maximize2 } from 'lucide-react';
 import { Message } from 'ai';
 import type { ReactNode } from 'react';
-import { INITIAL_AEGIS_MESSAGE } from '@/lib/aegis-knowledge';
+import { INITIAL_AEGIS_MESSAGE, VALID_ROUTES } from '@/lib/aegis-knowledge';
+import { useRouter } from 'next/navigation';
 
 function renderInline(text: string) {
   const parts = text.split(/(`[^`]+`|\*\*[^*]+\*\*)/g).filter(Boolean);
@@ -170,6 +171,8 @@ function renderMessageContent(content: string) {
 export function AegisChat() {
   const [isOpen, setIsOpen] = useState(false);
   const [isMinimized, setIsMinimized] = useState(false);
+  const router = useRouter();
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   const { messages, input, handleInputChange, handleSubmit, isLoading, error } = useChat({
     api: '/api/chat',
@@ -184,6 +187,21 @@ export function AegisChat() {
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  // Detect navigation markers and trigger navigation
+  useEffect(() => {
+    const lastMessage = messages[messages.length - 1];
+    if (!lastMessage || lastMessage.role !== 'assistant') return;
+
+    const navMatch = lastMessage.content.match(/__NAVIGATE:(\/\S+)__/);
+    if (navMatch) {
+      const path = navMatch[1];
+      const validRoute = VALID_ROUTES.find(r => r.path === path);
+      if (validRoute) {
+        router.push(validRoute.path);
+      }
+    }
+  }, [messages, router]);
 
   // Auto-scroll to bottom when messages change
   useEffect(() => {
@@ -216,6 +234,18 @@ export function AegisChat() {
       body.style.overflow = previousBodyOverflow;
     };
   }, [isOpen, isMinimized]);
+
+  // Memoize rendered messages to avoid re-rendering on every streaming chunk
+  const renderedMessages = useMemo(() => {
+    return messages.map((m: Message) => ({
+      id: m.id,
+      role: m.role,
+      content: m.content,
+      rendered: renderMessageContent(
+        m.content.replace(/__NAVIGATE:\/\S+__/g, '').trim()
+      ),
+    }));
+  }, [messages.map(m => `${m.id}-${m.content.length}`).join('|')]);
 
   return (
     <>
@@ -271,8 +301,8 @@ export function AegisChat() {
                   className="flex-1 flex flex-col overflow-hidden"
                 >
                   {/* Messages */}
-                  <div className="flex-1 overflow-y-auto p-4 space-y-4 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-border-dim">
-                    {messages.map((m: Message) => (
+                  <div ref={scrollRef} className="flex-1 overflow-y-auto p-4 space-y-4 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-border-dim">
+                    {renderedMessages.map((m) => (
                       <div 
                         key={m.id} 
                         className={`flex gap-3 ${m.role === 'user' ? 'flex-row-reverse' : 'flex-row'}`}
@@ -293,7 +323,7 @@ export function AegisChat() {
                             : 'bg-bg border border-border-dim text-muted-text rounded-tl-sm'
                         }`}>
                           <div className="space-y-3">
-                            {renderMessageContent(m.content)}
+                            {m.rendered}
                           </div>
                         </div>
                       </div>
