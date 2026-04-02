@@ -57,12 +57,49 @@ function getMaxTokens(messages: ChatMessage[]) {
   const lastUserMessage =
     [...messages].reverse().find(message => message.role === 'user')?.content.toLowerCase() ?? '';
 
-  const needsDepth =
-    /sentinel|aegis|ecosystem|roadmap|history|about|founder|creator|product|mobile|cloud|teams|cli|studio|edge|nexus|forge|feature|workflow|academic|paraphras|chatbot|research|study|compare|overview|details|explain|list/.test(
+  // Ultra-short responses for pure greetings/acknowledgments only
+  const isSimpleQuery =
+    /^(hi|hey|hello|thanks|thank you|ok|okay|cool|nice|good|great|awesome|bye|goodbye|yo|sup|what's up|whatsup)\.?!?$/i.test(
+      lastUserMessage.trim()
+    );
+
+  if (isSimpleQuery) {
+    return 80; // Enough for a friendly one-liner
+  }
+
+  // Navigation requests need room for the marker AND a real answer
+  const isNavigation =
+    /(go to|show|open|navigate|take me to|visit|see|check|view)\s+(the\s+)?(docs|documentation|pricing|price|prices|ecosystem|roadmap|about|products|showcase|home|homepage)/i.test(
+      lastUserMessage
+    ) ||
+    /\b(docs|documentation|pricing|ecosystem|roadmap|about|products|showcase|home)\s+(page|section|info|information)/i.test(
       lastUserMessage
     );
 
-  return needsDepth ? 200 : 120;
+  // Navigation + follow-up question combo — needs most room
+  if (isNavigation && / and /i.test(lastUserMessage)) {
+    return 600; // Navigate AND explain
+  }
+
+  if (isNavigation) {
+    return 200; // Plenty of room for marker + short confirmation
+  }
+
+  // Short responses for basic questions
+  const isBasicQuestion =
+    /^(what|who|when|where|why|how|is|are|can|do|does|will)\s+.{1,50}$/i.test(lastUserMessage.trim());
+
+  if (isBasicQuestion && lastUserMessage.length < 50) {
+    return 250; // Enough for a clear, complete short answer
+  }
+
+  // Detailed responses for product/ecosystem queries
+  const needsDepth =
+    /sentinel|aegis|ecosystem|roadmap|history|about|founder|creator|product|mobile|cloud|teams|cli|studio|edge|nexus|forge|argus|oracle|proteus|aletheia|iatros|janus|feature|workflow|academic|paraphras|chatbot|research|study|compare|overview|details|explain|list|pricing|install|download|how to|tutorial|guide/.test(
+      lastUserMessage
+    );
+
+  return needsDepth ? 500 : 300;
 }
 
 function normalizeMessages(messages: unknown): ChatMessage[] {
@@ -92,7 +129,7 @@ function normalizeMessages(messages: unknown): ChatMessage[] {
       !(message.role === 'assistant' && message.content.trim() === INITIAL_AEGIS_MESSAGE)
   );
 
-  return withoutInitialGreeting.slice(-16);
+  return withoutInitialGreeting.slice(-6);
 }
 
 export async function POST(req: Request) {
@@ -123,8 +160,8 @@ export async function POST(req: Request) {
           messages: normalizedMessages,
           system: AEGIS_SYSTEM_PROMPT,
           maxTokens: getMaxTokens(normalizedMessages),
-          temperature: 0.2,
-          topP: 0.9,
+          temperature: 0.3,
+          topP: 0.95,
         });
 
         return result.toDataStreamResponse();

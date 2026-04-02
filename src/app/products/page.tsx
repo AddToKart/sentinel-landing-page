@@ -221,7 +221,7 @@ function FloatingBackground() {
           scale: [1, 1.05, 1],
         }}
         transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute top-[20%] left-[10%] w-[500px] h-[500px] bg-accent/20 rounded-full blur-[150px]"
+        className="absolute top-[20%] left-[10%] w-full max-w-[500px] h-[500px] bg-accent/20 rounded-full blur-[150px]"
       />
       <motion.div
         animate={{
@@ -230,7 +230,7 @@ function FloatingBackground() {
           scale: [1, 1.1, 1],
         }}
         transition={{ duration: 15, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-        className="absolute bottom-[20%] right-[10%] w-[600px] h-[600px] bg-purple-500/10 rounded-full blur-[150px]"
+        className="absolute bottom-[20%] right-[10%] w-full max-w-[600px] h-[600px] bg-purple-500/10 rounded-full blur-[150px]"
       />
     </div>
   );
@@ -249,7 +249,7 @@ export default function ProductsPage() {
   const headerOpacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
 
   return (
-    <main className="min-h-screen relative selection:bg-accent selection:text-bg bg-bg text-text overflow-hidden">
+    <main className="min-h-[100dvh] relative selection:bg-accent selection:text-bg bg-bg text-text overflow-hidden">
       <GridCanvas />
       <FloatingBackground />
       

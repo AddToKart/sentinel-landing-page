@@ -193,7 +193,7 @@ export function AegisChat() {
     const lastMessage = messages[messages.length - 1];
     if (!lastMessage || lastMessage.role !== 'assistant') return;
 
-    const navMatch = lastMessage.content.match(/__NAVIGATE:(\/\S+)__/);
+    const navMatch = lastMessage.content.match(/__NAVIGATE:\s*(\/[^_\s]+?)\s*__/);
     if (navMatch) {
       const path = navMatch[1];
       const validRoute = VALID_ROUTES.find(r => r.path === path);
@@ -242,7 +242,7 @@ export function AegisChat() {
       role: m.role,
       content: m.content,
       rendered: renderMessageContent(
-        m.content.replace(/__NAVIGATE:\/\S+__/g, '').trim()
+        m.content.replace(/__NAVIGATE:\s*\/[^_\s]+?\s*__/g, '').trim()
       ),
     }));
   }, [messages.map(m => `${m.id}-${m.content.length}`).join('|')]);

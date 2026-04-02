@@ -245,7 +245,7 @@ export default function AboutPage() {
   const heroY = useTransform(scrollYProgress, [0, 0.5], [0, 100]);
 
   return (
-    <main className="min-h-screen relative selection:bg-accent selection:text-bg bg-bg overflow-x-hidden">
+    <main className="min-h-[100dvh] relative selection:bg-accent selection:text-bg bg-bg overflow-x-hidden">
       <GridCanvas />
 
       {/* ----------------- HERO ----------------- */}
@@ -254,7 +254,7 @@ export default function AboutPage() {
         style={{ opacity: heroOpacity, scale: heroScale, y: heroY }}
         className="hero pt-40 pb-32 px-6 relative z-[1] text-center"
       >
-        <div className="absolute top-[20%] left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-accent/[0.05] rounded-full blur-[150px] pointer-events-none" />
+        <div className="absolute top-[20%] left-1/2 -translate-x-1/2 w-full max-w-[800px] h-[400px] bg-accent/[0.05] rounded-full blur-[150px] pointer-events-none" />
 
         <motion.div
           initial={{ opacity: 0, y: -20 }}
@@ -456,7 +456,7 @@ export default function AboutPage() {
       {/* ----------------- STATS ----------------- */}
       <section className="py-24 px-6 relative z-[1] bg-bg2/60 border-y border-border-dim">
         <div className="max-w-[1200px] mx-auto">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-accent/20 border border-accent/20 p-px">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-px bg-accent/20 border border-accent/20 p-px">
             {stats.map((stat, i) => (
               <div key={stat.label} className="bg-bg p-8 md:p-12 relative overflow-hidden group">
                 <div className="absolute inset-0 bg-gradient-to-b from-accent/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -477,7 +477,7 @@ export default function AboutPage() {
 
       {/* ----------------- CTA ----------------- */}
       <section className="py-40 px-6 relative z-[1] text-center overflow-hidden">
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-accent/[0.05] rounded-full blur-[150px] pointer-events-none" />
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[800px] h-[400px] bg-accent/[0.05] rounded-full blur-[150px] pointer-events-none" />
 
         <motion.div
           initial={{ opacity: 0, y: 40 }}

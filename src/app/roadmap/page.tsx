@@ -683,7 +683,7 @@ export default function RoadmapPage() {
   const heroY = useTransform(scrollYProgress, [0, 0.4], [0, 60]);
 
   return (
-    <main className="min-h-screen relative selection:bg-accent selection:text-bg">
+    <main className="min-h-[100dvh] relative selection:bg-accent selection:text-bg">
       <GridCanvas />
       {/* ═══ HERO ═══ */}
       <motion.section
@@ -691,7 +691,7 @@ export default function RoadmapPage() {
         style={{ opacity: heroOpacity, scale: heroScale, y: heroY }}
         className="hero pt-32 pb-20 px-6 relative z-[1] text-center overflow-hidden"
       >
-        <div className="absolute top-[25%] left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-accent/[0.03] rounded-full blur-[120px] pointer-events-none" />
+        <div className="absolute top-[25%] left-1/2 -translate-x-1/2 w-full max-w-[600px] h-[400px] bg-accent/[0.03] rounded-full blur-[120px] pointer-events-none" />
 
         <motion.div
           initial={{ opacity: 0, scale: 0.92 }}
@@ -828,7 +828,7 @@ export default function RoadmapPage() {
 
       {/* ═══ CTA ═══ */}
       <section className="py-36 px-6 relative z-[1] text-center overflow-hidden">
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[500px] h-[250px] bg-accent/[0.03] rounded-full blur-[100px] pointer-events-none" />
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[500px] h-[250px] bg-accent/[0.03] rounded-full blur-[100px] pointer-events-none" />
 
         <ScrollReveal>
           <div className="text-[11px] tracking-[0.2em] uppercase text-accent/80 mb-6 font-bold">

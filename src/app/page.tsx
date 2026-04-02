@@ -146,7 +146,7 @@ export default function Home() {
       {/* ═══ HERO ═══ */}
       <motion.section
         style={{ opacity: heroOpacity, scale: heroScale, y: heroY }}
-        className="hero min-h-[calc(100svh-60px)] flex flex-col items-center justify-center px-6 pt-28 pb-20 md:pt-32 md:pb-24 relative text-center z-10"
+        className="hero min-h-[calc(100svh-60px)] flex flex-col items-center justify-center px-6 pt-24 pb-16 md:pt-32 md:pb-24 relative text-center z-10"
       >
         <motion.div
           initial={{ opacity: 0, scale: 0.8, filter: "blur(20px)" }}
@@ -159,7 +159,7 @@ export default function Home() {
           Initializing The Construct
         </motion.div>
 
-        <h1 className="font-head font-900 text-[clamp(3rem,12vw,9rem)] leading-[0.85] tracking-tighter mb-8 uppercase relative">
+        <h1 className="font-head font-900 text-[clamp(2.5rem,10vw,8rem)] leading-[0.85] tracking-tighter mb-8 uppercase relative">
           <RevealText text="Awaken" />
           <br />
           <span className="text-accent relative inline-block">
@@ -233,8 +233,8 @@ export default function Home() {
       </div>
 
       {/* ═══ THE CONSTRUCT (FEATURES) ═══ */}
-      <section id="features" className="py-32 px-6 relative z-10 overflow-hidden">
-        <motion.div style={{ y: parallaxY1, willChange: "transform", transform: "translateZ(0)" }} className="absolute right-0 top-0 text-[20vw] font-900 text-bg2 leading-none pointer-events-none opacity-50 select-none">
+      <section id="features" className="py-20 md:py-32 px-6 relative z-10 overflow-hidden">
+        <motion.div style={{ y: parallaxY1, willChange: "transform", transform: "translateZ(0)" }} className="hidden md:block absolute right-0 top-0 text-[20vw] font-900 text-bg2 leading-none pointer-events-none opacity-50 select-none">
           CONSTRUCT
         </motion.div>
         
@@ -243,7 +243,7 @@ export default function Home() {
             <div className="text-[12px] tracking-[0.3em] uppercase text-accent mb-4 font-mono font-bold flex items-center gap-2">
               <Shield className="w-4 h-4" /> Aegis Architecture
             </div>
-            <h2 className="font-head font-900 text-5xl md:text-7xl tracking-tighter leading-none mb-6 uppercase">
+            <h2 className="font-head font-900 text-3xl md:text-4xl lg:text-5xl lg:text-7xl tracking-tighter leading-none mb-6 uppercase">
               Forged in <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-blue-500">The Void.</span>
             </h2>
@@ -261,8 +261,8 @@ export default function Home() {
       </section>
 
       {/* ═══ NEXUS (WORKFLOW) ═══ */}
-      <section className="py-32 px-6 relative z-10 bg-bg2/50 border-y border-border-dim backdrop-blur-sm overflow-hidden">
-        <motion.div style={{ y: parallaxY2, willChange: "transform", transform: "translateZ(0)" }} className="absolute left-[-5%] top-[20%] text-[20vw] font-900 text-bg leading-none pointer-events-none opacity-50 select-none">
+      <section className="py-20 md:py-32 px-6 relative z-10 bg-bg2/50 border-y border-border-dim backdrop-blur-sm overflow-hidden">
+        <motion.div style={{ y: parallaxY2, willChange: "transform", transform: "translateZ(0)" }} className="hidden md:block absolute left-[-5%] top-[20%] text-[20vw] font-900 text-bg leading-none pointer-events-none opacity-50 select-none">
           NEXUS
         </motion.div>
 
@@ -275,7 +275,7 @@ export default function Home() {
               <div className="text-[12px] tracking-[0.3em] uppercase text-accent mb-4 font-mono font-bold">
                 Neural Pathways
               </div>
-              <h2 className="font-head font-900 text-5xl md:text-7xl tracking-tighter leading-none uppercase">
+              <h2 className="font-head font-900 text-3xl md:text-4xl lg:text-5xl lg:text-7xl tracking-tighter leading-none uppercase">
                 Synchronized <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-purple-500">Chaos</span>.
               </h2>
             </div>
@@ -287,13 +287,13 @@ export default function Home() {
       </section>
 
       {/* ═══ ARCHITECTURE ═══ */}
-      <section id="architecture" className="py-32 px-6 relative z-10 overflow-hidden">
-        <div className="max-w-[1200px] mx-auto grid grid-cols-1 lg:grid-cols-[1fr_1.2fr] gap-20 items-center">
+      <section id="architecture" className="py-20 md:py-32 px-6 relative z-10 overflow-hidden">
+        <div className="max-w-[1200px] mx-auto grid grid-cols-1 lg:grid-cols-[1fr_1.2fr] gap-10 md:gap-12 lg:gap-20 items-center">
           <ScrollReveal variant="fade-left">
             <div className="text-[12px] tracking-[0.3em] uppercase text-accent mb-4 font-mono font-bold flex items-center gap-2">
               <Cpu className="w-4 h-4" /> Core Systems
             </div>
-            <h2 className="font-head font-900 text-5xl md:text-6xl tracking-tighter leading-none mb-8 uppercase">
+            <h2 className="font-head font-900 text-3xl md:text-4xl lg:text-5xl lg:text-6xl tracking-tighter leading-none mb-8 uppercase">
               Bare Metal <br />
               <span className="text-accent/80">Supremacy.</span>
             </h2>
@@ -350,14 +350,14 @@ export default function Home() {
       </section>
 
       {/* ═══ ECOSYSTEMS (INTEGRATIONS) ═══ */}
-      <section className="py-32 px-6 relative z-10 bg-bg2/40 border-y border-border-dim backdrop-blur-md">
+      <section className="py-20 md:py-32 px-6 relative z-10 bg-bg2/40 border-y border-border-dim backdrop-blur-md">
         <div className="max-w-[1200px] mx-auto">
           <ScrollReveal>
             <div className="text-center mb-20">
               <div className="text-[12px] tracking-[0.3em] uppercase text-accent mb-4 font-mono font-bold">
                 The 10 Realms
               </div>
-              <h2 className="font-head font-900 text-5xl md:text-6xl tracking-tighter leading-none mb-6 uppercase">
+              <h2 className="font-head font-900 text-3xl md:text-4xl lg:text-5xl lg:text-6xl tracking-tighter leading-none mb-6 uppercase">
                 Mythological Entities.
               </h2>
               <p className="text-muted-text max-w-[600px] mx-auto text-lg leading-relaxed font-mono">
@@ -372,14 +372,14 @@ export default function Home() {
       </section>
 
       {/* ═══ INTERACTIVE TERMINAL ═══ */}
-      <section className="py-32 px-6 relative z-10">
+      <section className="py-20 md:py-32 px-6 relative z-10">
         <div className="max-w-[1200px] mx-auto">
           <ScrollReveal>
             <div className="text-center mb-16">
               <div className="text-[12px] tracking-[0.3em] uppercase text-accent mb-4 font-mono font-bold">
                 Simulation Chamber
               </div>
-              <h2 className="font-head font-900 text-5xl md:text-6xl tracking-tighter leading-none mb-6 uppercase">
+              <h2 className="font-head font-900 text-3xl md:text-4xl lg:text-5xl lg:text-6xl tracking-tighter leading-none mb-6 uppercase">
                 Run The Grid.
               </h2>
             </div>
@@ -393,8 +393,8 @@ export default function Home() {
       </section>
 
       {/* ═══ MOBILE TEASER ═══ */}
-      <section id="mobile" className="py-32 px-6 relative z-10 overflow-hidden bg-bg/50">
-        <div className="max-w-[1200px] mx-auto grid grid-cols-1 lg:grid-cols-[1fr_1.1fr] gap-20 items-center">
+      <section id="mobile" className="py-20 md:py-32 px-6 relative z-10 overflow-hidden bg-bg/50">
+        <div className="max-w-[1200px] mx-auto grid grid-cols-1 lg:grid-cols-[1fr_1.1fr] gap-12 lg:gap-20 items-center">
           <ScrollReveal variant="scale-in" className="order-2 lg:order-1 relative">
              <div className="absolute inset-0 bg-purple-500/10 blur-[100px] rounded-full" />
              <MobileTeaser />
@@ -404,7 +404,7 @@ export default function Home() {
               <Activity className="w-4 h-4" />
               Uplink Established
             </div>
-            <h2 className="font-head font-900 text-5xl md:text-6xl tracking-tighter leading-none mb-8 uppercase">
+            <h2 className="font-head font-900 text-3xl md:text-4xl lg:text-5xl lg:text-6xl tracking-tighter leading-none mb-8 uppercase">
               Command <br />
               <span className="text-purple-400">Anywhere.</span>
             </h2>
@@ -441,13 +441,13 @@ export default function Home() {
       </section>
 
       {/* ═══ TESTIMONIALS & ROADMAP ═══ */}
-      <section className="py-32 px-6 relative z-10">
-        <div className="max-w-[1200px] mx-auto space-y-32">
+      <section className="py-20 md:py-32 px-6 relative z-10">
+        <div className="max-w-[1200px] mx-auto space-y-20 md:space-y-32">
           <div>
             <ScrollReveal>
               <div className="text-center mb-16">
                 <div className="text-[12px] tracking-[0.3em] uppercase text-accent mb-4 font-mono font-bold">Encrypted Logs</div>
-                <h2 className="font-head font-900 text-4xl md:text-5xl tracking-tighter leading-none uppercase">Architect Data.</h2>
+                <h2 className="font-head font-900 text-3xl md:text-4xl lg:text-5xl tracking-tighter leading-none uppercase">Architect Data.</h2>
               </div>
             </ScrollReveal>
             <ScrollReveal delay={100}>
@@ -459,7 +459,7 @@ export default function Home() {
             <ScrollReveal>
               <div className="text-center mb-16">
                 <div className="text-[12px] tracking-[0.3em] uppercase text-accent mb-4 font-mono font-bold">Future Vectors</div>
-                <h2 className="font-head font-900 text-4xl md:text-5xl tracking-tighter leading-none uppercase">Evolution Path.</h2>
+                <h2 className="font-head font-900 text-3xl md:text-4xl lg:text-5xl tracking-tighter leading-none uppercase">Evolution Path.</h2>
               </div>
             </ScrollReveal>
             <ScrollReveal delay={80}>
@@ -470,14 +470,14 @@ export default function Home() {
       </section>
 
       {/* ═══ GITHUB & FAQ & CTA ═══ */}
-      <section className="py-32 px-6 relative z-10 bg-bg2/30 border-t border-border-dim backdrop-blur-xl">
-        <div className="max-w-[1200px] mx-auto space-y-32">
+      <section className="py-20 md:py-32 px-6 relative z-10 bg-bg2/30 border-t border-border-dim backdrop-blur-xl">
+        <div className="max-w-[1200px] mx-auto space-y-20 md:space-y-32">
           
           <div>
             <ScrollReveal>
               <div className="text-center mb-16">
                 <div className="text-[12px] tracking-[0.3em] uppercase text-accent mb-4 font-mono font-bold">Live Uplink</div>
-                <h2 className="font-head font-900 text-4xl md:text-5xl tracking-tighter leading-none uppercase">Network Activity.</h2>
+                <h2 className="font-head font-900 text-3xl md:text-4xl lg:text-5xl tracking-tighter leading-none uppercase">Network Activity.</h2>
               </div>
             </ScrollReveal>
             <ScrollReveal delay={80}>
@@ -489,7 +489,7 @@ export default function Home() {
             <ScrollReveal>
               <div className="text-center mb-16">
                 <div className="text-[12px] tracking-[0.3em] uppercase text-accent mb-4 font-mono font-bold">Knowledge Base</div>
-                <h2 className="font-head font-900 text-4xl md:text-5xl tracking-tighter leading-none uppercase">Query The Void.</h2>
+                <h2 className="font-head font-900 text-3xl md:text-4xl lg:text-5xl tracking-tighter leading-none uppercase">Query The Void.</h2>
               </div>
             </ScrollReveal>
             <ScrollReveal delay={80}>
@@ -499,11 +499,11 @@ export default function Home() {
 
           <Newsletter />
 
-          <div className="text-center relative py-20">
+          <div className="text-center relative py-10 md:py-20">
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-accent/10 rounded-full blur-[120px] pointer-events-none" />
             <ScrollReveal>
               <div className="text-[12px] tracking-[0.3em] uppercase text-accent mb-6 font-mono font-bold">End of Transmission</div>
-              <h2 className="font-head font-900 text-6xl md:text-8xl tracking-tighter leading-none mb-10 uppercase">
+              <h2 className="font-head font-900 text-5xl md:text-6xl lg:text-8xl tracking-tighter leading-none mb-10 uppercase">
                 Claim <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-blue-500">The Future.</span>
               </h2>

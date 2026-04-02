@@ -307,7 +307,7 @@ export default function PricingPage() {
   const heroOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
   return (
-    <main className="min-h-screen relative selection:bg-accent selection:text-bg">
+    <main className="min-h-[100dvh] relative selection:bg-accent selection:text-bg">
       <GridCanvas />
       {/* ═══ HERO ═══ */}
       <motion.section
@@ -315,7 +315,7 @@ export default function PricingPage() {
         style={{ y: heroY, opacity: heroOpacity }}
         className="pt-40 pb-20 px-6 relative z-[1] text-center overflow-hidden"
       >
-        <div className="absolute top-[20%] left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-accent/[0.04] rounded-full blur-[150px] pointer-events-none" />
+        <div className="absolute top-[20%] left-1/2 -translate-x-1/2 w-full max-w-[800px] h-[500px] bg-accent/[0.04] rounded-full blur-[150px] pointer-events-none" />
 
         <ScrollReveal>
           <div className="inline-flex items-center gap-2 text-[11px] text-accent/80 tracking-[0.2em] uppercase border border-accent/15 px-4 py-1.5 mb-8 bg-accent/[0.03] rounded-full">
@@ -449,7 +449,7 @@ export default function PricingPage() {
         </div>
 
         <div className="max-w-[1200px] mx-auto">
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
             {ecosystemAccess.map((eco, i) => {
               const Icon = eco.icon;
               const isActive = hoveredPlan 
@@ -561,7 +561,7 @@ export default function PricingPage() {
 
       {/* ═══ CTA ═══ */}
       <section className="py-32 px-6 relative z-[1] text-center overflow-hidden border-t border-white/[0.04]">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-accent/[0.03] rounded-full blur-[120px] pointer-events-none" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[800px] h-[400px] bg-accent/[0.03] rounded-full blur-[120px] pointer-events-none" />
         <ScrollReveal>
           <h2 className="font-head font-800 text-5xl md:text-7xl tracking-tighter leading-none mb-8">
             Ready to <span className="text-accent italic">deploy?</span>

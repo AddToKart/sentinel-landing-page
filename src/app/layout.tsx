@@ -29,7 +29,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="scroll-smooth">
+    <html lang="en" className="scroll-smooth" data-scroll-behavior="smooth">
       <body
         className={`${ibmPlexMono.variable} ${syne.variable} font-mono antialiased bg-background text-foreground transition-colors duration-300`}
       >

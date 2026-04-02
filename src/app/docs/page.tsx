@@ -267,7 +267,7 @@ export default function DocsPage() {
   const opacityHero = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
 
   return (
-    <div className="min-h-screen bg-bg text-text selection:bg-accent/30 selection:text-accent relative overflow-hidden" ref={containerRef}>
+    <div className="min-h-[100dvh] bg-bg text-text selection:bg-accent/30 selection:text-accent relative overflow-hidden" ref={containerRef}>
       <GridCanvas />
       
       {/* Background Parallax */}
@@ -276,22 +276,22 @@ export default function DocsPage() {
         <div className="absolute top-[60%] right-[10%] w-[30vw] h-[30vw] bg-purple-500/5 rounded-full blur-[120px]" />
       </motion.div>
 
-      {/* Floating Index (Desktop) */}
+      {/* Floating Index (Desktop & Mobile) */}
       <motion.nav 
-        initial={{ opacity: 0, x: -50 }}
-        animate={{ opacity: 1, x: 0 }}
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1, duration: 0.8 }}
-        className="hidden xl:flex fixed left-8 top-1/2 -translate-y-1/2 flex-col gap-4 z-50 border-l border-border-dim/50 pl-4"
+        className="sticky top-16 xl:fixed xl:left-8 xl:top-1/2 xl:-translate-y-1/2 flex xl:flex-col items-center xl:items-start gap-4 z-50 xl:border-l xl:border-border-dim/50 xl:pl-4 bg-bg/80 xl:bg-transparent backdrop-blur-md xl:backdrop-blur-none px-6 py-4 xl:p-0 overflow-x-auto hide-scrollbar border-b border-border-dim/50 xl:border-b-0 w-full xl:w-auto"
       >
-        <div className="text-[10px] font-mono uppercase tracking-[0.2em] text-accent/50 mb-2">The Codex</div>
+        <div className="text-[10px] font-mono uppercase tracking-[0.2em] text-accent/50 xl:mb-2 hidden xl:block">The Codex</div>
         {[
           { id: "awakening", label: "I. The Awakening" },
           { id: "directives", label: "II. Core Directives" },
           { id: "arsenal", label: "III. The Arsenal" },
           { id: "knowledge", label: "IV. Knowledge" }
         ].map((item) => (
-          <a key={item.id} href={`#${item.id}`} className="text-xs font-mono text-muted-text hover:text-accent transition-colors duration-200 flex items-center gap-2 group">
-            <span className="w-1 h-1 rounded-full bg-border-dim group-hover:bg-accent group-hover:shadow-[0_0_8px_var(--accent)] transition-all" />
+          <a key={item.id} href={`#${item.id}`} className="whitespace-nowrap text-xs font-mono text-muted-text hover:text-accent transition-colors duration-200 flex items-center gap-2 group shrink-0">
+            <span className="w-1 h-1 rounded-full bg-border-dim group-hover:bg-accent group-hover:shadow-[0_0_8px_var(--accent)] transition-all hidden xl:block" />
             {item.label}
           </a>
         ))}
@@ -347,10 +347,10 @@ export default function DocsPage() {
                 </p>
                 <div className="p-6 bg-bg2/50 border border-border-dim font-mono text-sm relative overflow-hidden group">
                   <div className="absolute top-0 left-0 w-1 h-full bg-accent" />
-                  <div className="text-accent/50 mb-2">// macOS & Linux Initialization</div>
+                  <div className="text-accent/50 mb-2">{`// macOS & Linux Initialization`}</div>
                   <div className="text-text drop-shadow-[0_0_8px_rgba(255,255,255,0.2)]">curl -fsSL https://sentinel.dev/install | bash</div>
                   
-                  <div className="text-accent/50 mt-6 mb-2">// Windows PowerShell Injection</div>
+                  <div className="text-accent/50 mt-6 mb-2">{`// Windows PowerShell Injection`}</div>
                   <div className="text-text drop-shadow-[0_0_8px_rgba(255,255,255,0.2)]">iwr https://sentinel.dev/install.ps1 | iex</div>
                 </div>
               </div>

@@ -1042,7 +1042,7 @@ function EcosystemSection({ ecosystem }: { ecosystem: Ecosystem }) {
     >
       {/* Ambient glow */}
       <div
-        className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] rounded-full blur-[150px] pointer-events-none"
+        className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[600px] h-[300px] rounded-full blur-[150px] pointer-events-none"
         style={{ backgroundColor: `${ecosystem.accentColor}04` }}
       />
 
@@ -1090,14 +1090,14 @@ export default function EcosystemPage() {
   const heroOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
 
   return (
-    <main className="min-h-screen relative selection:bg-accent selection:text-bg">
+    <main className="min-h-[100dvh] relative selection:bg-accent selection:text-bg">
       <GridCanvas />
       {/* ═══ HERO ═══ */}
       <section
         ref={heroRef}
         className="pt-32 pb-20 px-6 relative z-[1] text-center overflow-hidden"
       >
-        <div className="absolute top-[25%] left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-accent/[0.03] rounded-full blur-[120px] pointer-events-none" />
+        <div className="absolute top-[25%] left-1/2 -translate-x-1/2 w-full max-w-[600px] h-[400px] bg-accent/[0.03] rounded-full blur-[120px] pointer-events-none" />
 
         <ScrollReveal>
           <div className="inline-flex items-center gap-2 text-[11px] text-accent/80 tracking-[0.2em] uppercase border border-accent/15 px-4 py-1.5 mb-8 bg-accent/[0.03]">
@@ -1183,7 +1183,7 @@ export default function EcosystemPage() {
 
       {/* ═══ CTA ═══ */}
       <section className="py-28 px-6 relative z-[1] text-center">
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[500px] h-[250px] bg-accent/[0.03] rounded-full blur-[100px] pointer-events-none" />
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[500px] h-[250px] bg-accent/[0.03] rounded-full blur-[100px] pointer-events-none" />
 
         <ScrollReveal>
           <div className="inline-flex items-center gap-2 text-[11px] text-accent/80 tracking-[0.2em] uppercase border border-accent/15 px-4 py-1.5 mb-8 bg-accent/[0.03]">
